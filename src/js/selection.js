@@ -13,6 +13,8 @@ var haut;
 var dash;
 var lent;
 var groupe_plateformes;
+var dashDernierTemps = 0;
+var dashDelai = 4000; // 4000 millisecondes = 4 secondes
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -128,10 +130,10 @@ export default class selection extends Phaser.Scene {
     var vitesse_dash=0;
 
     if(lent.isDown){
-      vitesse_lent=140;
-    }else if (dash.JustDown){
+      vitesse_lent=70;
+    }else if (dash.isDown && this.time.now > dashDernierTemps + dashDelai){
       vitesse_dash=300;
-      
+      dashDernierTemps = this.time.now;
     }else{
       vitesse_dash=0;
       vitesse_lent=0;
