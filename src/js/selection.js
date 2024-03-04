@@ -30,6 +30,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("img_porte2", "src/assets/door2.png");
     this.load.image("img_porte3", "src/assets/door3.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
+    this.load.image("fireball", "src/assets/fireball.png");
   }
 
   /***********************************************************************/
@@ -153,21 +154,30 @@ export default class selection extends Phaser.Scene {
   }
 
   // Fonction pour tirer une balle
-  tirerBalle() {
-    // Création de la balle à la position du joueur
-    let bullet = this.physics.add.sprite(player.x, player.y, "bullet");
-    
-    // Déplacement de la balle vers la position de la souris
-    this.physics.moveTo(
-      bullet,
-      this.input.mousePointer.worldX,
-      this.input.mousePointer.worldY,
-      500
-    );
+  // Fonction pour tirer une balle
+tirerBalle() {
+  // Calcul du coefficient de direction en fonction de la position du clic de la souris
+  let diffX = this.input.mousePointer.worldX - player.x;
+  let diffY = this.input.mousePointer.worldY - player.y;
+  let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+  let coefdirX = diffX / distance;
+  let coefdirY = diffY / distance;
 
-    // Gestion des collisions de la balle avec les plateformes
-    this.physics.add.collider(bullet, groupe_plateformes, () => {
-      bullet.destroy();
-    });
-  }
+  // Création de la balle à la position du joueur
+  let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, "fireball");
+
+  // Déplacement de la balle vers la position de la souris
+  this.physics.moveTo(
+    bullet,
+    this.input.mousePointer.worldX,
+    this.input.mousePointer.worldY,
+    500
+  );
+
+  // Gestion des collisions de la balle avec les plateformes
+  this.physics.add.collider(bullet, groupe_plateformes, () => {
+    bullet.destroy();
+  });
+}
+
 }
