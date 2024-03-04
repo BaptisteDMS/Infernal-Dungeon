@@ -20,7 +20,7 @@ var config = {
     arcade: {
       // parametres du mode arcade
       gravity: {},
-      debug: false // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
+      debug: true // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
     }
   },
   scene: [selection, niveau1, niveau2, niveau3]
