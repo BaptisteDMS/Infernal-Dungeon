@@ -62,7 +62,16 @@ export default class selection extends Phaser.Scene {
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
-    // Création des animations du joueur
+    //  propriétées physiqyes de l'objet player :
+    player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
+
+    /***************************
+     *  CREATION DES ANIMATIONS *
+     ****************************/
+    // dans cette partie, on crée les animations, à partir des spritesheet
+    // chaque animation est une succession de frame à vitesse de défilement défini
+    // une animation doit avoir un nom. Quand on voudra la jouer sur un sprite, on utilisera la méthode play()
+    // creation de l'animation "anim_tourne_gauche" qui sera jouée sur le player lorsque ce dernier tourne à gauche
     this.anims.create({
       key: "anim_tourne_gauche",
       frames: this.anims.generateFrameNumbers("img_perso", {
@@ -105,16 +114,26 @@ export default class selection extends Phaser.Scene {
     if (clavier.left.isDown) {
       player.setVelocityX(-160);
       player.anims.play("anim_tourne_gauche", true);
-    } else if (clavier.right.isDown) {
+    } 
+    
+    if (clavier.right.isDown) {
       player.setVelocityX(160);
       player.anims.play("anim_tourne_droite", true);
-    } else {
-      player.setVelocityX(0);
-      player.anims.play("anim_face");
+    }  
+    
+    if (clavier.down.isDown) {
+      player.setVelocityY(160);
+      player.anims.play("anim_tourne_droite", true);
     }
-
-    if (clavier.up.isDown && player.body.touching.down) {
-      player.setVelocityY(-330);
+    
+    if (clavier.up.isDown) {
+      player.setVelocityY(-160);
+      player.anims.play("anim_tourne_gauche", true);
+    }
+    else {
+      player.setVelocityX(0);
+      player.setVelocityY(0);
+      player.anims.play("anim_face");
     }
 
     // Tir de la balle suivant la position de la souris
