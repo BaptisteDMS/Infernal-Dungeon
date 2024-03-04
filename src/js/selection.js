@@ -148,25 +148,58 @@ export default class selection extends Phaser.Scene {
   update() {
     
     if (clavier.left.isDown) {
-      player.setVelocityX(-160);
-      player.anims.play("anim_tourne_gauche", true);
-    } 
-    
-    if (clavier.right.isDown) {
-      player.setVelocityX(160);
-      player.anims.play("anim_tourne_droite", true);
-    }  
-    
-    if (clavier.down.isDown) {
-      player.setVelocityY(160);
-      player.anims.play("anim_tourne_droite", true);
-    }
-    
-    if (clavier.up.isDown) {
-      player.setVelocityY(-160);
-      player.anims.play("anim_tourne_gauche", true);
-    }
-    else {
+      if (clavier.up.isDown){
+        player.setVelocityX(-160);
+        player.setVelocityY(-160);
+        player.anims.play("anim_tourne_gauche", true);
+      }else if(clavier.down.isDown) {
+        player.setVelocityX(-160);
+        player.setVelocityY(160);
+        player.anims.play("anim_tourne_gauche", true);
+      }else{
+        player.setVelocityX(-160);
+        player.anims.play("anim_tourne_gauche", true);
+      }
+    }  else if (clavier.right.isDown) {
+      if (clavier.up.isDown){
+        player.setVelocityX(160);
+        player.setVelocityY(-160);
+        player.anims.play("anim_tourne_droite", true);
+      }else if(clavier.down.isDown) {
+        player.setVelocityX(160);
+        player.setVelocityY(160);
+        player.anims.play("anim_tourne_droite", true);
+      }else{
+        player.setVelocityX(160);
+        player.anims.play("anim_tourne_droite", true);
+      }
+    } else if (clavier.down.isDown) {
+      if (clavier.left.isDown){
+        player.setVelocityX(-160);
+        player.setVelocityY(160);
+        player.anims.play("anim_tourne_gauche", true);
+      }else if(clavier.right.isDown) {
+        player.setVelocityX(160);
+        player.setVelocityY(160);
+        player.anims.play("anim_tourne_droite", true);
+      }else{
+        player.setVelocityY(160);
+        player.anims.play("anim_tourne_gauche", true);
+      }
+    } else if (clavier.up.isDown) {
+      if (clavier.left.isDown){
+        player.setVelocityX(-160);
+        player.setVelocityY(-160);
+        player.anims.play("anim_tourne_gauche", true);
+      }else if(clavier.right.isDown) {
+        player.setVelocityX(160);
+        player.setVelocityY(-160);
+        player.anims.play("anim_tourne_droite", true);
+      }else{
+        player.setVelocityY(-160);
+        player.anims.play("anim_tourne_droite", true);
+      }
+    } else {
       player.setVelocityX(0);
       player.setVelocityY(0);
       player.anims.play("anim_face");
@@ -174,7 +207,7 @@ export default class selection extends Phaser.Scene {
 
     if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
       if (this.physics.overlap(player, this.porte1))
-        this.scene.switch("niveau1");
+        this.scene.switch("niveau1"); 
       if (this.physics.overlap(player, this.porte2))
         this.scene.switch("niveau2");
       if (this.physics.overlap(player, this.porte3))
