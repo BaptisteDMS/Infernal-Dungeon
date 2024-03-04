@@ -6,6 +6,12 @@ import * as fct from "/src/js/fonctions.js";
 
 var player; // désigne le sprite du joueur
 var clavier; // pour la gestion du clavier
+var droite;
+var gauche;
+var bas;
+var haut;
+var dash;
+var lent;
 var groupe_plateformes;
 
 // définition de la classe "selection"
@@ -101,6 +107,12 @@ export default class selection extends Phaser.Scene {
 
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
+    haut = this.input.keyboard.addKey("Z");
+    bas = this.input.keyboard.addKey("S");
+    gauche = this.input.keyboard.addKey("Q");
+    droite = this.input.keyboard.addKey("D");
+    dash = this.input.keyboard.addKey("shift");
+    lent= this.input.keyboard.addKey("space");
 
     // Gestion des collisions entre le joueur et les plateformes
     this.physics.add.collider(player, groupe_plateformes);
@@ -112,56 +124,69 @@ export default class selection extends Phaser.Scene {
 
   update() {
     // Déplacement du joueur
-    if (clavier.left.isDown) {
-      if (clavier.up.isDown){
-        player.setVelocityX(-160);
-        player.setVelocityY(-160);
+    var vitesse_lent=0;
+    var vitesse_dash=0;
+
+    if(lent.isDown){
+      vitesse_lent=140;
+    }else if (dash.JustDown){
+      vitesse_dash=300;
+      
+    }else{
+      vitesse_dash=0;
+      vitesse_lent=0;
+    }
+
+    if (gauche.isDown) {
+      if (haut.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
-      }else if(clavier.down.isDown) {
-        player.setVelocityX(-160);
-        player.setVelocityY(160);
+      }else if(bas.isDown) {
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
       }else{
-        player.setVelocityX(-160);
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
       }
-    }  else if (clavier.right.isDown) {
-      if (clavier.up.isDown){
-        player.setVelocityX(160);
-        player.setVelocityY(-160);
+    }  else if (droite.isDown) {
+      if (haut.isDown){
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
-      }else if(clavier.down.isDown) {
-        player.setVelocityX(160);
-        player.setVelocityY(160);
+      }else if(bas.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
       }else{
-        player.setVelocityX(160);
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
       }
-    } else if (clavier.down.isDown) {
-      if (clavier.left.isDown){
-        player.setVelocityX(-160);
-        player.setVelocityY(160);
+    } else if (bas.isDown) {
+      if (gauche.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
-      }else if(clavier.right.isDown) {
-        player.setVelocityX(160);
-        player.setVelocityY(160);
+      }else if(droite.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
       }else{
-        player.setVelocityY(160);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
       }
-    } else if (clavier.up.isDown) {
-      if (clavier.left.isDown){
-        player.setVelocityX(-160);
-        player.setVelocityY(-160);
+    } else if (haut.isDown) {
+      if (gauche.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_gauche", true);
-      }else if(clavier.right.isDown) {
-        player.setVelocityX(160);
-        player.setVelocityY(-160);
+      }else if(droite.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
       }else{
-        player.setVelocityY(-160);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
         player.anims.play("anim_tourne_droite", true);
       }
     } else {
