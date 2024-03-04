@@ -39,6 +39,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("img_porte3", "src/assets/door3.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
+    this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
   }
 
   /***********************************************************************/
@@ -67,7 +68,7 @@ export default class selection extends Phaser.Scene {
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
     // Création du joueur
-    player = this.physics.add.sprite(100, 450, "img_perso");
+    player = this.physics.add.sprite(100, 450, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
@@ -143,58 +144,46 @@ export default class selection extends Phaser.Scene {
       if (haut.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(bas.isDown) {
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else{
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }
     }  else if (droite.isDown) {
       if (haut.isDown){
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else if(bas.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }
     } else if (bas.isDown) {
       if (gauche.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(droite.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }
     } else if (haut.isDown) {
       if (gauche.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(droite.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }
     } else {
       player.setVelocityX(0);
       player.setVelocityY(0);
-      player.anims.play("anim_face");
+      player.anims.play("Personnage");
     }
 
     // Tir de la balle suivant la position de la souris
@@ -211,7 +200,34 @@ export default class selection extends Phaser.Scene {
       if (this.physics.overlap(player, this.porte3))
         this.scene.switch("niveau3");
     }
-  }
+
+    // Calcul de la direction entre le joueur et la position de la souris
+let diffX = this.input.mousePointer.worldX - player.x;
+let diffY = this.input.mousePointer.worldY - player.y;
+
+// Calcul de l'angle en radians entre le joueur et la souris
+let angle = Math.atan(diffY / diffX);
+
+// Convertir l'angle en degrés
+angle = Phaser.Math.RadToDeg(angle);
+
+// Ajuster l'angle en fonction de la position du curseur
+if (diffX < 0) {
+// player.flipX=true;
+angle-=180;
+}
+else {
+// player.flipX=false;
+
+}
+// Appliquer la sensibilité à l'angle
+//angle *= sensitivity;
+
+// Appliquer la rotation à l'image du joueur
+player.setAngle(angle);
+//console.log(angle);
+}
+
 
   // Fonction pour tirer une balle
   // Fonction pour tirer une balle
