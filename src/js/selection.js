@@ -90,7 +90,6 @@ export default class selection extends Phaser.Scene {
     player = this.physics.add.sprite(100, 450, "img_perso");
 
     //  propriétées physiqyes de l'objet player :
-    player.setBounce(0.2); // on donne un petit coefficient de rebond
     player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
 
     /***************************
@@ -151,16 +150,26 @@ export default class selection extends Phaser.Scene {
     if (clavier.left.isDown) {
       player.setVelocityX(-160);
       player.anims.play("anim_tourne_gauche", true);
-    } else if (clavier.right.isDown) {
+    } 
+    
+    if (clavier.right.isDown) {
       player.setVelocityX(160);
       player.anims.play("anim_tourne_droite", true);
-    } else {
-      player.setVelocityX(0);
-      player.anims.play("anim_face");
+    }  
+    
+    if (clavier.down.isDown) {
+      player.setVelocityY(160);
+      player.anims.play("anim_tourne_droite", true);
     }
-
-    if (clavier.up.isDown && player.body.touching.down) {
-      player.setVelocityY(-330);
+    
+    if (clavier.up.isDown) {
+      player.setVelocityY(-160);
+      player.anims.play("anim_tourne_gauche", true);
+    }
+    else {
+      player.setVelocityX(0);
+      player.setVelocityY(0);
+      player.anims.play("anim_face");
     }
 
     if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {

@@ -19,9 +19,7 @@ var config = {
     default: "arcade", // mode arcade : le plus simple : des rectangles pour gérer les collisions. Pas de pentes
     arcade: {
       // parametres du mode arcade
-      gravity: {
-        y: 300 // gravité verticale : acceleration ddes corps en pixels par seconde
-      },
+      gravity: {},
       debug: true // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
     }
   },
