@@ -28,9 +28,9 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
     this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
     this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
-    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map.json");
+    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map_fini.json");
     this.load.image("img_perso","src/assets/map_principale/dude.png"); 
-    this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
+    this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
@@ -111,7 +111,7 @@ export default class niveau1 extends Phaser.Scene {
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
     // Création du joueur
-    player = this.physics.add.sprite(100, 450, "Personnage");
+    player = this.physics.add.sprite(750, 600, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.peutDash = true;
