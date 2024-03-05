@@ -73,6 +73,8 @@ export default class selection extends Phaser.Scene {
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
+    this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
+    this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
   
     
     this.load.image("tire","src/assets/Redi/tire.jpg")
@@ -167,7 +169,7 @@ export default class selection extends Phaser.Scene {
 enemy.children.iterate(enemy => {
   enemy.on('destroy', () => {
       // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
-      var proba = Math.floor(Math.random() * 6);
+      var proba = Math.floor(Math.random() * 2);
       if (proba === 0) { // Vérifier si le nombre est égal à 0
           // Spawn d'une arme à la position de l'ennemi
           let randomWeaponKey = Phaser.Math.RND.pick(['ak', 'shotgun', 'pistolet', 'blaster', 'lanceflamme']);
@@ -399,21 +401,21 @@ enemy.children.iterate(enemy => {
         Vitesse = 500;
     } else if (arme === "Handgun") {
         cadence = 500;
-        nomArme = "tire";
+        nomArme = "pistolbullet";
         Vitesse = 1000;
     } else if (arme ==="ak") {
       cadence = 200;
-        nomArme = "tire";
+        nomArme = "pistolbullet";
         Vitesse = 1000;
 
     } else if (arme ==="shotgun") {
       cadence = 1200;
-        nomArme = "tire";
+        nomArme = "pistolbullet";
         Vitesse = 800;
 
     } else if (arme ==="blaster") {
       cadence = 750;
-        nomArme = "tire";
+        nomArme = "blasterbullet";
         Vitesse = 2500;
 
     }else if (arme === "pistolet") {
