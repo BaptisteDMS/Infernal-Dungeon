@@ -33,6 +33,13 @@ var yCoord;
 var elem;
 var obj;
 
+// enemy variable 2
+var enemy2;
+var xCoord2;
+var yCoord2;
+var elem2;
+var obj2;
+
 function createEnemy() {
   xCoord = Math.random() * 800;
   yCoord = Math.random() * 600;
@@ -45,6 +52,20 @@ function createEnemy() {
   this.physics.add.collider(obj, enemy);
   
   enemy.add(obj);
+}
+
+function createEnemy2() {
+  xCoord2 = Math.random() * 800;
+  yCoord2 = Math.random() * 600;
+  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "img_ene2");
+  obj2.setCollideWorldBounds(true);
+  this.physics.add.collider(obj2, groupe_plateformes);
+  this.physics.add.collider(obj2, player, (enemy2) => {
+      enemy2.destroy();
+  });
+  this.physics.add.collider(obj2, enemy2);
+  
+  enemy2.add(obj2);
 }
 
 // définition de la classe "selection"
@@ -73,6 +94,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
+    this.load.image("img_ene2", "src/assets/Redi/Chauve souris");
     this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
     this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
   
@@ -85,10 +107,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("ak", "src/assets/armeSol/1(3).png")
     this.load.image("pistolet", "src/assets/armeSol/1(4).png")
     this.load.image("shotgun", "src/assets/armeSol/1(2).png")
-    this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
-    
-    
-    
+    this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");    
   }
 
   /***********************************************************************/
@@ -164,6 +183,19 @@ export default class selection extends Phaser.Scene {
         n++;
     }
 
+    /****************************
+     *  CREATION DU MECHANT 2 *
+     ****************************/
+
+    enemy2 = this.physics.add.group();
+
+    let b = 0;
+
+    while (b < 5) {
+        createEnemy2.call(this); 
+        b++;
+    }
+
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 enemy.children.iterate(enemy => {
@@ -220,6 +252,14 @@ enemy.children.iterate(enemy => {
     while (n < p) {
         this.physics.moveTo(elem[n], player.x, player.y, 80);
         n++;
+    }
+
+    elem2 = enemy2.getChildren();
+    var b = elem2.length;
+    let v = 0;
+    while (v < b) {
+        this.physics.moveTo(elem2[v], player.x-100, player.y-100, 200);
+        v++;
     }
 
     // Détection des collisions entre les balles et les ennemis
