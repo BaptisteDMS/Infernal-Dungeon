@@ -114,7 +114,7 @@ export default class niveau1 extends Phaser.Scene {
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
     // Création du joueur
-    player = this.physics.add.sprite(735, 595, "Personnage");
+    player = this.physics.add.sprite(740, 600, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.peutDash = true;
