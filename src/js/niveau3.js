@@ -13,10 +13,11 @@ var sprint;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
-var Fond_map;
-var chateau;
-var fond_porte_chateau;
-var donjon;
+var Fond;
+var Bords;
+var sol;
+var Falaise;
+var Ponts;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -27,11 +28,9 @@ export default class niveau1 extends Phaser.Scene {
     });
   }
   preload() {
-    this.load.image("Phaser_JeuDeTuiles1", "src/assets/donjon_lave/dungeon_tiles.png");
-    this.load.image("Phaser_JeuDeTuiles2", "src/assets/donjon_lave/tuilesJeu.png");
-    this.load.image("Phaser_JeuDeTuiles3", "src/assets/donjon_lave/DungeonCrawl_ProjectUtumnoTileset.png");
-    this.load.image("Phaser_JeuDeTuiles4", "src/assets/donjon_lave/00_items.png");
-    this.load.tilemapTiledJSON("carte", "src/assets/donjon_lave/donjon.lave.json");
+    this.load.image("Phaser_JeuDeTuiles1", "src/assets/donjon_lave/tuilesJeu.png");
+    this.load.image("Phaser_JeuDeTuiles2", "src/assets/donjon_lave/ProjectUtumno_full.png");
+    this.load.tilemapTiledJSON("carte2", "src/assets/donjon_lave/donjon_lave_1.json");
     this.load.image("img_perso","src/assets/map_principale/dude.png"); 
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
@@ -44,63 +43,39 @@ export default class niveau1 extends Phaser.Scene {
     fct.doAlsoNothing();
     const carteDuNiveau = this.add.tilemap("carte2");
     const tileset1 = carteDuNiveau.addTilesetImage(
-      "00_items",
+      "tuilesJeu",
       "Phaser_JeuDeTuiles1"
     ); 
     const tileset2 = carteDuNiveau.addTilesetImage(
-      "dungeon_tiles",
+      "ProjectUtumno_full",
       "Phaser_JeuDeTuiles2"
-    ); 
-    const tileset3 = carteDuNiveau.addTilesetImage(
-      "DungeonCrawl_ProjectUtumnoTileset",
-      "Phaser_JeuDeTuiles3"
-    ); 
-    const tileset4 = carteDuNiveau.addTilesetImage(
-      "tuilesJeu",
-      "Phaser_JeuDeTuiles4"
     ); 
     Fond = carteDuNiveau.createLayer(
       "Fond",
       [tileset1,
-        tileset2,
-        tileset3,
-        tileset4,
-        tileset5]
+        tileset2]
     );
     Bords = carteDuNiveau.createLayer(
       "Bords",
       [tileset1,
-      tileset2,
-      tileset3,
-      tileset4,
-      tileset5]
+      tileset2]
     );
     sol = carteDuNiveau.createLayer(
       "sol",
       [tileset1,
-        tileset2,
-        tileset3,
-        tileset4]
+        tileset2]
     );
     Falaise = carteDuNiveau.createLayer(
       "Falaise",
       [tileset1,
-        tileset2,
-        tileset3,
-        tileset4]
+        tileset2]
     );
     Ponts = carteDuNiveau.createLayer(
       "Ponts",
       [tileset1,
-        tileset2,
-        tileset3,
-        tileset4]
+        tileset2]
     );
-    Fond.setCollisionByProperty({ estSolide: true });
-    Bords.setCollisionByProperty({ estSolide: true });
-    sol.setCollisionByProperty({ estSolide: true });
-    Falaise.setCollisionByProperty({ estSolide: true });
-    Ponts.setCollisionByProperty({ estSolide: true });
+ 
 
 
 
@@ -141,10 +116,11 @@ export default class niveau1 extends Phaser.Scene {
    lent= this.input.keyboard.addKey("space");
    sprint = this.input.keyboard.addKey("shift");
 
-    this.physics.add.collider(player, fond_porte_chateau); 
-    this.physics.add.collider(player, donjon); 
-    this.physics.add.collider(player, chateau); 
-    this.physics.add.collider(player, Fond_map);
+    this.physics.add.collider(player, Ponts); 
+    this.physics.add.collider(player, Bords); 
+    this.physics.add.collider(player, sol); 
+    this.physics.add.collider(player, Falaise);
+    this.physics.add.collider(player, Fond);
   }
 
   update() {
@@ -282,16 +258,19 @@ tirerBalle() {
     500
   );
   // Gestion des collisions de la balle avec les plateformes
-  this.physics.add.collider(bullet, Fond_map, () => {
+  this.physics.add.collider(bullet, Fond, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, chateau, () => {
+  this.physics.add.collider(bullet, Falaise, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, fond_porte_chateau, () => {
+  this.physics.add.collider(bullet, sol, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, donjon, () => {
+  this.physics.add.collider(bullet, Bords, () => {
+    bullet.destroy();
+  });
+  this.physics.add.collider(bullet, Ponts, () => {
     bullet.destroy();
   });
 }
