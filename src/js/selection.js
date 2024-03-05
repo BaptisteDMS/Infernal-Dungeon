@@ -14,8 +14,9 @@ var dash;
 var lent;
 var sprint;
 var groupe_plateformes;
-var dashDernierTemps = 0;
-var dashDelai = 4000; // 4000 millisecondes = 4 secondes
+var vitesse_lent=0;
+var vitesse_dash=0;
+let image_sprint;
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -41,6 +42,8 @@ export default class selection extends Phaser.Scene {
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
     this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
+    this.load.image("Sprinter_bleu", "src/assets/bleu.png");
+    this.load.image("Sprinter_rouge", "src/assets/rouge.png");
   }
 
   /***********************************************************************/
@@ -68,24 +71,24 @@ export default class selection extends Phaser.Scene {
     this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
+    // Création icone dash
+    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+
     // Création du joueur
     player = this.physics.add.sprite(100, 450, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
-
-    //  propriétées physiqyes de l'objet player :
-    player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
-
-
+    player.peutDash = true;
+  
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
     haut = this.input.keyboard.addKey("Z");
     bas = this.input.keyboard.addKey("S");
     gauche = this.input.keyboard.addKey("Q");
     droite = this.input.keyboard.addKey("D");
-    dash = this.input.keyboard.addKey("shift");
+    dash = this.input.keyboard.addKey("space");
     lent= this.input.keyboard.addKey("C");
-    sprint = this.input.keyboard.addKey("space");
+    sprint = this.input.keyboard.addKey("shift");
 
     // Gestion des collisions entre le joueur et les plateformes
     this.physics.add.collider(player, groupe_plateformes);
@@ -97,14 +100,20 @@ export default class selection extends Phaser.Scene {
 
   update() {
     // Déplacement du joueur
-    var vitesse_lent=0;
-    var vitesse_dash=0;
 
     if(lent.isDown){
       vitesse_lent=70;
+      if (dash.isDown && player.peutDash==true){
+        vitesse_dash=8000;
+        this.dash(player,image_sprint);}
     }else if (sprint.isDown){
-      vitesse_dash=70;
-      dashDernierTemps = this.time.now;
+      vitesse_dash=100;
+      if (dash.isDown && player.peutDash==true){
+        vitesse_dash=8000;
+        this.dash(player,image_sprint);}
+    }else if (dash.isDown && player.peutDash==true){
+      vitesse_dash=8000;
+      this.dash(player,image_sprint);
     }else{
       vitesse_dash=0;
       vitesse_lent=0;
@@ -200,6 +209,9 @@ export default class selection extends Phaser.Scene {
  }
 
 
+
+ 
+
   // Fonction pour tirer une balle
   // Fonction pour tirer une balle
 tirerBalle() {
@@ -225,6 +237,21 @@ tirerBalle() {
   this.physics.add.collider(bullet, groupe_plateformes, () => {
     bullet.destroy();
   });
+}
+
+dash (player, image_sprint) {
+  if (player.peutDash == true) {
+      
+      player.peutDash = false; // on désactive la possibilté de dash
+      
+      image_sprint = this.add.image(16, 16, "Sprinter_rouge");
+      
+      // on la réactive dans 4 secondes avec un timer
+      var timerDashOk = this.time.delayedCall(4000, () => {
+          player.peutDash = true;
+          image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+      }, null, this);  
+  }
 }
 
 }
