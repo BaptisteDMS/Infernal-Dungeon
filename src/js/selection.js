@@ -95,7 +95,8 @@ export default class selection extends Phaser.Scene {
     this.physics.add.collider(player,groupe_plateformes);
     this.physics.add.collider(player, armesol, () => {
       player.gun = "lanceflamme";
-      removeFromeScene(armesol);
+      this.armesol.destroy();
+      
       
   }); 
 
