@@ -35,7 +35,9 @@ function createEnemy() {
   obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
   obj.setCollideWorldBounds(true);
   this.physics.add.collider(obj, groupe_plateformes);
-  this.physics.add.collider(obj, player);
+  this.physics.add.collider(obj, player, (enemy) => {
+      enemy.destroy();
+  });
   this.physics.add.collider(obj, enemy);
   
   enemy.add(obj);
@@ -213,23 +215,10 @@ export default class selection extends Phaser.Scene {
         bullet8.setVelocityX(500);
       
         // Gestion des collisions de la balle avec les plateformes
-        this.physics.add.collider(groupeballe, groupe_plateformes, () => {
-            bullet1.destroy();
-            bullet2.destroy();
-            bullet3.destroy();
-            bullet4.destroy();
-            bullet5.destroy();
-            bullet6.destroy();
-            bullet7.destroy();
-            bullet8.destroy();
+        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe) => {
+            laballe.destroy();
         });
-    });
-
-    // Détection des collisions entre palyer et les ennemis
-    this.physics.overlap(player, enemy, (enemy) => {
-      // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
-      enemy.destroy();
-  });
+    });  
 
 
     // Déplacement du joueur
