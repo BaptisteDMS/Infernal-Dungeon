@@ -17,11 +17,27 @@ var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
 
-
-
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
+
+// enemy variable
+var enemy;
+var xCoord;
+var yCoord;
+var elem;
+var obj;
+
+function createEnemy() {
+  xCoord = Math.random() * 800;
+  yCoord = Math.random() * 600;
+  obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
+  obj.setCollideWorldBounds(true);
+  this.physics.add.collider(obj, groupe_plateformes);
+  this.physics.add.collider(obj, player);
+  this.physics.add.collider(obj, enemy);
+  enemy.add(obj);
+}
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
