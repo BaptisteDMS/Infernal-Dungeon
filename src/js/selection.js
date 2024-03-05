@@ -18,9 +18,12 @@ var armesol;
 var lastFiredTime = 0;
 var groupeballe;
 
+
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
+let weapon = null;
+let weaponsGroup;
 
 // enemy variable
 var enemy;
@@ -68,9 +71,18 @@ export default class selection extends Phaser.Scene {
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
   
-    this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
+    
     this.load.image("tire","src/assets/Redi/tire.jpg")
     this.load.image("cible", "src/assets/Redi/eyeball.png")
+
+    //Arme
+    this.load.image("blaster", "src/assets/armeSol/Pistolet_blaster_DH-17.jpg")
+    this.load.image("ak", "src/assets/armeSol/1(3).png")
+    this.load.image("pistolet", "src/assets/armeSol/1(4).png")
+    this.load.image("shotgun", "src/assets/armeSol/1(2).png")
+    this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
+    
+    
     
   }
 
@@ -83,6 +95,8 @@ export default class selection extends Phaser.Scene {
     fct.doNothing();
     fct.doAlsoNothing();
     groupeballe = this.physics.add.group();
+
+    weaponsGroup = this.physics.add.group();
 
     // Création du ciel
     this.add.image(400, 300, "img_ciel");
@@ -116,10 +130,16 @@ export default class selection extends Phaser.Scene {
     player.gun= "Handgun";
 
     this.physics.add.collider(player,groupe_plateformes);
+
+  
     this.physics.add.collider(player, armesol, () => {
       player.gun = "lanceflamme";
       armesol.destroy();    
   }); 
+  this.physics.add.collider(player, weapon, () => {
+    player.gun = "lanceflamme";
+    weapon.destroy();    
+}); 
 
 
     player.peutDash = true;
@@ -133,9 +153,31 @@ export default class selection extends Phaser.Scene {
     let n = 0;
 
     while (n < 5) {
-      createEnemy.call(this); //!!!
-      n++;
+        createEnemy.call(this); //!!!
+        n++;
     }
+
+   // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
+enemy.children.iterate(enemy => {
+  enemy.on('destroy', () => {
+      // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
+      var proba = Math.floor(Math.random() * 6);
+      if (proba === 0) { // Vérifier si le nombre est égal à 0
+          // Spawn d'une arme à la position de l'ennemi
+          let randomWeaponKey = Phaser.Math.RND.pick(['ak', 'shotgun', 'pistolet', 'blaster', 'lanceflamme']);
+          let weapon = this.physics.add.sprite(enemy.x, enemy.y, randomWeaponKey);
+          weapon.setCollideWorldBounds(true);
+          // Ajouter l'arme au groupe d'armes
+          weaponsGroup.add(weapon);
+      }
+  });
+});
+
+  
+  this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
+    player.gun = weapon.texture.key;
+    weapon.destroy();    
+});
   
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
@@ -148,6 +190,7 @@ export default class selection extends Phaser.Scene {
     sprint = this.input.keyboard.addKey("shift");
 
   }
+  
   
 
   /***********************************************************************/
@@ -305,13 +348,31 @@ export default class selection extends Phaser.Scene {
         nomArme = "fireball";
         Vitesse = 500;
     } else if (arme === "Handgun") {
-        cadence = 1500;
+        cadence = 500;
         nomArme = "tire";
         Vitesse = 1000;
-    } else {
-        console.error("Arme non reconnue");
-        return;
+    } else if (arme ==="ak") {
+      cadence = 200;
+        nomArme = "tire";
+        Vitesse = 1000;
+
+    } else if (arme ==="shotgun") {
+      cadence = 1200;
+        nomArme = "tire";
+        Vitesse = 800;
+
+    } else if (arme ==="blaster") {
+      cadence = 750;
+        nomArme = "tire";
+        Vitesse = 2500;
+
+    }else if (arme === "pistolet") {
+      cadence = 500;
+      nomArme = "tire";
+      Vitesse = 1000;
     }
+       
+    
     
     // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
     if (this.time.now - lastFiredTime > cadence) {
