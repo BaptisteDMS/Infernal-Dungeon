@@ -14,52 +14,66 @@ var interagir;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
-var deco_fond;
-var CalquedeTuiles2;
-var rien1;
+var deco;
+var CalquedeTuiles3;
+var rien3;
+var mur;
+var decofinale;
 
-export default class niveau4 extends Phaser.Scene {
+export default class niveau5 extends Phaser.Scene {
     // constructeur de la classe
     constructor() {
       super({
-        key: "niveau4" //  ici on précise le nom de la classe en tant qu'identifiant
+        key: "niveau5" //  ici on précise le nom de la classe en tant qu'identifiant
       });
     }
     preload(){
-        this.load.image("Phaser_JeuDeTuiles7", "src/assets/map_donjon_japon/void-tiles.png");
-        this.load.tilemapTiledJSON("carte4", "src/assets/map_principale/donjon_japon_2.json");
+        this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_eglise/chateau.png");
+        this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/map_eglise.json");
     }
     create() {
         fct.doNothing();
         fct.doAlsoNothing();
-        const carteDuNiveau = this.add.tilemap("carte4");
+        const carteDuNiveau = this.add.tilemap("carte5");
         const tileset = carteDuNiveau.addTilesetImage(
-          "void-tiles",
-          "Phaser_JeuDeTuiles7"
+          "chateau",
+          "Phaser_JeuDeTuiles8"
         ); 
 
-        rien1 = carteDuNiveau.createLayer(
-          "rien1",
+        rien3 = carteDuNiveau.createLayer(
+          "rien3",
          tileset
         );
-        deco_fond = carteDuNiveau.createLayer(
-          "deco_fond",
+        deco = carteDuNiveau.createLayer(
+          "deco",
           tileset
         );
-        CalquedeTuiles2 = carteDuNiveau.createLayer(
-          "CalquedeTuiles2",
+        CalquedeTuiles3 = carteDuNiveau.createLayer(
+          "CalquedeTuiles3",
           tileset
         );
+        mur = carteDuNiveau.createLayer(
+            "mur",
+            tileset
+          );
+          decofinale = carteDuNiveau.createLayer(
+            "decofinale",
+            tileset
+          );
         
-        CalquedeTuiles2.setCollisionByProperty({ estSolide: true });
-        rien1.setCollisionByProperty({ estSolide: true });
-        deco_fond.setCollisionByProperty({ estSolide: true });
+        CalquedeTuiles3.setCollisionByProperty({ estSolide: true });
+        rien3.setCollisionByProperty({ estSolide: true });
+        deco.setCollisionByProperty({ estSolide: true });
+        decofinale.setCollisionByProperty({ estSolide: true });
+        mur.setCollisionByProperty({ estSolide: true });
+
+
     
     
     
     
         // ajout d'un texte distintcif  du niveau
-        this.add.text(400, 100, "Vous êtes dans le niveau 4", {
+        this.add.text(400, 100, "Vous êtes dans le niveau 5", {
           fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
           fontSize: "22pt"
         });
@@ -94,9 +108,11 @@ export default class niveau4 extends Phaser.Scene {
        sprint = this.input.keyboard.addKey("shift");
        interagir = this.input.keyboard.addKey("E");
     
-        this.physics.add.collider(player, deco_fond); 
-        this.physics.add.collider(player, CalquedeTuiles2); 
-        this.physics.add.collider(player, rien1); 
+        this.physics.add.collider(player, decofinale); 
+        this.physics.add.collider(player, CalquedeTuiles3); 
+        this.physics.add.collider(player, rien3); 
+        this.physics.add.collider(player, mur); 
+        this.physics.add.collider(player, deco); 
       }
     
       update() {
@@ -234,13 +250,19 @@ export default class niveau4 extends Phaser.Scene {
         500
       );
       // Gestion des collisions de la balle avec les plateformes
-      this.physics.add.collider(bullet, rien1, () => {
+      this.physics.add.collider(bullet, rien3, () => {
         bullet.destroy();
       });
-      this.physics.add.collider(bullet, CalquedeTuiles2, () => {
+      this.physics.add.collider(bullet, CalquedeTuiles3, () => {
         bullet.destroy();
       });
-      this.physics.add.collider(bullet, deco_fond, () => {
+      this.physics.add.collider(bullet, deco, () => {
+        bullet.destroy();
+      });
+      this.physics.add.collider(bullet, decofinale, () => {
+        bullet.destroy();
+      });
+      this.physics.add.collider(bullet, mur, () => {
         bullet.destroy();
       });
     }
