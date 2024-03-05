@@ -158,11 +158,12 @@ export default class selection extends Phaser.Scene {
     let n = 0;
 
     while (n < 5) {
-        createEnemy.call(this); //!!!
+        createEnemy.call(this); 
         n++;
     }
 
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
+// Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 enemy.children.iterate(enemy => {
   enemy.on('destroy', () => {
       // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
@@ -177,6 +178,7 @@ enemy.children.iterate(enemy => {
       }
   });
 });
+
 
   
   this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
