@@ -1,3 +1,6 @@
+
+
+
 export function doNothing() {
     // cette fonction ne fait rien.
     // c'est juste un exemple pour voir comment mettre une fonction
@@ -8,3 +11,4 @@ export function doNothing() {
 export function doAlsoNothing() {
     // cette fonction ne fait rien non plus.
  }
+

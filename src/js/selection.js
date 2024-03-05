@@ -14,9 +14,9 @@ var dash;
 var lent;
 var sprint;
 var groupe_plateformes;
-  var player; // désigne le sprite du joueur
-  var clavier; // pour la gestion du clavier
-  var groupe_plateformes;
+var lastFiredTime = 0;
+
+
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -42,7 +42,8 @@ export default class selection extends Phaser.Scene {
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
     this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
-  }
+    this.load.image("Gunsol", "src/assets/armeSol/1(1).png");
+  }z
 
   /***********************************************************************/
   /** FONCTION CREATE 
@@ -73,6 +74,7 @@ export default class selection extends Phaser.Scene {
     player = this.physics.add.sprite(100, 450, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
+    player.gun= "Handgun";
 
     //  propriétées physiqyes de l'objet player :
     player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
@@ -157,9 +159,12 @@ export default class selection extends Phaser.Scene {
       player.anims.play("Personnage");
     }
 
-    // Tir de la balle suivant la position de la souris
+
     if (this.input.mousePointer.isDown) {
-      this.tirerBalle();
+      
+      this.tirerBalle(player.gun); 
+
+
     }
 
     // Passage aux niveaux suivants selon la porte touchée
@@ -200,32 +205,62 @@ export default class selection extends Phaser.Scene {
     //console.log(angle);
  }
 
+ 
 
   // Fonction pour tirer une balle
   // Fonction pour tirer une balle
-tirerBalle() {
-  // Calcul du coefficient de direction en fonction de la position du clic de la souris
-  let diffX = this.input.mousePointer.worldX - player.x;
-  let diffY = this.input.mousePointer.worldY - player.y;
-  let distance = Math.sqrt(diffX * diffX + diffY * diffY);
-  let coefdirX = diffX / distance;
-  let coefdirY = diffY / distance;
-
-  // Création de la balle à la position du joueur
-  let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, "fireball");
-
-  // Déplacement de la balle vers la position de la souris
-  this.physics.moveTo(
-    bullet,
-    this.input.mousePointer.worldX,
-    this.input.mousePointer.worldY,
-    500
-  );
-
-  // Gestion des collisions de la balle avec les plateformes
-  this.physics.add.collider(bullet, groupe_plateformes, () => {
-    bullet.destroy();
-  });
-}
+  tirerBalle(arme) {
+    let cadence;
+    let nomArme;
+    let Vitesse;
+  
+    
+    if (arme === "LanceFlamme") {
+      cadence = 500;
+      nomArme = "fireball";
+      Vitesse = 100;
+    } else if (arme === "Handgun") {
+      cadence = 1500;
+      nomArme = "fireball";
+      Vitesse = 1000;
+    } else {
+      
+      console.error("Arme non reconnue");
+      return;
+    }
+  
+    // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
+    if (this.time.now - lastFiredTime > cadence) {
+      // Calcul du coefficient de direction en fonction de la position du clic de la souris
+      let diffX = this.input.mousePointer.worldX - player.x;
+      let diffY = this.input.mousePointer.worldY - player.y;
+      let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+      let coefdirX = diffX / distance;
+      let coefdirY = diffY / distance;
+  
+      // Création de la balle à la position du joueur avec le bon nom d'arme
+      let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, nomArme);
+  
+      // Déplacement de la balle vers la position de la souris
+      this.physics.moveTo(
+        bullet,
+        this.input.mousePointer.worldX,
+        this.input.mousePointer.worldY,
+        Vitesse
+      );
+  
+      // Gestion des collisions de la balle avec les plateformes
+      this.physics.add.collider(bullet, groupe_plateformes, () => {
+        bullet.destroy();
+      });
+  
+      // Mettre à jour le temps du dernier tir
+      lastFiredTime = this.time.now;
+    }
+  }
+  
+  
+  
+  
 
 }
