@@ -14,19 +14,20 @@ var dash;
 var lent;
 var sprint;
 var groupe_plateformes;
+var armesol;
 var lastFiredTime = 0;
+
 
 
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
+let image_sprint; 
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
   constructor() {
     super({ key: "selection" }); // mettre le meme nom que le nom de la classe
   }
-
   /***********************************************************************/
   /** FONCTION PRELOAD 
 /***********************************************************************/
@@ -44,11 +45,14 @@ export default class selection extends Phaser.Scene {
     this.load.image("img_porte3", "src/assets/door3.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
-    this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
+    this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
-  }
-    this.load.image("Gunsol", "src/assets/armeSol/1(1).png");
+  
+    this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
+    this.load.image("tire","src/assets/Redi/tire.jpg")
+    this.load.image("cible", "src/assets/Redi/eyeball.png")
+    
   }
 
   /***********************************************************************/
@@ -65,16 +69,19 @@ export default class selection extends Phaser.Scene {
 
     // Création des plateformes
     groupe_plateformes = this.physics.add.staticGroup();
+    armesol = this.physics.add.staticGroup();
     groupe_plateformes.create(200, 584, "img_plateforme");
     groupe_plateformes.create(600, 584, "img_plateforme");
     groupe_plateformes.create(600, 450, "img_plateforme");
     groupe_plateformes.create(50, 300, "img_plateforme");
     groupe_plateformes.create(750, 270, "img_plateforme");
+    armesol.create(200,200, "lanceflamme");
 
     // Création des portes
     this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
     this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
+    this.armesol = this.physics.add.staticSprite(200,200,"lanceflamme")
 
     // Création icone dash
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
@@ -85,8 +92,15 @@ export default class selection extends Phaser.Scene {
     player.setCollideWorldBounds(true);
     player.gun= "Handgun";
 
-    //  propriétées physiqyes de l'objet player :
-    player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
+    this.physics.add.collider(player,groupe_plateformes);
+    this.physics.add.collider(player, armesol, () => {
+      player.gun = "lanceflamme";
+      removeFromeScene(armesol);
+      
+  }); 
+
+    
+    
 
 
     player.peutDash = true;
@@ -101,9 +115,8 @@ export default class selection extends Phaser.Scene {
     lent= this.input.keyboard.addKey("C");
     sprint = this.input.keyboard.addKey("shift");
 
-    // Gestion des collisions entre le joueur et les plateformes
-    this.physics.add.collider(player, groupe_plateformes);
   }
+  
 
   /***********************************************************************/
   /** FONCTION UPDATE 
@@ -223,7 +236,7 @@ export default class selection extends Phaser.Scene {
  }
 
  
-
+ 
 
  
 
@@ -235,13 +248,13 @@ export default class selection extends Phaser.Scene {
     let Vitesse;
   
     
-    if (arme === "LanceFlamme") {
-      cadence = 500;
+    if (arme === "lanceflamme") {
+      cadence = 20;
       nomArme = "fireball";
-      Vitesse = 100;
+      Vitesse = 500;
     } else if (arme === "Handgun") {
       cadence = 1500;
-      nomArme = "fireball";
+      nomArme = "tire";
       Vitesse = 1000;
     } else {
       
@@ -282,6 +295,7 @@ export default class selection extends Phaser.Scene {
   
   
   
+  
 
 dash (player, image_sprint) {
   if (player.peutDash == true) {
@@ -297,5 +311,6 @@ dash (player, image_sprint) {
       }, null, this);  
   }
 }
+
 
 }
