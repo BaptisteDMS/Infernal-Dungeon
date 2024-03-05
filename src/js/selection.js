@@ -17,11 +17,27 @@ var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
 
-
-
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint; 
+let image_sprint;
+
+// enemy variable
+var enemy;
+var xCoord;
+var yCoord;
+var elem;
+var obj;
+
+function createEnemy() {
+  xCoord = Math.random() * 800;
+  yCoord = Math.random() * 600;
+  obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
+  obj.setCollideWorldBounds(true);
+  this.physics.add.collider(obj, groupe_plateformes);
+  this.physics.add.collider(obj, player);
+  this.physics.add.collider(obj, enemy);
+  enemy.add(obj);
+}
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -48,6 +64,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
+    this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
   
     this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
     this.load.image("tire","src/assets/Redi/tire.jpg")
@@ -88,7 +105,6 @@ export default class selection extends Phaser.Scene {
 
     // Création du joueur
     player = this.physics.add.sprite(100, 450, "Personnage");
-    player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.gun= "Handgun";
 
@@ -105,6 +121,19 @@ export default class selection extends Phaser.Scene {
 
 
     player.peutDash = true;
+
+    /****************************
+     *  CREATION DU MECHANT  *
+     ****************************/
+
+    enemy = this.physics.add.group();
+
+    let n = 0;
+
+    while (n < 5) {
+      createEnemy.call(this); //!!!
+      n++;
+    }
   
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
@@ -124,6 +153,20 @@ export default class selection extends Phaser.Scene {
 /***********************************************************************/
 
   update() {
+    // Deplacement enenmy
+    /*************************
+     *     ENEMY FOLLOW     *
+     ************************/
+
+    elem = enemy.getChildren();
+    var p = elem.length;
+    let n = 0;
+    while (n < p) {
+      this.physics.moveTo(elem[n], player.x, player.y, 80);
+      n++;
+    }
+
+
     // Déplacement du joueur
 
     if(lent.isDown){

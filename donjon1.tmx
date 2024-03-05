@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+ <editorsettings>
+  <export target="map_donjon1_eau.json" format="json"/>
+ </editorsettings>
  <tileset firstgid="1" name="map1" tilewidth="32" tileheight="32" tilecount="667" columns="23">
   <image source="fond_et_map/image/arriere_plan.png" width="736" height="928"/>
   <tile id="0">
@@ -3338,7 +3341,7 @@
    </properties>
   </tile>
  </tileset>
- <layer id="1" name="Calque de Tuiles 1" width="40" height="30">
+ <layer id="1" name="CalquedeTuiles" width="40" height="30">
   <data encoding="csv">
 369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,
 369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,369,
