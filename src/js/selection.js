@@ -13,6 +13,7 @@ var haut;
 var dash;
 var lent;
 var sprint;
+var interagir;
 var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
@@ -150,6 +151,7 @@ export default class selection extends Phaser.Scene {
     dash = this.input.keyboard.addKey("space");
     lent= this.input.keyboard.addKey("C");
     sprint = this.input.keyboard.addKey("shift");
+    interagir = this.input.keyboard.addKey("E");
 
   }
   
@@ -296,7 +298,7 @@ export default class selection extends Phaser.Scene {
     }
 
     // Passage aux niveaux suivants selon la porte touchée
-    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
+    if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
       if (this.physics.overlap(player, this.porte1))
         this.scene.switch("niveau1"); 
       if (this.physics.overlap(player, this.porte2))
