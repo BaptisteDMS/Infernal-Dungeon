@@ -10,6 +10,7 @@ var haut;
 var dash;
 var lent;
 var sprint;
+var interagir;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
@@ -137,6 +138,7 @@ export default class niveau1 extends Phaser.Scene {
    dash = this.input.keyboard.addKey("shift");
    lent= this.input.keyboard.addKey("space");
    sprint = this.input.keyboard.addKey("shift");
+   interagir = this.input.keyboard.addKey("E");
 
     this.physics.add.collider(player, fond_porte_chateau); 
     this.physics.add.collider(player, donjon); 

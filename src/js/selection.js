@@ -13,6 +13,7 @@ var haut;
 var dash;
 var lent;
 var sprint;
+var interagir;
 var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
@@ -38,7 +39,9 @@ function createEnemy() {
   obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
   obj.setCollideWorldBounds(true);
   this.physics.add.collider(obj, groupe_plateformes);
-  this.physics.add.collider(obj, player);
+  this.physics.add.collider(obj, player, (enemy) => {
+      enemy.destroy();
+  });
   this.physics.add.collider(obj, enemy);
   
   enemy.add(obj);
@@ -142,6 +145,8 @@ export default class selection extends Phaser.Scene {
 }); 
 
 
+
+
     player.peutDash = true;
 
     /****************************
@@ -179,6 +184,7 @@ enemy.children.iterate(enemy => {
     weapon.destroy();    
 });
   
+
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
     haut = this.input.keyboard.addKey("Z");
@@ -188,6 +194,7 @@ enemy.children.iterate(enemy => {
     dash = this.input.keyboard.addKey("space");
     lent= this.input.keyboard.addKey("C");
     sprint = this.input.keyboard.addKey("shift");
+    interagir = this.input.keyboard.addKey("E");
 
   }
   
@@ -213,10 +220,51 @@ enemy.children.iterate(enemy => {
 
     // Détection des collisions entre les balles et les ennemis
     this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
+        // Création des balles à la position du joueur avec le bon nom d'arme
+        let bullet1 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet2 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet3 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet4 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet5 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet6 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet7 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        let bullet8 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
+        
+
         // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
-        enemy.destroy();
         bullet.destroy();
-    });
+        enemy.destroy();
+
+        // Ajouter la balle au groupe de balles
+        groupeballe.add(bullet1);
+        groupeballe.add(bullet2);
+        groupeballe.add(bullet3);
+        groupeballe.add(bullet4);
+        groupeballe.add(bullet5);
+        groupeballe.add(bullet6);
+        groupeballe.add(bullet7);
+        groupeballe.add(bullet8);
+        
+        // Déplacement des balles vers la position de la souris
+        bullet1.setVelocityX(500);
+        bullet2.setVelocityX(-500);
+        bullet3.setVelocityY(500);
+        bullet4.setVelocityY(-500);
+
+        bullet5.setVelocityX(500);
+        bullet5.setVelocityY(500);
+        bullet6.setVelocityX(-500);
+        bullet6.setVelocityY(500);
+        bullet7.setVelocityY(-500);
+        bullet7.setVelocityX(-500);
+        bullet8.setVelocityY(-500);  
+        bullet8.setVelocityX(500);
+      
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe) => {
+            laballe.destroy();
+        });
+    });  
 
 
     // Déplacement du joueur
@@ -294,7 +342,7 @@ enemy.children.iterate(enemy => {
     }
 
     // Passage aux niveaux suivants selon la porte touchée
-    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
+    if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
       if (this.physics.overlap(player, this.porte1))
         this.scene.switch("niveau1"); 
       if (this.physics.overlap(player, this.porte2))
