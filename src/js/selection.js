@@ -172,10 +172,43 @@ export default class selection extends Phaser.Scene {
 
     // Détection des collisions entre les balles et les ennemis
     this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
+        // Création des balles à la position du joueur avec le bon nom d'arme
+        let bullet1 = this.physics.add.sprite(enemy.x, enemy.y, "lance-flamme");
+        let bullet2 = this.physics.add.sprite(enemy.x, enemy.y, "lance-flamme");
+        let bullet3 = this.physics.add.sprite(enemy.x, enemy.y, "lance-flamme");
+        let bullet4 = this.physics.add.sprite(enemy.x, enemy.y, "lance-flamme");
+        
+
         // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
-        enemy.destroy();
         bullet.destroy();
+        enemy.destroy();
+
+        // Ajouter la balle au groupe de balles
+        groupeballe.add(bullet1);
+        groupeballe.add(bullet2);
+        groupeballe.add(bullet3);
+        groupeballe.add(bullet4);
+        
+        // Déplacement de la balle vers la position de la souris
+        this.physics.moveTo(
+            bullet,
+            this.input.mousePointer.worldX,
+            this.input.mousePointer.worldY,
+            Vitesse
+        );
+        
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(bullet, groupe_plateformes, () => {
+            bullet.destroy();
+        });
     });
+
+    // Détection des collisions entre palyer et les ennemis
+    this.physics.overlap(palyer, enemy, (enemy) => {
+      // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
+      enemy.destroy();
+      
+  });
 
 
     // Déplacement du joueur
