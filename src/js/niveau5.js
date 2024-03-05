@@ -20,7 +20,7 @@ var rien3;
 var mur;
 var decofinale;
 
-export default class niveau5 extends Phaser.Scene {
+export default class niveau10 extends Phaser.Scene {
     // constructeur de la classe
     constructor() {
       super({
@@ -29,7 +29,7 @@ export default class niveau5 extends Phaser.Scene {
     }
     preload(){
         this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_eglise/chateau.png");
-        this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/map_eglise.json");
+        this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/eglise_finale.json");
     }
     create() {
         fct.doNothing();
@@ -84,15 +84,14 @@ export default class niveau5 extends Phaser.Scene {
     
         // Création du joueur
         player = this.physics.add.sprite(740, 600, "Personnage");
-        player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.peutDash = true;
     
     
     
-        this.physics.world.setBounds(0, 0, 1600, 1280);
+        this.physics.world.setBounds(0, 0, 1280, 967.5);
         //  ajout du champs de la caméra de taille identique à celle du monde
-        this.cameras.main.setBounds(0, 0, 1600, 1280);
+        this.cameras.main.setBounds(0, 0, 1280, 967.5);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(player);
     
@@ -195,6 +194,10 @@ export default class niveau5 extends Phaser.Scene {
             this.scene.switch("niveau2");
           if (this.physics.overlap(player, this.porte3))
             this.scene.switch("niveau3");
+          if (this.physics.overlap(player, this.porte4))
+            this.scene.switch("niveau4");
+          if (this.physics.overlap(player, this.porte5))
+            this.scene.switch("niveau5");
         }
     
     
