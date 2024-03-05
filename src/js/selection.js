@@ -16,6 +16,7 @@ var sprint;
 var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
+var groupeballe;
 
 var vitesse_lent=0;
 var vitesse_dash=0;
@@ -36,6 +37,7 @@ function createEnemy() {
   this.physics.add.collider(obj, groupe_plateformes);
   this.physics.add.collider(obj, player);
   this.physics.add.collider(obj, enemy);
+  
   enemy.add(obj);
 }
 
@@ -80,24 +82,26 @@ export default class selection extends Phaser.Scene {
     // Appel de la fonction doNothing et doAlsoNothing provenant du module fonctions.js
     fct.doNothing();
     fct.doAlsoNothing();
+    groupeballe = this.physics.add.group();
 
     // Création du ciel
     this.add.image(400, 300, "img_ciel");
 
     // Création des plateformes
     groupe_plateformes = this.physics.add.staticGroup();
+   
     groupe_plateformes.create(200, 584, "img_plateforme");
     groupe_plateformes.create(600, 584, "img_plateforme");
     groupe_plateformes.create(600, 450, "img_plateforme");
     groupe_plateformes.create(50, 300, "img_plateforme");
     groupe_plateformes.create(750, 270, "img_plateforme");
     
+    
 
     // Création des portes
     this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
     this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
-
 
     // Création icone dash
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
@@ -162,9 +166,16 @@ export default class selection extends Phaser.Scene {
     var p = elem.length;
     let n = 0;
     while (n < p) {
-      this.physics.moveTo(elem[n], player.x, player.y, 80);
-      n++;
+        this.physics.moveTo(elem[n], player.x, player.y, 80);
+        n++;
     }
+
+    // Détection des collisions entre les balles et les ennemis
+    this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
+        // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
+        enemy.destroy();
+        bullet.destroy();
+    });
 
 
     // Déplacement du joueur
@@ -290,51 +301,53 @@ export default class selection extends Phaser.Scene {
     let cadence;
     let nomArme;
     let Vitesse;
-  
     
     if (arme === "lanceflamme") {
-      cadence = 20;
-      nomArme = "fireball";
-      Vitesse = 500;
+        cadence = 20;
+        nomArme = "fireball";
+        Vitesse = 500;
     } else if (arme === "Handgun") {
-      cadence = 1500;
-      nomArme = "tire";
-      Vitesse = 1000;
+        cadence = 1500;
+        nomArme = "tire";
+        Vitesse = 1000;
     } else {
-      
-      console.error("Arme non reconnue");
-      return;
+        console.error("Arme non reconnue");
+        return;
     }
-  
+    
     // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
     if (this.time.now - lastFiredTime > cadence) {
-      // Calcul du coefficient de direction en fonction de la position du clic de la souris
-      let diffX = this.input.mousePointer.worldX - player.x;
-      let diffY = this.input.mousePointer.worldY - player.y;
-      let distance = Math.sqrt(diffX * diffX + diffY * diffY);
-      let coefdirX = diffX / distance;
-      let coefdirY = diffY / distance;
-  
-      // Création de la balle à la position du joueur avec le bon nom d'arme
-      let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, nomArme);
-  
-      // Déplacement de la balle vers la position de la souris
-      this.physics.moveTo(
-        bullet,
-        this.input.mousePointer.worldX,
-        this.input.mousePointer.worldY,
-        Vitesse
-      );
-  
-      // Gestion des collisions de la balle avec les plateformes
-      this.physics.add.collider(bullet, groupe_plateformes, () => {
-        bullet.destroy();
-      });
-  
-      // Mettre à jour le temps du dernier tir
-      lastFiredTime = this.time.now;
+        // Calcul du coefficient de direction en fonction de la position du clic de la souris
+        let diffX = this.input.mousePointer.worldX - player.x;
+        let diffY = this.input.mousePointer.worldY - player.y;
+        let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+        let coefdirX = diffX / distance;
+        let coefdirY = diffY / distance;
+        
+        // Création de la balle à la position du joueur avec le bon nom d'arme
+        let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, nomArme);
+        
+        // Ajouter la balle au groupe de balles
+        groupeballe.add(bullet);
+        
+        // Déplacement de la balle vers la position de la souris
+        this.physics.moveTo(
+            bullet,
+            this.input.mousePointer.worldX,
+            this.input.mousePointer.worldY,
+            Vitesse
+        );
+        
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(bullet, groupe_plateformes, () => {
+            bullet.destroy();
+        });
+        
+        // Mettre à jour le temps du dernier tir
+        lastFiredTime = this.time.now;
     }
-  }
+}
+
   
   
   
