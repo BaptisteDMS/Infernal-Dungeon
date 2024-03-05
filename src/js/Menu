@@ -1,0 +1,41 @@
+export default class menu extends Phaser.Scene {
+  constructor() {
+    super({ key: "menu" });
+  }
+  //on charge les images
+  preload() {
+    this.load.image("menu_fond", "src/assets/Menu/boss.png");
+    this.load.image("imageBoutonPlay", "src/assets/Menu/JOUER.png");
+    this.load.image("imageBoutonBack", "src/assets/Menu/retour_rouge.png");
+    this.load.image("imageBoutonPlayHover", "src/assets/Menu/JOUER_blanc.png");
+  }
+
+  create() {
+   // on place les éléments de fond
+    this.add
+      .image(0, 0, "menu_fond")
+      .setOrigin(0)
+      .setDepth(0);
+
+    //on ajoute un bouton de clic, nommé bouton_play
+    var bouton_play = this.add.image(300, 450, "imageBoutonPlay").setDepth(1);
+   
+    //=========================================================
+    //on rend le bouton interratif
+    bouton_play.setInteractive();
+
+    bouton_play.on("pointerover", () => {
+        bouton_play.setTexture("imageBoutonPlayHover"); // Changez la texture pour l'image avec la couleur différente
+      });
+      
+      bouton_play.on("pointerout", () => {
+        bouton_play.setTexture("imageBoutonPlay"); // Revenez à l'image normale du bouton
+      });
+  
+      bouton_play.on("pointerup", () => {
+        this.scene.start("niveau 1");
+      });
+    }
+
+    update(){}
+  }
