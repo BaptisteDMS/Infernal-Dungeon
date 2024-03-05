@@ -8,30 +8,90 @@ export default class niveau1 extends Phaser.Scene {
     });
   }
   preload() {
+    this.load.image("Phaser_JeuDeTuiles1", "src/assets/map_principale/terrain.png");
+    this.load.image("Phaser_JeuDeTuiles2", "src/assets/map_principale/arriere_plan.png");
+    this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
+    this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
+    this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
+    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map_principale.json"); 
   }
 
   create() {
     fct.doNothing();
     fct.doAlsoNothing();
+    const carteDuNiveau = this.add.tilemap("carte");
+    const tileset1 = carteDuNiveau.addTilesetImage(
+      "terrain",
+      "Phaser_JeuDeTuiles1"
+    ); 
+    const tileset2 = carteDuNiveau.addTilesetImage(
+      "arriere_plan",
+      "Phaser_JeuDeTuiles2"
+    ); 
+    const tileset3 = carteDuNiveau.addTilesetImage(
+      "chateau",
+      "Phaser_JeuDeTuiles3"
+    ); 
+    const tileset4 = carteDuNiveau.addTilesetImage(
+      "donjon_maison",
+      "Phaser_JeuDeTuiles4"
+    ); 
+    const tileset5 = carteDuNiveau.addTilesetImage(
+      "house",
+      "Phaser_JeuDeTuiles5"
+    ); 
+    const Fond_map = carteDuNiveau.createLayer(
+      "Fond_map",
+      tileset1,
+      tileset2
+    );
+    const chateau = carteDuNiveau.createLayer(
+      "chateau",
+      tileset3,
+      tileset5
+    );
+    const donjon = carteDuNiveau.createLayer(
+      "donjon",
+      tileset2,
+      tileset5,
+      tileset4,
+      tileset3
+    );
+    const fond_porte_chateau = carteDuNiveau.createLayer(
+      "fond_porte_chateau",
+      tileset3,
+      tileset2
+    );
+    Fond_map.setCollisionByProperty({ estSolide: true });
+    chateau.setCollisionByProperty({ estSolide: true });
+    donjon.setCollisionByProperty({ estSolide: true });
+    fond_porte_chateau.setCollisionByProperty({ estSolide: true });
 
-    this.add.image(400, 300, "img_ciel");
-    this.groupe_plateformes = this.physics.add.staticGroup();
-    this.groupe_plateformes.create(200, 584, "img_plateforme");
-    this.groupe_plateformes.create(600, 584, "img_plateforme");
+
+
+
     // ajout d'un texte distintcif  du niveau
     this.add.text(400, 100, "Vous êtes dans le niveau 1", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     });
 
-    this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 
     this.player = this.physics.add.sprite(100, 450, "img_perso");
     this.player.refreshBody();
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
-    this.physics.add.collider(this.player, this.groupe_plateformes);
+    this.physics.add.collider(player, fond_porte_chateau); 
+    this.physics.add.collider(player, donjon); 
+    this.physics.add.collider(player, chateau); 
+    this.physics.add.collider(player, Fond_map); 
+// redimentionnement du monde avec les dimensions calculées via tiled
+this.physics.world.setBounds(0, 0, 3200, 640);
+//  ajout du champs de la caméra de taille identique à celle du monde
+this.cameras.main.setBounds(0, 0, 3200, 640);
+// ancrage de la caméra sur le joueur
+this.cameras.main.startFollow(player); 
   }
 
   update() {

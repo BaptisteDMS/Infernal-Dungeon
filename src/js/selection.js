@@ -12,6 +12,7 @@ var bas;
 var haut;
 var dash;
 var lent;
+var sprint;
 var groupe_plateformes;
   var player; // désigne le sprite du joueur
   var clavier; // pour la gestion du clavier
@@ -40,6 +41,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("img_porte3", "src/assets/door3.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
+    this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
   }
 
   /***********************************************************************/
@@ -68,45 +70,13 @@ export default class selection extends Phaser.Scene {
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
     // Création du joueur
-    player = this.physics.add.sprite(100, 450, "img_perso");
+    player = this.physics.add.sprite(100, 450, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
     //  propriétées physiqyes de l'objet player :
     player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
 
-    /***************************
-     *  CREATION DES ANIMATIONS *
-     ****************************/
-    // dans cette partie, on crée les animations, à partir des spritesheet
-    // chaque animation est une succession de frame à vitesse de défilement défini
-    // une animation doit avoir un nom. Quand on voudra la jouer sur un sprite, on utilisera la méthode play()
-    // creation de l'animation "anim_tourne_gauche" qui sera jouée sur le player lorsque ce dernier tourne à gauche
-    this.anims.create({
-      key: "anim_tourne_gauche",
-      frames: this.anims.generateFrameNumbers("img_perso", {
-        start: 0,
-        end: 3
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
-
-    this.anims.create({
-      key: "anim_face",
-      frames: [{ key: "img_perso", frame: 4 }],
-      frameRate: 20
-    });
-
-    this.anims.create({
-      key: "anim_tourne_droite",
-      frames: this.anims.generateFrameNumbers("img_perso", {
-        start: 5,
-        end: 8
-      }),
-      frameRate: 10,
-      repeat: -1
-    });
 
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
@@ -115,7 +85,8 @@ export default class selection extends Phaser.Scene {
     gauche = this.input.keyboard.addKey("Q");
     droite = this.input.keyboard.addKey("D");
     dash = this.input.keyboard.addKey("shift");
-    lent= this.input.keyboard.addKey("space");
+    lent= this.input.keyboard.addKey("C");
+    sprint = this.input.keyboard.addKey("space");
 
     // Gestion des collisions entre le joueur et les plateformes
     this.physics.add.collider(player, groupe_plateformes);
@@ -131,10 +102,10 @@ export default class selection extends Phaser.Scene {
     var vitesse_dash=0;
 
     if(lent.isDown){
-      vitesse_lent=140;
-    }else if (dash.JustDown){
-      vitesse_dash=300;
-      
+      vitesse_lent=70;
+    }else if (sprint.isDown){
+      vitesse_dash=70;
+      dashDernierTemps = this.time.now;
     }else{
       vitesse_dash=0;
       vitesse_lent=0;
@@ -144,58 +115,46 @@ export default class selection extends Phaser.Scene {
       if (haut.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(bas.isDown) {
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else{
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }
     }  else if (droite.isDown) {
       if (haut.isDown){
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else if(bas.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }
     } else if (bas.isDown) {
       if (gauche.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(droite.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }
     } else if (haut.isDown) {
       if (gauche.isDown){
         player.setVelocityX(-160+vitesse_lent-vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_gauche", true);
       }else if(droite.isDown) {
         player.setVelocityX(160-vitesse_lent+vitesse_dash);
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }else{
         player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        player.anims.play("anim_tourne_droite", true);
       }
     } else {
       player.setVelocityX(0);
       player.setVelocityY(0);
-      player.anims.play("anim_face");
+      player.anims.play("Personnage");
     }
 
     // Tir de la balle suivant la position de la souris
@@ -212,7 +171,35 @@ export default class selection extends Phaser.Scene {
       if (this.physics.overlap(player, this.porte3))
         this.scene.switch("niveau3");
     }
-  }
+
+
+
+    // Calcul de la direction entre le joueur et la position de la souris
+    let diffX = this.input.mousePointer.worldX - player.x;
+    let diffY = this.input.mousePointer.worldY - player.y;
+
+    // Calcul de l'angle en radians entre le joueur et la souris
+    let angle = Math.atan(diffY / diffX);
+
+    // Convertir l'angle en degrés
+    angle = Phaser.Math.RadToDeg(angle);
+
+    // Ajuster l'angle en fonction de la position du curseur
+    if (diffX < 0) {
+    // player.flipX=true;
+    angle-=180;
+    }
+    else {
+    // player.flipX=false;
+    }
+    // Appliquer la sensibilité à l'angle
+    //angle *= sensitivity;
+
+    // Appliquer la rotation à l'image du joueur
+    player.setAngle(angle);
+    //console.log(angle);
+ }
+
 
   // Fonction pour tirer une balle
   // Fonction pour tirer une balle
