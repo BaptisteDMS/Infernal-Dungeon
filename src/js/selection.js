@@ -118,6 +118,7 @@ export default class selection extends Phaser.Scene {
   }); 
 
 
+
     player.peutDash = true;
 
     /****************************
@@ -132,7 +133,8 @@ export default class selection extends Phaser.Scene {
       createEnemy.call(this); //!!!
       n++;
     }
-  
+
+
     // Création du clavier
     clavier = this.input.keyboard.createCursorKeys();
     haut = this.input.keyboard.addKey("Z");
