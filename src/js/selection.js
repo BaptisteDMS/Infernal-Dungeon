@@ -42,7 +42,7 @@ function createEnemy() {
   this.physics.add.collider(obj, player, (enemy) => {
       enemy.destroy();
   });
-  this.physics.add.collider(obj,enemy);
+  this.physics.add.collider(obj, enemy);
   
   enemy.add(obj);
 }
@@ -151,7 +151,6 @@ export default class selection extends Phaser.Scene {
 
     player.peutDash = true;
 
-
     /****************************
      *  CREATION DU MECHANT  *
      ****************************/
@@ -161,7 +160,7 @@ export default class selection extends Phaser.Scene {
     let n = 0;
 
     while (n < 5) {
-        createEnemy().call(this); 
+        createEnemy.call(this); 
         n++;
     }
 
