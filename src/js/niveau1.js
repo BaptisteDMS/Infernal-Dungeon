@@ -13,6 +13,10 @@ var sprint;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
+var Fond_map;
+var chateau;
+var fond_porte_chateau;
+var donjon;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -28,7 +32,7 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
     this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
     this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
-    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map_fini.json");
+    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map_finito_pipo.json");
     this.load.image("img_perso","src/assets/map_principale/dude.png"); 
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
@@ -60,7 +64,7 @@ export default class niveau1 extends Phaser.Scene {
       "house",
       "Phaser_JeuDeTuiles5"
     ); 
-    const Fond_map = carteDuNiveau.createLayer(
+    Fond_map = carteDuNiveau.createLayer(
       "Fond_map",
       [tileset1,
         tileset2,
@@ -68,7 +72,7 @@ export default class niveau1 extends Phaser.Scene {
         tileset4,
         tileset5]
     );
-    const chateau = carteDuNiveau.createLayer(
+    chateau = carteDuNiveau.createLayer(
       "chateau",
       [tileset1,
       tileset2,
@@ -76,7 +80,7 @@ export default class niveau1 extends Phaser.Scene {
       tileset4,
       tileset5]
     );
-    const donjon = carteDuNiveau.createLayer(
+    donjon = carteDuNiveau.createLayer(
       "donjon",
       [tileset1,
         tileset2,
@@ -84,7 +88,7 @@ export default class niveau1 extends Phaser.Scene {
         tileset4,
         tileset5]
     );
-    const fond_porte_chateau = carteDuNiveau.createLayer(
+    fond_porte_chateau = carteDuNiveau.createLayer(
       "fond_porte_chateau",
       [tileset1,
         tileset2,
@@ -93,7 +97,6 @@ export default class niveau1 extends Phaser.Scene {
         tileset5]
     );
     Fond_map.setCollisionByProperty({ estSolide: true });
-    chateau.setCollisionByProperty({ estSolide: true });
     donjon.setCollisionByProperty({ estSolide: true });
     fond_porte_chateau.setCollisionByProperty({ estSolide: true });
 
@@ -111,19 +114,18 @@ export default class niveau1 extends Phaser.Scene {
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
     // Création du joueur
-    player = this.physics.add.sprite(750, 600, "Personnage");
+    player = this.physics.add.sprite(735, 595, "Personnage");
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.peutDash = true;
 
 
 
-this.physics.world.setBounds(0, 0, 3200, 640);
-//  ajout du champs de la caméra de taille identique à celle du monde
-this.cameras.main.setBounds(0, 0, 800, 600);
-// ancrage de la caméra sur le joueur
-this.cameras.main.startFollow(player); 
-player.setCollideWorldBounds(true); // le player se cognera contre les bords du monde
+    this.physics.world.setBounds(0, 0, 1600, 1280);
+    //  ajout du champs de la caméra de taille identique à celle du monde
+    this.cameras.main.setBounds(0, 0, 1600, 1280);
+    // ancrage de la caméra sur le joueur
+    this.cameras.main.startFollow(player);
 
 
    // Création du clavier
@@ -276,9 +278,17 @@ tirerBalle() {
     this.input.mousePointer.worldY,
     500
   );
-
   // Gestion des collisions de la balle avec les plateformes
-  this.physics.add.collider(bullet, groupe_plateformes, () => {
+  this.physics.add.collider(bullet, Fond_map, () => {
+    bullet.destroy();
+  });
+  this.physics.add.collider(bullet, chateau, () => {
+    bullet.destroy();
+  });
+  this.physics.add.collider(bullet, fond_porte_chateau, () => {
+    bullet.destroy();
+  });
+  this.physics.add.collider(bullet, donjon, () => {
     bullet.destroy();
   });
 }
