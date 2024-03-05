@@ -18,6 +18,7 @@ var Bords;
 var sol;
 var Falaise;
 var Ponts;
+var Rien;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -30,7 +31,7 @@ export default class niveau1 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_JeuDeTuiles1", "src/assets/donjon_lave/tuilesJeu.png");
     this.load.image("Phaser_JeuDeTuiles2", "src/assets/donjon_lave/ProjectUtumno_full.png");
-    this.load.tilemapTiledJSON("carte2", "src/assets/donjon_lave/donjon_lave_1.json");
+    this.load.tilemapTiledJSON("carte2", "src/assets/donjon_lave/donjon_lave_4.json");
     this.load.image("img_perso","src/assets/map_principale/dude.png"); 
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
@@ -75,8 +76,17 @@ export default class niveau1 extends Phaser.Scene {
       [tileset1,
         tileset2]
     );
- 
-
+    Rien= carteDuNiveau.createLayer(
+      "Rien",
+      [tileset1,
+        tileset2]
+    );
+    Fond.setCollisionByProperty({ estSolide: true });
+    Rien.setCollisionByProperty({ estSolide: true });
+    Falaise.setCollisionByProperty({ estSolide: true });
+    sol.setCollisionByProperty({ estSolide: true });
+    Bords.setCollisionByProperty({ estSolide: true });
+    Ponts.setCollisionByProperty({ estSolide: true });
 
 
 
@@ -271,6 +281,9 @@ tirerBalle() {
     bullet.destroy();
   });
   this.physics.add.collider(bullet, Ponts, () => {
+    bullet.destroy();
+  });
+  this.physics.add.collider(bullet, Rien, () => {
     bullet.destroy();
   });
 }

@@ -204,7 +204,7 @@ export default class selection extends Phaser.Scene {
     });
 
     // Détection des collisions entre palyer et les ennemis
-    this.physics.overlap(palyer, enemy, (enemy) => {
+    this.physics.overlap(player, enemy, (enemy) => {
       // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
       enemy.destroy();
       
