@@ -41,7 +41,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("img_porte3", "src/assets/door3.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
-    this.load.image("Personnage", "src/assets/Redi/survivor-move_handgun_0.png");
+    this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
   }
