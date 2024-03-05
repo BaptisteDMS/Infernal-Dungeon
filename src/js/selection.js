@@ -86,22 +86,25 @@ export default class selection extends Phaser.Scene {
 
     // Création des plateformes
     groupe_plateformes = this.physics.add.staticGroup();
-    armesol = this.physics.add.staticGroup();
     groupe_plateformes.create(200, 584, "img_plateforme");
     groupe_plateformes.create(600, 584, "img_plateforme");
     groupe_plateformes.create(600, 450, "img_plateforme");
     groupe_plateformes.create(50, 300, "img_plateforme");
     groupe_plateformes.create(750, 270, "img_plateforme");
-    armesol.create(200,200, "lanceflamme");
+    
 
     // Création des portes
     this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
     this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
-    this.armesol = this.physics.add.staticSprite(200,200,"lanceflamme")
+
 
     // Création icone dash
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+
+    // Creation arme
+    armesol = this.physics.add.sprite(200,200,"lanceflamme");
+    armesol.setCollideWorldBounds(true);
 
     // Création du joueur
     player = this.physics.add.sprite(100, 450, "Personnage");
@@ -111,13 +114,8 @@ export default class selection extends Phaser.Scene {
     this.physics.add.collider(player,groupe_plateformes);
     this.physics.add.collider(player, armesol, () => {
       player.gun = "lanceflamme";
-      this.armesol.destroy();
-      
-      
+      armesol.destroy();    
   }); 
-
-    
-    
 
 
     player.peutDash = true;
