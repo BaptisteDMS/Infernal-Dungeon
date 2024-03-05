@@ -12,3 +12,4 @@ export function doAlsoNothing() {
     // cette fonction ne fait rien non plus.
  }
 
+ 
