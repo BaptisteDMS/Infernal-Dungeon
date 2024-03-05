@@ -33,6 +33,13 @@ var yCoord;
 var elem;
 var obj;
 
+// enemy variable 2
+var enemy2;
+var xCoord2;
+var yCoord2;
+var elem2;
+var obj2;
+
 function createEnemy() {
   xCoord = Math.random() * 800;
   yCoord = Math.random() * 600;
@@ -45,6 +52,20 @@ function createEnemy() {
   this.physics.add.collider(obj, enemy);
   
   enemy.add(obj);
+}
+
+function createEnemy2() {
+  xCoord2 = Math.random() * 800;
+  yCoord2 = Math.random() * 600;
+  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "Sprinter_rouge");
+  obj2.setCollideWorldBounds(true);
+  this.physics.add.collider(obj2, groupe_plateformes);
+  this.physics.add.collider(obj2, player, (enemy2) => {
+      enemy2.destroy();
+  });
+  this.physics.add.collider(obj2, enemy2);
+  
+  enemy2.add(obj2);
 }
 
 // définition de la classe "selection"
@@ -126,7 +147,7 @@ export default class selection extends Phaser.Scene {
     image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
     // Creation arme
-    armesol = this.physics.add.sprite(100,200,"shotgun");
+    armesol = this.physics.add.sprite(200,200,"lanceflamme");
     armesol.setCollideWorldBounds(true);
 
     // Création du joueur
@@ -138,7 +159,7 @@ export default class selection extends Phaser.Scene {
 
   
     this.physics.add.collider(player, armesol, () => {
-      player.gun = "shotgun";
+      player.gun = "lanceflamme";
       armesol.destroy();    
   }); 
   this.physics.add.collider(player, weapon, () => {
@@ -162,6 +183,19 @@ export default class selection extends Phaser.Scene {
     while (n < 5) {
         createEnemy.call(this); 
         n++;
+    }
+
+    /****************************
+     *  CREATION DU MECHANT  *
+     ****************************/
+
+    enemy2 = this.physics.add.group();
+
+    let b = 0;
+
+    while (b < 5) {
+        createEnemy2.call(this); 
+        b++;
     }
 
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
@@ -220,6 +254,14 @@ enemy.children.iterate(enemy => {
     while (n < p) {
         this.physics.moveTo(elem[n], player.x, player.y, 80);
         n++;
+    }
+
+    elem2 = enemy2.getChildren();
+    var b = elem2.length;
+    let v = 0;
+    while (v < b) {
+        this.physics.moveTo(elem2[v], player.x-100, player.y-100, 200);
+        v++;
     }
 
     // Détection des collisions entre les balles et les ennemis
@@ -419,7 +461,7 @@ enemy.children.iterate(enemy => {
       cadence = 500;
       nomArme = "tire";
       Vitesse = 1000;
-    } else if (arme === "shotgun") {
+    }else if (arme === "shotgun") {
       cadence = 1200;
       nomArme = "pistolbullet";
       Vitesse = 800;
@@ -467,13 +509,8 @@ enemy.children.iterate(enemy => {
           // Mettre à jour le temps du dernier tir
           lastFiredTime = this.time.now;
       }
-  
-  
-
-  
   }
   
-    
        
     
     
