@@ -14,11 +14,42 @@ var interagir;
 var changement;
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 var deco_fond;
 var CalquedeTuiles2;
 var rien1;
 var musique_de_fond5;
+var groupeballe;
+var groupeenemy;
+let weaponsGroup;
+let weapon = null;
+var lastFiredTime = 0;
+var groupe_plateformes;
+
+// enemy variable 4
+var enemy4;
+var xCoord4;
+var yCoord4;
+var elem4;
+var obj4;
+
+function createEnemy4() {
+  enemy4.add(obj4);
+  xCoord4 = Math.random() * 800;
+  yCoord4 = Math.random() * 600;
+  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "Sprinter_rouge");
+  obj4.setCollideWorldBounds(true);
+  this.physics.add.collider(obj4, groupe_plateformes);
+  this.physics.add.collider(obj4, player, (obj4, player) => {
+    this.physics.pause();
+    var timerRestart = this.time.delayedCall(3000,
+      () => {
+        this.scene.stop();
+        this.scene.start();
+      },
+      null, this);    
+  });
+  this.physics.add.collider(obj4, enemy4);
+}
 
 export default class niveau3 extends Phaser.Scene {
     // constructeur de la classe
@@ -34,8 +65,6 @@ export default class niveau3 extends Phaser.Scene {
         this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
     }
     create() {
-        fct.doNothing();
-        fct.doAlsoNothing();
         musique_de_fond5 = this.sound.add("background5");
         musique_de_fond5.play();
         const carteDuNiveau = this.add.tilemap("carte3");
