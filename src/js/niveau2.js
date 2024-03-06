@@ -93,7 +93,7 @@ export default class niveau2 extends Phaser.Scene {
 
 
     // ajout d'un texte distintcif  du niveau
-    this.add.text(400, 100, "Vous êtes dans le niveau 2", {
+    this.add.text(550, 316.25, "Vous êtes dans le niveau 2", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     });
