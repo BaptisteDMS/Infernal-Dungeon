@@ -13,7 +13,8 @@ export default class Menu extends Phaser.Scene {
         this.load.image("commandestuto", "src/assets/Menu/commandestuto.png");
         this.load.image("imageBoutonGuide", "src/assets/Menu/guide_rouge.png");
         this.load.image("imageBoutonGuideBlanc", "src/assets/Menu/guide.png");
-        this.load.image("imageRetour", "src/assets/Menu/retour_rouge.png");
+        this.load.image("imageRetour", "src/assets/Menu/retour.png");
+        this.load.image("imageRetourRouge", "src/assets/Menu/retour_rouge.png");
         this.load.audio("musique_menu", "src/assets/Menu/son.mp3");
         this.load.audio("fx", "src/assets/Menu/fx.mp3");
         this.load.image("imgjeu", "src/assets/Menu/imgjeu.png");
@@ -71,7 +72,7 @@ export default class Menu extends Phaser.Scene {
         bouton_play.on("pointerup", () => {
             this.scene.start("selection_map_1");
             this.playClickSound();
-            this.musiqueMenu.stop();
+            this.stopMenuMusic();
         });
 
         // Lancement de la musique du menu
