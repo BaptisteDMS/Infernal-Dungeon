@@ -59,9 +59,9 @@ function createEnemy() {
 /***********************************************************************/
 
 // définition de la classe "selection"
-export default class selection_principale extends Phaser.Scene {
+export default class selection_map_1 extends Phaser.Scene {
     constructor() {
-      super({ key: "selection_principale" }); // mettre le meme nom que le nom de la classe
+      super({ key: "selection_map_1" }); // mettre le meme nom que le nom de la classe
     }
     /***********************************************************************/
     /** FONCTION PRELOAD 
@@ -228,9 +228,6 @@ export default class selection_principale extends Phaser.Scene {
     // Création icone dash
       image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
-    // Creation arme
-      armesol = this.physics.add.sprite(200,200,"lanceflamme");
-      armesol.setCollideWorldBounds(true);
 
     // Création du joueur
       player = this.physics.add.sprite(740, 600, "Personnage");
@@ -267,43 +264,7 @@ export default class selection_principale extends Phaser.Scene {
       lent= this.input.keyboard.addKey("space");
       sprint = this.input.keyboard.addKey("shift");
       interagir = this.input.keyboard.addKey("E");
-    
-      /****************************
-       *  CREATION DU MECHANT  *
-       ****************************/
-  
-      enemy = this.physics.add.group();
-      let n = 0;
-      while (n < 5) {
-          createEnemy.call(this); 
-          n++;
-      }
-  
-     // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
-  // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
-  enemy.children.iterate(enemy => {
-    enemy.on('destroy', () => {
-        // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
-        var proba = Math.floor(Math.random() * 2);
-        if (proba === 0) { // Vérifier si le nombre est égal à 0
-            // Spawn d'une arme à la position de l'ennemi
-            let randomWeaponKey = Phaser.Math.RND.pick(['ak', 'shotgun', 'pistolet', 'blaster', 'lanceflamme']);
-            let weapon = this.physics.add.sprite(enemy.x, enemy.y, randomWeaponKey);
-            weapon.setCollideWorldBounds(true);
-            // Ajouter l'arme au groupe d'armes
-            weaponsGroup.add(weapon);
-        }
-    });
-  });
-  
-  
-    
-    this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
-      player.gun = weapon.texture.key;
-      weapon.destroy();    
-  });
-}
-    
+    }   
     
   
     /***********************************************************************/
@@ -311,66 +272,7 @@ export default class selection_principale extends Phaser.Scene {
   /***********************************************************************/
   
     update() {
-      // Deplacement enenmy
-      /*************************
-       *     ENEMY FOLLOW     *
-       ************************/
-  
-      elem = enemy.getChildren();
-      var p = elem.length;
-      let n = 0;
-      while (n < p) {
-          this.physics.moveTo(elem[n], player.x, player.y, 80);
-          n++;
-      }
-  
-      // Détection des collisions entre les balles et les ennemis
-      this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
-          // Création des balles à la position du joueur avec le bon nom d'arme
-          let bullet1 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet2 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet3 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet4 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet5 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet6 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet7 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          let bullet8 = this.physics.add.sprite(enemy.x, enemy.y, "fireball");
-          
-  
-          // Suppression de l'ennemi et de la balle lorsqu'il y a une collision
-          bullet.destroy();
-          enemy.destroy();
-  
-          // Ajouter la balle au groupe de balles
-          groupeballe.add(bullet1);
-          groupeballe.add(bullet2);
-          groupeballe.add(bullet3);
-          groupeballe.add(bullet4);
-          groupeballe.add(bullet5);
-          groupeballe.add(bullet6);
-          groupeballe.add(bullet7);
-          groupeballe.add(bullet8);
-          
-          // Déplacement des balles vers la position de la souris
-          bullet1.setVelocityX(500);
-          bullet2.setVelocityX(-500);
-          bullet3.setVelocityY(500);
-          bullet4.setVelocityY(-500);
-  
-          bullet5.setVelocityX(500);
-          bullet5.setVelocityY(500);
-          bullet6.setVelocityX(-500);
-          bullet6.setVelocityY(500);
-          bullet7.setVelocityY(-500);
-          bullet7.setVelocityX(-500);
-          bullet8.setVelocityY(-500);  
-          bullet8.setVelocityX(500);
-        
-          // Gestion des collisions de la balle avec les plateformes
-          this.physics.add.collider(groupeballe, groupe_plateformes, (laballe) => {
-              laballe.destroy();
-          });
-      });  
+
   
   
       // Déplacement du joueur
@@ -447,15 +349,7 @@ export default class selection_principale extends Phaser.Scene {
       // Passage aux niveaux suivants selon la porte touchée
       if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
         if (this.physics.overlap(player, this.porte1))
-          this.scene.switch("niveau1"); 
-        if (this.physics.overlap(player, this.porte2))
-          this.scene.switch("niveau2");
-        if (this.physics.overlap(player, this.porte3))
-          this.scene.switch("niveau3");
-        if (this.physics.overlap(player, this.porte4))
-          this.scene.switch("niveau4");
-        if (this.physics.overlap(player, this.porte5))
-          this.scene.switch("niveau5");
+          this.scene.switch("niveau1");
       }
 
       // Calcul de la direction entre le joueur et la position de la souris

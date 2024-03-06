@@ -11,6 +11,7 @@ var dash;
 var lent;
 var sprint;
 var interagir;
+var changement;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
@@ -20,7 +21,7 @@ var rien3;
 var mur;
 var decofinale;
 
-export default class niveau10 extends Phaser.Scene {
+export default class niveau5 extends Phaser.Scene {
     // constructeur de la classe
     constructor() {
       super({
@@ -106,6 +107,8 @@ export default class niveau10 extends Phaser.Scene {
        lent= this.input.keyboard.addKey("space");
        sprint = this.input.keyboard.addKey("shift");
        interagir = this.input.keyboard.addKey("E");
+       changement = this.input.keyboard.addKey("L");
+
     
         this.physics.add.collider(player, decofinale); 
         this.physics.add.collider(player, CalquedeTuiles3); 
@@ -187,17 +190,8 @@ export default class niveau10 extends Phaser.Scene {
         }
     
         // Passage aux niveaux suivants selon la porte touchée
-        if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-          if (this.physics.overlap(player, this.porte1))
-            this.scene.switch("niveau1"); 
-          if (this.physics.overlap(player, this.porte2))
-            this.scene.switch("niveau2");
-          if (this.physics.overlap(player, this.porte3))
-            this.scene.switch("niveau3");
-          if (this.physics.overlap(player, this.porte4))
-            this.scene.switch("niveau4");
-          if (this.physics.overlap(player, this.porte5))
-            this.scene.switch("niveau5");
+        if (Phaser.Input.Keyboard.JustDown(changement) == true) {
+            this.scene.switch("Menu_fin"); 
         }
     
     
