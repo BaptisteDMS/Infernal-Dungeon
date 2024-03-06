@@ -1,6 +1,7 @@
 // chargement des librairies
 import Menu from "/src/js/Menu.js";
-import Menu_fin from "/src/js/Menu_fin.js";
+import Menu_fin_Defaite from "/src/js/Menu_fin_Defaite.js";
+import Menu_fin_Victoire from "/src/js/Menu_fin_Victoire.js";
 import selection from "/src/js/selection.js";
 import niveau1 from "/src/js/niveau1.js";
 import niveau2 from "/src/js/niveau2.js";
@@ -31,7 +32,7 @@ var config = {
       debug: true // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
     }
   },
-  scene: [Menu,Menu_fin,selection_map_1,selection_map_2,selection_map_3,selection_map_4,selection_map_5, niveau1, niveau2, niveau3, niveau4,niveau5,selection]
+  scene: [Menu,Menu_fin_Defaite,Menu_fin_Victoire,selection_map_1,selection_map_2,selection_map_3,selection_map_4,selection_map_5, niveau1, niveau2, niveau3, niveau4,niveau5,selection]
 };
 
 // création et lancement du jeu
