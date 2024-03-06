@@ -146,7 +146,7 @@ export default class niveau1 extends Phaser.Scene {
     }
 
     var TimerSpawn = this.time.addEvent({
-      delay: 3000, // ms
+      delay: 5000, // ms
       callback: function () {
         enemy2 = this.physics.add.group();
 

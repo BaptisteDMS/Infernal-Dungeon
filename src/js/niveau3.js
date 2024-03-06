@@ -127,7 +127,7 @@ export default class niveau3 extends Phaser.Scene {
 
     let a = 0;
 
-    while (a < 4) {
+    while (a < 20) {
         createEnemy4.call(this); 
         a++;
     }
@@ -165,6 +165,7 @@ export default class niveau3 extends Phaser.Scene {
     // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy3
 enemy4.children.iterate(enemy4 => {
   enemy4.on('destroy', () => {
+      condition_switch++;
       // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
       var proba = Math.floor(Math.random() * 2);
       if (proba === 0) { // Vérifier si le nombre est égal à 0
@@ -332,6 +333,9 @@ this.physics.overlap(groupeballe, enemy4, (bullet, enemy4) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
+      this.scene.switch("selection_map_4");
+      musique_de_fond5.stop();
+    }else if (condition_switch==20){
       this.scene.switch("selection_map_4");
       musique_de_fond5.stop();
     }
