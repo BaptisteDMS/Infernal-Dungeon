@@ -346,6 +346,7 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
       this.scene.stop();
       this.scene.switch("selection_map_2");
     }else if (condition_switch==10){
+      musique_de_fond1.stop();
       this.scene.stop();
       this.scene.switch("selection_map_2");
     }
