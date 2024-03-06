@@ -331,6 +331,7 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
           bullet.destroy();
           boss_vie--;
           if(boss_vie==0){
+            musique_de_fond9.stop();
             this.scene.stop();
             this.scene.switch("Menu_fin_Victoire");
           }
