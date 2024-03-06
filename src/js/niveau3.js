@@ -33,14 +33,14 @@ var elem4;
 var obj4;
 
 function createEnemy4() {
-  enemy4.add(obj4);
   xCoord4 = Math.random() * 800;
   yCoord4 = Math.random() * 600;
-  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "fantome");
+  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "Sprinter_rouge");
+  enemy4.add(obj4);
   obj4.setCollideWorldBounds(true);
-  this.physics.add.collider(obj2, deco_fond);
-  this.physics.add.collider(obj2, CalquedeTuiles2);
-  this.physics.add.collider(obj2, rien1);
+  this.physics.add.collider(obj4, deco_fond);
+  this.physics.add.collider(obj4, CalquedeTuiles2);
+  this.physics.add.collider(obj4, rien1);
   this.physics.add.collider(obj4, groupe_plateformes);
   this.physics.add.collider(obj4, player, (obj4, player) => {
     this.physics.pause();
@@ -120,7 +120,7 @@ export default class niveau3 extends Phaser.Scene {
 
     let a = 0;
 
-    while (a < 5) {
+    while (a < 4) {
         createEnemy4.call(this); 
         a++;
     }
