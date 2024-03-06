@@ -7,7 +7,7 @@ export default class Menu_fin extends Phaser.Scene {
     }
   
     preload() {
-        this.load.image("menu_fond", "src/assets/Menu/backfin.png");
+        this.load.image("menu_fond1", "src/assets/Menu/backfin.png");
         this.load.image("imageBoutonPlay1", "src/assets/Menu/rejouer_rouge.png");
         this.load.image("imageBoutonBack2", "src/assets/Menu/retour_rouge.png");
         this.load.image("imageBoutonPlayHover1", "src/assets/Menu/rejouer_blanc.png");
@@ -20,7 +20,7 @@ export default class Menu_fin extends Phaser.Scene {
     }
   
     create() {
-        this.add.image(80, 35, "menu_fond").setOrigin(0).setDepth(0);
+        this.add.image(80, 35, "menu_fond1").setOrigin(0).setDepth(0);
   
         var bouton_play = this.add.image(390, 300, "imageBoutonPlay1").setDepth(1);
         var bouton_commandes = this.add.image(390, 350, "commandes1").setDepth(1);
