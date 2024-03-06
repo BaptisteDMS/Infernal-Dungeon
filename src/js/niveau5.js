@@ -128,7 +128,7 @@ export default class niveau5 extends Phaser.Scene {
      ****************************/
 
     var TimerBossAtt1= this.time.addEvent({
-      delay: 3000, // ms
+      delay: 1500, // ms
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
@@ -146,7 +146,7 @@ export default class niveau5 extends Phaser.Scene {
 
 
     var TimerBossAtt2= this.time.addEvent({
-      delay: 3200, // ms
+      delay: 1700, // ms
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
@@ -163,7 +163,7 @@ export default class niveau5 extends Phaser.Scene {
     }); 
 
     var TimerBossAtt3= this.time.addEvent({
-      delay: 3400, // ms
+      delay: 1900, // ms
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
@@ -180,7 +180,7 @@ export default class niveau5 extends Phaser.Scene {
     }); 
 
     var TimerBossAttLeger= this.time.addEvent({
-      delay: 8000 , // ms
+      delay: 10000 , // ms
       callback: function () {
         let randomValue = Math.random();
         let randomBinary = Math.round(randomValue);
@@ -237,7 +237,7 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
 
 
     var TimerBossBoule = this.time.addEvent({
-      delay: 10000, // ms
+      delay: 5000, // ms
       callback: function () {
         let bullet1 = this.physics.add.sprite(boss.x+85, boss.y, "fireball");
         let bullet2 = this.physics.add.sprite(boss.x-85, boss.y, "fireball");

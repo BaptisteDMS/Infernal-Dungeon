@@ -32,6 +32,7 @@ var xCoord;
 var yCoord;
 var elem;
 var obj;
+var condition_switch;
 
 function createEnemy() {
   xCoord = Math.random() * 800;
@@ -80,6 +81,7 @@ export default class niveau4 extends Phaser.Scene {
   }
 
   create() {
+    condition_switch=0;
     groupeballe=this.physics.add.group();
     weaponsGroup=this.physics.add.group();
     musique_de_fond7 = this.sound.add("background7");
@@ -154,16 +156,15 @@ export default class niveau4 extends Phaser.Scene {
 
         let n = 0;
     
-        while (n < 5) {
+        while (n < 30) {
             createEnemy.call(this); 
             
             n++;
         }
 
-
-
         enemy.children.iterate(enemy => {
           enemy.on('destroy', () => {
+            condition_switch++;
               // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
               var proba = Math.floor(Math.random() * 2);
               if (proba === 0) { // Vérifier si le nombre est égal à 0
@@ -234,6 +235,11 @@ export default class niveau4 extends Phaser.Scene {
     });
     this.physics.add.collider(groupeballe, Vert, (laballe, laplateforme) => {
       laballe.destroy();
+    });
+
+    this.physics.add.collider(groupeballe, enemy, (bullet, enemy) => {
+      bullet.destroy();
+      enemy.destroy();
     });
     
         
@@ -375,7 +381,9 @@ export default class niveau4 extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(changement)) {
       musique_de_fond7.stop();
       this.scene.switch("selection_map_5");
+    }else if (condition_switch==30){
       musique_de_fond7.stop();
+      this.scene.switch("selection_map_5");
     }
 
 
