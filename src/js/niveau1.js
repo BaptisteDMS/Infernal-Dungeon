@@ -317,6 +317,7 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
+      musique_de_fond1.stop();
       this.scene.switch("selection_map_2");
       musique_de_fond1.stop();
     }

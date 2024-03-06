@@ -259,6 +259,7 @@ this.physics.overlap(groupeballe, enemy3, (bullet, enemy3) => {
 
 // Passage aux niveaux suivants selon la porte touchée
 if (Phaser.Input.Keyboard.JustDown(changement)) {
+  musique_de_fond3.stop();
   this.scene.switch("selection_map_3");
   musique_de_fond3.stop();
 }
