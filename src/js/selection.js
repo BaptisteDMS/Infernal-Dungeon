@@ -23,7 +23,6 @@ var groupeenemy;
 
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 let weapon = null;
 let weaponsGroup;
 
@@ -222,11 +221,6 @@ export default class selection extends Phaser.Scene {
     this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
     this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
-
-    // Création icone dash
-    //image_sprint = this.add.image(16, 16, "Sprinter_bleu");
-    // Ajouter une image fixe en haut à gauche de l'écran
-    let image_sprint = this.add.image(16, 16, "Sprinter_bleu").setOrigin(0, 0);
 
 
     // Creation arme
@@ -562,16 +556,13 @@ this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateform
     if(lent.isDown){
       vitesse_lent=70;
       if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;
-        this.dash(player,image_sprint);}
+        vitesse_dash=8000;}
     }else if (sprint.isDown){
       vitesse_dash=100;
       if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;
-        this.dash(player,image_sprint);}
+        vitesse_dash=8000;}
     }else if (dash.isDown && player.peutDash==true){
       vitesse_dash=8000;
-      this.dash(player,image_sprint);
     }else{
       vitesse_dash=0;
       vitesse_lent=0;
