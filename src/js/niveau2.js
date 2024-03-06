@@ -37,9 +37,9 @@ var yCoord3;
 var elem3;
 var obj3;
 
-function createEnemy3() {
-  let xCoord3 = 402;
-  let yCoord3 = 563;
+function createEnemy3(Xcor,Ycor) {
+  let xCoord3 = Xcor;
+  let yCoord3 = Ycor;
   let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "slime");
   enemy3.add(obj3);
 
@@ -61,8 +61,8 @@ function createEnemy3() {
       null, this);    
   });
   obj3.setBounce(1);
-  let speedX = Math.random() * 400 - 200; 
-  let speedY = Math.random() * 400 - 200; 
+  let speedX = Math.random() * 800 - 300; 
+  let speedY = Math.random() * 800 - 300; 
 
   obj3.setVelocity(speedX, speedY); 
 } 
@@ -182,13 +182,15 @@ export default class niveau2 extends Phaser.Scene {
     
     enemy3 = this.physics.add.group();
 
-    let c = 0;
+    
 
-    while (c < 1) {
-        createEnemy3.call(this); 
-        
-        c++;
-    }
+    createEnemy3.call(this, 420, 350); // Premier ennemi aux coordonnées (100, 200)
+createEnemy3.call(this, 920, 434); // Deuxième ennemi aux coordonnées (300, 400)
+createEnemy3.call(this, 960, 360); // Troisième ennemi aux coordonnées (500, 600)
+createEnemy3.call(this, 582, 732); // Quatrième ennemi aux coordonnées (700, 800)
+createEnemy3.call(this, 700, 640);
+createEnemy3.call(this, 460, 290);
+
 
     
 
