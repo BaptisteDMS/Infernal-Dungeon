@@ -70,6 +70,12 @@ export default class menu extends Phaser.Scene {
   playClickSound() {
       this.sound.play("fx"); // Jouez le son du clic
   }
+
+  stopMenuMusic() {
+    // Arrêter la musique du menu
+    this.musiqueMenu.stop();
+}
+
   destroy() {
     // Arrêter la musique lorsque la scène est détruite
     if (this.musiqueMenu && this.musiqueMenu.isPlaying) {
