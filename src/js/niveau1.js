@@ -24,6 +24,7 @@ let weaponsGroup;
 let weapon = null;
 var lastFiredTime = 0;
 var groupe_plateformes;
+var condition_switch=0;
 
 // enemy variable 2
 var enemy2;
@@ -79,6 +80,7 @@ export default class niveau1 extends Phaser.Scene {
     groupeballe=this.physics.add.group();
     weaponsGroup=this.physics.add.group();
     musique_de_fond1 = this.sound.add("background1");
+    musique_mort = this.sound.add("die");
     musique_de_fond1.play();
     const carteDuNiveau = this.add.tilemap("carte1");
     const tileset = carteDuNiveau.addTilesetImage(
@@ -134,10 +136,27 @@ export default class niveau1 extends Phaser.Scene {
 
     let b = 0;
 
-    while (b < 5) {
+    while (b < 3) {
       createEnemy2.call(this);
       b++;
     }
+
+    var TimerSpawn = this.time.addEvent({
+      delay: 3000, // ms
+      callback: function () {
+        enemy2 = this.physics.add.group();
+
+    let b = 0;
+
+    while (b < 3) {
+      createEnemy2.call(this);
+      b++;
+    }
+      },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    });
 
     var TimerMonster2 = this.time.addEvent({
       delay: 500, // ms
@@ -228,11 +247,13 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
     this.physics.add.collider(groupeballe, enemy2, (bullet, enemy2) => {
       bullet.destroy();
       enemy2.destroy();
+      condition_switch++;
     });
 
     // Contact player
     this.physics.overlap(groupeballe, player, (bullet, player) => {
       this.physics.pause();
+      musique_de_fond1.stop();
       var timerRestart = this.time.delayedCall(3000,
         () => {
           this.scene.stop();
@@ -318,9 +339,13 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
+      die.
       musique_de_fond1.stop();
+      this.scene.stop();
       this.scene.switch("selection_map_2");
-      musique_de_fond1.stop();
+    }else if (condition_switch==10){
+      this.scene.stop();
+      this.scene.switch("selection_map_2");
     }
 
 
