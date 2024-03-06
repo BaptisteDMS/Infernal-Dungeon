@@ -268,6 +268,7 @@ export default class selection_map_5 extends Phaser.Scene {
     update() {
 
       if(refresh.isDown){
+        musique_de_fond8.stop();
         this.scene.stop();
         this.scene.start();
       }
