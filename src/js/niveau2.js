@@ -38,7 +38,7 @@ var obj3;
 function createEnemy3() {
   let xCoord3 = Math.random() * 800;
   let yCoord3 = Math.random() * 600;
-  let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "fireball");
+  let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "slime");
   enemy3.add(obj3);
 
   obj3.setCollideWorldBounds(true);
