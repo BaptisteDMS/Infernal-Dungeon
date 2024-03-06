@@ -15,52 +15,27 @@ var lent;
 var sprint;
 var interagir;
 var groupe_plateformes;
-var armesol;
 var lastFiredTime = 0;
 var groupeballe;
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 let weapon = null;
 let weaponsGroup;
-// enemy variable
-var enemy;
-var xCoord;
-var yCoord;
-var elem;
-var obj;
+
 // varaible 
 var Fond_map;
 var chateau;
 var fond_porte_chateau;
 var donjon;
 var rien;
-var musique_de_fond2;
-
-/***********************************************************************/
-/** FONCTION */
-/***********************************************************************/
-
-function createEnemy() {
-    xCoord = Math.random() * 800;
-    yCoord = Math.random() * 600;
-    obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
-    obj.setCollideWorldBounds(true);
-    this.physics.add.collider(obj, groupe_plateformes);
-    this.physics.add.collider(obj, player, (enemy) => {
-        enemy.destroy();
-    });
-    this.physics.add.collider(obj, enemy);
-    
-    enemy.add(obj);
-  }
+var musique_de_fond;
 
 /***********************************************************************/
 /** CODE PRINCIPALE
 /***********************************************************************/
 
 // définition de la classe "selection"
-export default class selection_map_2 extends Phaser.Scene {
+export default class selection_map_1 extends Phaser.Scene {
     constructor() {
       super({ key: "selection_map_2" }); // mettre le meme nom que le nom de la classe
     }
@@ -71,7 +46,7 @@ export default class selection_map_2 extends Phaser.Scene {
     preload() {
 
       //CHARGEMENT MUSIQUE
-      this.load.audio("background2", "/src/assets/song/clash_of_clan.mp3"); 
+      this.load.audio("background", "/src/assets/song/clash_of_clan.mp3"); 
       //CHARGEMENT DES IMAGES DE PORTES DES DIFFERENTES NIVEAUX
       this.load.image("porte_bleu", "src/assets/map_principale/maison_bleu_prote.png");
       this.load.image("porte_rouge", "src/assets/map_principale/porte_donjon_rouge.png");
@@ -81,11 +56,11 @@ export default class selection_map_2 extends Phaser.Scene {
       //CHARGEMENT DES IMAGES DU PERSONNAGES
       this.load.image("fireball", "src/assets/fireball.png");
       this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
-      this.load.image("Sprinter_bleu", "src/assets/bleu.png");
-      this.load.image("Sprinter_rouge", "src/assets/rouge.png");
       this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
       this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
       this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
+      this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
+      this.load.image("Sprinter_rouge", "src/assets/rouge.png");
       // CHARGEMENT DES IMAGES DE SHOOTS
       this.load.image("tire","src/assets/Redi/tire.jpg")
       this.load.image("cible", "src/assets/Redi/eyeball.png")
@@ -114,11 +89,8 @@ export default class selection_map_2 extends Phaser.Scene {
   /***********************************************************************/
   
     create() {
-
-      fct.doNothing();
-      fct.doAlsoNothing();
-      musique_de_fond2 = this.sound.add("background2");
-      musique_de_fond2.play();
+      musique_de_fond = this.sound.add("background");
+      musique_de_fond.play();
       groupeballe = this.physics.add.group();
       weaponsGroup = this.physics.add.group();
 
@@ -230,11 +202,7 @@ export default class selection_map_2 extends Phaser.Scene {
       this.porte4 = this.physics.add.staticSprite(1505, 1088.5, "porte_brique");
       this.porte5 = this.physics.add.staticSprite(720, 495, "porte_chateau");
 
-    // Création icone dash
-      image_sprint = this.add.image(16, 16, "Sprinter_bleu");
-
-
-    // Création du joueur
+      // Création du joueur
       player = this.physics.add.sprite(740, 600, "Personnage");
       player.setCollideWorldBounds(true);
       player.gun= "Handgun";
@@ -245,14 +213,6 @@ export default class selection_map_2 extends Phaser.Scene {
       this.physics.add.collider(player, donjon); 
       this.physics.add.collider(player, chateau); 
       this.physics.add.collider(player, Fond_map);
-      this.physics.add.collider(player, armesol, () => {
-        player.gun = "lanceflamme";
-        armesol.destroy();    
-      }); 
-      this.physics.add.collider(player, weapon, () => {
-        player.gun = "lanceflamme";
-        weapon.destroy();    
-      }); 
 
       // PARAMETRE CAMERA
       this.physics.world.setBounds(0, 0, 1600, 1280);
@@ -265,8 +225,8 @@ export default class selection_map_2 extends Phaser.Scene {
       bas = this.input.keyboard.addKey("S");
       gauche = this.input.keyboard.addKey("Q");
       droite = this.input.keyboard.addKey("D");
-      dash = this.input.keyboard.addKey("shift");
-      lent= this.input.keyboard.addKey("space");
+      dash = this.input.keyboard.addKey("space");
+      lent= this.input.keyboard.addKey("C");
       sprint = this.input.keyboard.addKey("shift");
       interagir = this.input.keyboard.addKey("E");
     }   
@@ -277,147 +237,221 @@ export default class selection_map_2 extends Phaser.Scene {
   /***********************************************************************/
   
     update() {
+       // Déplacement du joueur
 
-  
-  
-      // Déplacement du joueur
-  
-      if(lent.isDown){
-        vitesse_lent=70;
-        if (dash.isDown && player.peutDash==true){
-          vitesse_dash=8000;
-          this.dash(player,image_sprint);}
-      }else if (sprint.isDown){
-        vitesse_dash=100;
-        if (dash.isDown && player.peutDash==true){
-          vitesse_dash=8000;
-          this.dash(player,image_sprint);}
-      }else if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;
-        this.dash(player,image_sprint);
+    if(lent.isDown){
+      vitesse_lent=70;
+      if (dash.isDown && player.peutDash==true){
+        vitesse_dash=8000;}
+    }else if (sprint.isDown){
+      vitesse_dash=100;
+      if (dash.isDown && player.peutDash==true){
+        vitesse_dash=8000;}
+    }else if (dash.isDown && player.peutDash==true){
+      vitesse_dash=8000;
+    }else{
+      vitesse_dash=0;
+      vitesse_lent=0;
+    }
+
+    if (gauche.isDown) {
+      if (haut.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+      }else if(bas.isDown) {
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
       }else{
-        vitesse_dash=0;
-        vitesse_lent=0;
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
       }
-  
-      if (gauche.isDown) {
-        if (haut.isDown){
-          player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-          player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        }else if(bas.isDown) {
-          player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-          player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        }else{
-          player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        }
-      }  else if (droite.isDown) {
-        if (haut.isDown){
-          player.setVelocityX(160-vitesse_lent+vitesse_dash);
-          player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        }else if(bas.isDown) {
-          player.setVelocityX(160-vitesse_lent+vitesse_dash);
-          player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        }else{
-          player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        }
-      } else if (bas.isDown) {
-        if (gauche.isDown){
-          player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-          player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        }else if(droite.isDown) {
-          player.setVelocityX(160-vitesse_lent+vitesse_dash);
-          player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        }else{
-          player.setVelocityY(160-vitesse_lent+vitesse_dash);
-        }
-      } else if (haut.isDown) {
-        if (gauche.isDown){
-          player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-          player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        }else if(droite.isDown) {
-          player.setVelocityX(160-vitesse_lent+vitesse_dash);
-          player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        }else{
-          player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-        }
-      } else {
-        player.setVelocityX(0);
-        player.setVelocityY(0);
-        player.anims.play("Personnage");
+    }  else if (droite.isDown) {
+      if (haut.isDown){
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+      }else if(bas.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
+      }else{
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
       }
+    } else if (bas.isDown) {
+      if (gauche.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
+      }else if(droite.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
+      }else{
+        player.setVelocityY(160-vitesse_lent+vitesse_dash);
+      }
+    } else if (haut.isDown) {
+      if (gauche.isDown){
+        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+      }else if(droite.isDown) {
+        player.setVelocityX(160-vitesse_lent+vitesse_dash);
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+      }else{
+        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+      }
+    } else {
+      player.setVelocityX(0);
+      player.setVelocityY(0);
+    }
 
-      // Tir de la balle suivant la position de la souris
-      if (this.input.mousePointer.isDown) {
-        this.tirerBalle(player.gun);
-      }
+    // Tire balle fct position souris
+    if (this.input.mousePointer.isDown) {
+      this.tirerBalle(player.gun);
+    }
 
-      // Passage aux niveaux suivants selon la porte touchée
-      if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
-        if (this.physics.overlap(player, this.porte2))
-          this.scene.switch("niveau2");
-          musique_de_fond2.stop();     
-     }
+    // Passage aux niveaux suivants selon la porte touchée
+    if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
+      if (this.physics.overlap(player, this.porte2))
+        this.scene.switch("niveau2");
+        musique_de_fond.stop();
+    }
+
+    
 
       // Calcul de la direction entre le joueur et la position de la souris
-      let diffX = this.input.mousePointer.worldX - player.x;
-      let diffY = this.input.mousePointer.worldY - player.y;
-  
-      // Calcul de l'angle en radians entre le joueur et la souris
-      let angle = Math.atan(diffY / diffX);
-  
-      // Convertir l'angle en degrés
-      angle = Phaser.Math.RadToDeg(angle);
-  
-      // Ajuster l'angle en fonction de la position du curseur
-      if (diffX < 0) {
-      // player.flipX=true;
-      angle-=180;
+      this.input.mousePointer.updateWorldPoint(this.cameras.main);
+
+    let diffX = this.input.mousePointer.worldX - player.x;
+    let diffY = this.input.mousePointer.worldY - player.y;
+
+    // Calcul de l'angle en radians entre le joueur et la souris
+    let angle = Math.atan(diffY / diffX);
+
+
+    // Convertir l'angle en degrés
+    angle = Phaser.Math.RadToDeg(angle);
+    //console.log(angle);
+    // Ajuster l'angle en fonction de la position du curseur
+    if (diffX < 0) {
+    // player.flipX=true;
+    angle-=180;
+    }
+    else {
+    // player.flipX=false;
+    }
+    // Appliquer la sensibilité à l'angle
+    //angle *= sensitivity;
+
+    // Appliquer la rotation à l'image du joueur
+    player.setAngle(angle);
+    //console.log(angle);
+    
+ }
+
+ tirerBalle(arme) {
+  let cadence;
+  let nomArme;
+  let Vitesse;
+
+  if (arme === "lanceflamme") {
+      cadence = 20;
+      nomArme = "fireball";
+      Vitesse = 500;
+  } else if (arme === "Handgun") {
+      cadence = 500;
+      nomArme = "pistolbullet";
+      Vitesse = 1000;
+  } else if (arme === "ak") {
+      cadence = 200;
+      nomArme = "pistolbullet";
+      Vitesse = 1000;
+  } else if (arme === "blaster") {
+      cadence = 750;
+      nomArme = "blasterbullet";
+      Vitesse = 2500;
+  } else if (arme === "pistolet") {
+      cadence = 500;
+      nomArme = "tire";
+      Vitesse = 1000;
+  } else if (arme === "shotgun") {
+      cadence = 1200;
+      nomArme = "pistolbullet";
+      Vitesse = 800;
+
+      // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
+      if (this.time.now - lastFiredTime > cadence) {
+          // Calcul du coefficient de direction en fonction de la position du clic de la souris
+          let diffX = this.input.mousePointer.worldX - player.x;
+          let diffY = this.input.mousePointer.worldY - player.y;
+          let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+          let coefdirX = diffX / distance;
+          let coefdirY = diffY / distance;
+
+          // Création des trois balles
+          for (let i = 0; i < 3; i++) {
+              let bullet;
+              // Position de la balle en fonction de l'indice i
+              if (i === 0) {
+                  bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, nomArme);
+              } else {
+                  // Calcul des positions pour les balles latérales
+                  let angle = (i === 1) ? -45 : 45; // Angle négatif pour la balle de gauche, positif pour la balle de droite
+                  let newDirX = Math.cos(Phaser.Math.DegToRad(angle)) * coefdirX - Math.sin(Phaser.Math.DegToRad(angle)) * coefdirY;
+                  let newDirY = Math.sin(Phaser.Math.DegToRad(angle)) * coefdirX + Math.cos(Phaser.Math.DegToRad(angle)) * coefdirY;
+                  bullet = this.physics.add.sprite(player.x + 20 * newDirX, player.y + 20 * newDirY, nomArme);
+              }
+
+              // Ajouter la balle au groupe de balles
+              groupeballe.add(bullet);
+
+              // Déplacement de la balle vers la position de la souris
+              this.physics.moveTo(
+                  bullet,
+                  this.input.mousePointer.worldX,
+                  this.input.mousePointer.worldY,
+                  Vitesse
+              );
+
+              // Gestion des collisions de la balle avec les plateformes
+              this.physics.add.collider(bullet, groupe_plateformes, () => {
+                  bullet.destroy();
+              });
+          }
+
+          // Mettre à jour le temps du dernier tir
+          lastFiredTime = this.time.now;
       }
-      else {
-      // player.flipX=false;
-      }
-      // Appliquer la sensibilité à l'angle
-      //angle *= sensitivity;
-  
-      // Appliquer la rotation à l'image du joueur
-      player.setAngle(angle);
-      //console.log(angle);
-   }
+  }
 
-  // Fonction pour tirer une balle
-  // Fonction pour tirer une balle
-tirerBalle() {
-  // Calcul du coefficient de direction en fonction de la position du clic de la souris
-  let diffX = this.input.mousePointer.worldX - player.x;
-  let diffY = this.input.mousePointer.worldY - player.y;
-  let distance = Math.sqrt(diffX * diffX + diffY * diffY);
-  let coefdirX = diffX / distance;
-  let coefdirY = diffY / distance;
-
-  // Création de la balle à la position du joueur
-  let bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, "fireball");
-
-  // Déplacement de la balle vers la position de la souris
-  this.physics.moveTo(
-    bullet,
-    this.input.mousePointer.worldX,
-    this.input.mousePointer.worldY,
-    500
-  );
-  // Gestion des collisions de la balle avec les plateformes
-  this.physics.add.collider(bullet, Fond_map, () => {
-    bullet.destroy();
-  });
-  this.physics.add.collider(bullet, chateau, () => {
-    bullet.destroy();
-  });
-  this.physics.add.collider(bullet, fond_porte_chateau, () => {
-    bullet.destroy();
-  });
-  this.physics.add.collider(bullet, donjon, () => {
-    bullet.destroy();
-  });
-
+    
+    // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
+    if (this.time.now - lastFiredTime > cadence) {
+        // Calcul du coefficient de direction en fonction de la position du clic de la souris
+        this.input.mousePointer.updateWorldPoint(this.cameras.main);
+        let diffX = this.input.mousePointer.worldX - player.x;
+        let diffY = this.input.mousePointer.worldY - player.y;
+        let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+        let coefdirX = diffX / distance;
+        let coefdirY = diffY / distance;
+        
+        // Création de la balle à la position du joueur avec le bon nom d'arme
+        let bullet = this.physics.add.sprite(player.x + 40 * coefdirX, player.y + 40 * coefdirY, nomArme);
+        
+        // Ajouter la balle au groupe de balles
+        groupeballe.add(bullet);
+        
+        // Déplacement de la balle vers la position de la souris
+        this.input.mousePointer.updateWorldPoint(this.cameras.main);
+        this.physics.moveTo(
+            bullet,
+            this.input.mousePointer.worldX,
+            this.input.mousePointer.worldY,
+            Vitesse
+        );
+        
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(bullet, groupe_plateformes, () => {
+            bullet.destroy();
+        });
+        
+        // Mettre à jour le temps du dernier tir
+        lastFiredTime = this.time.now;
+    }
 }
 
 dash (player, image_sprint) {
@@ -434,7 +468,4 @@ dash (player, image_sprint) {
       }, null, this);  
   }
 }
-}   
-
-
-
+}

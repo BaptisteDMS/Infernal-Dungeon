@@ -59,6 +59,8 @@ export default class selection_map_1 extends Phaser.Scene {
       this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
       this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
       this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
+      this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
+      this.load.image("Sprinter_rouge", "src/assets/rouge.png");
       // CHARGEMENT DES IMAGES DE SHOOTS
       this.load.image("tire","src/assets/Redi/tire.jpg")
       this.load.image("cible", "src/assets/Redi/eyeball.png")
@@ -235,18 +237,43 @@ export default class selection_map_1 extends Phaser.Scene {
   /***********************************************************************/
   
     update() {
+
+      // Gestion des collisions de la balle avec les plateformes
+    this.physics.add.collider(groupeballe, Fond_map, (laballe, laplateforme) => {
+      laballe.destroy();
+  });
+
+  this.physics.add.collider(groupeballe, chateau, (laballe, laplateforme) => {
+    laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, fond_porte_chateau, (laballe, laplateforme) => {
+  laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, donjon, (laballe, laplateforme) => {
+  laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, rien, (laballe, laplateforme) => {
+  laballe.destroy();
+});
+
+
+
        // Déplacement du joueur
 
     if(lent.isDown){
       vitesse_lent=70;
       if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;}
+        vitesse_dash=500;
+      }
     }else if (sprint.isDown){
       vitesse_dash=100;
       if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;}
+        vitesse_dash=500;}
     }else if (dash.isDown && player.peutDash==true){
-      vitesse_dash=8000;
+      vitesse_dash=500;
     }else{
       vitesse_dash=0;
       vitesse_lent=0;
@@ -316,10 +343,6 @@ export default class selection_map_1 extends Phaser.Scene {
 
     let diffX = this.input.mousePointer.worldX - player.x;
     let diffY = this.input.mousePointer.worldY - player.y;
-    console.log("pointer"+this.input.mousePointer.x); 
-    console.log("pointer"+this.input.mousePointer.worldX); 
-
-    console.log("player" +player.x);
 
     // Calcul de l'angle en radians entre le joueur et la souris
     let angle = Math.atan(diffY / diffX);
@@ -456,17 +479,14 @@ export default class selection_map_1 extends Phaser.Scene {
     }
 }
 
-dash (player, image_sprint) {
+dash (player) {
   if (player.peutDash == true) {
       
       player.peutDash = false; // on désactive la possibilté de dash
       
-      image_sprint = this.add.image(16, 16, "Sprinter_rouge");
-      
       // on la réactive dans 4 secondes avec un timer
       var timerDashOk = this.time.delayedCall(4000, () => {
           player.peutDash = true;
-          image_sprint = this.add.image(16, 16, "Sprinter_bleu");
       }, null, this);  
   }
 }

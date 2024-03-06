@@ -763,17 +763,15 @@ tirerBalle(arme) {
     }
 }
 
-dash (player, image_sprint) {
+dash (player) {
   if (player.peutDash == true) {
       
       player.peutDash = false; // on désactive la possibilté de dash
-      
-      image_sprint = this.add.image(16, 16, "Sprinter_rouge");
+    
       
       // on la réactive dans 4 secondes avec un timer
       var timerDashOk = this.time.delayedCall(4000, () => {
           player.peutDash = true;
-          image_sprint = this.add.image(16, 16, "Sprinter_bleu");
       }, null, this);  
   }
 }
