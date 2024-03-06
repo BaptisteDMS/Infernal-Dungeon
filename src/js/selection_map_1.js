@@ -59,7 +59,12 @@ export default class selection_map_1 extends Phaser.Scene {
       this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
       this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
       this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
-      this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
+      this.load.image("bullet", "src/assets/projectile5.png");
+      this.load.image("chauve-souris", "src/assets/monstres/chauve-souris.png") 
+      this.load.image("boss", "src/assets/monstres/ph.png")
+      this.load.image("slime", "src/assets/monstres/Slime.png")
+      this.load.image("fantome", "src/assets/monstres/phh.png")
+      // Chargement de l'image de la balle
       this.load.image("Sprinter_rouge", "src/assets/rouge.png");
       // CHARGEMENT DES IMAGES DE SHOOTS
       this.load.image("tire","src/assets/Redi/tire.jpg")
