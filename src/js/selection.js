@@ -109,23 +109,6 @@ function createEnemy3() {
   enemy3.add(obj3);
 }
 
-
-
-
-function createEnemy2() {
-  xCoord2 = Math.random() * 800;
-  yCoord2 = Math.random() * 600;
-  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "Sprinter_bleu");
-  obj2.setCollideWorldBounds(true);
-  this.physics.add.collider(obj2, groupe_plateformes);
-  this.physics.add.collider(obj2, player, (enemy2) => {
-      enemy2.destroy();
-  });
-  this.physics.add.collider(obj2, enemy2);
-  
-  enemy2.add(obj2);
-}
-
 function createEnemy4() {
   xCoord4 = Math.random() * 800;
   yCoord4 = Math.random() * 600;
@@ -260,20 +243,6 @@ export default class selection extends Phaser.Scene {
         createEnemy.call(this); 
         
         n++;
-    }
-
-    /****************************
-     *  CREATION DU MECHANT  *
-     ****************************/
-
-    enemy2 = this.physics.add.group();
-
-    let b = 0;
-
-    while (b < 5) {
-        createEnemy2.call(this);
-        
-        b++;
     }
 
     enemy3 = this.physics.add.group();
@@ -459,14 +428,6 @@ this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateform
     while (n < p) {
         this.physics.moveTo(elem[n], player.x, player.y, 80);
         n++;
-    }
-
-    elem2 = enemy2.getChildren();
-    var b = elem2.length;
-    let v = 0;
-    while (v < b) {
-        this.physics.moveTo(elem2[v], player.x-100, player.y-100, 200);
-        v++;
     }
 
     elem3 = enemy3.getChildren();
