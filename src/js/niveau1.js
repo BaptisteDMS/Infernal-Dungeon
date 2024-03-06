@@ -1,6 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-// Variable globale
+// Variables globale
 var player; // désigne le sprite du joueur
 var clavier; // pour la gestion du clavier
 var droite;
@@ -18,6 +18,7 @@ var Fond_map;
 var chateau;
 var fond_porte_chateau;
 var donjon;
+var rien;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -33,7 +34,12 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
     this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
     this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
-    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/map_finito_pipo.json");
+    this.load.image("Phaser_JeuDeTuiles6", "src/assets/map_principale/maison_bleu_prote.png");
+    this.load.image("Phaser_JeuDeTuiles7", "src/assets/map_principale/porte_chateau.png");
+    this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_principale/porte_donjon_bois.png");
+    this.load.image("Phaser_JeuDeTuiles9", "src/assets/map_principale/porte_donjon_rouge.png");
+    this.load.image("Phaser_JeuDeTuiles10", "src/assets/map_principale/porte_donjon_brique.png");
+    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/carte_map_principale.json");
     this.load.image("img_perso","src/assets/map_principale/dude.png"); 
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
@@ -65,21 +71,52 @@ export default class niveau1 extends Phaser.Scene {
       "house",
       "Phaser_JeuDeTuiles5"
     ); 
+    const tileset6 = carteDuNiveau.addTilesetImage(
+      "maison_bleu_porte",
+      "Phaser_JeuDeTuiles6"
+    ); 
+    const tileset7 = carteDuNiveau.addTilesetImage(
+      "porte_chateau",
+      "Phaser_JeuDeTuiles7"
+    ); 
+    const tileset8 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_bois",
+      "Phaser_JeuDeTuiles8"
+    ); 
+    const tileset9 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_rouge",
+      "Phaser_JeuDeTuiles9"
+    ); 
+    const tileset10 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_brique",
+      "Phaser_JeuDeTuiles10"
+    ); 
+
     Fond_map = carteDuNiveau.createLayer(
       "Fond_map",
       [tileset1,
         tileset2,
         tileset3,
         tileset4,
-        tileset5]
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     chateau = carteDuNiveau.createLayer(
       "chateau",
       [tileset1,
-      tileset2,
-      tileset3,
-      tileset4,
-      tileset5]
+        tileset2,
+        tileset3,
+        tileset4,
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     donjon = carteDuNiveau.createLayer(
       "donjon",
@@ -87,7 +124,12 @@ export default class niveau1 extends Phaser.Scene {
         tileset2,
         tileset3,
         tileset4,
-        tileset5]
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     fond_porte_chateau = carteDuNiveau.createLayer(
       "fond_porte_chateau",
@@ -95,7 +137,12 @@ export default class niveau1 extends Phaser.Scene {
         tileset2,
         tileset3,
         tileset4,
-        tileset5]
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     Fond_map.setCollisionByProperty({ estSolide: true });
     donjon.setCollisionByProperty({ estSolide: true });
@@ -144,6 +191,7 @@ export default class niveau1 extends Phaser.Scene {
     this.physics.add.collider(player, donjon); 
     this.physics.add.collider(player, chateau); 
     this.physics.add.collider(player, Fond_map);
+
   }
 
   update() {
@@ -293,6 +341,7 @@ tirerBalle() {
   this.physics.add.collider(bullet, donjon, () => {
     bullet.destroy();
   });
+
 }
 
 dash (player, image_sprint) {
