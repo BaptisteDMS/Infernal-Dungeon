@@ -11,6 +11,7 @@ var dash;
 var lent;
 var sprint;
 var interagir;
+var changement;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
@@ -29,7 +30,7 @@ export default class niveau5 extends Phaser.Scene {
     }
     preload(){
         this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_eglise/chateau.png");
-        this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/map_eglise.json");
+        this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/eglise_finale.json");
     }
     create() {
         fct.doNothing();
@@ -84,15 +85,14 @@ export default class niveau5 extends Phaser.Scene {
     
         // Création du joueur
         player = this.physics.add.sprite(740, 600, "Personnage");
-        player.setBounce(0.2);
         player.setCollideWorldBounds(true);
         player.peutDash = true;
     
     
     
-        this.physics.world.setBounds(0, 0, 1600, 1280);
+        this.physics.world.setBounds(0, 0, 1280, 967.5);
         //  ajout du champs de la caméra de taille identique à celle du monde
-        this.cameras.main.setBounds(0, 0, 1600, 1280);
+        this.cameras.main.setBounds(0, 0, 1280, 967.5);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(player);
     
@@ -107,6 +107,8 @@ export default class niveau5 extends Phaser.Scene {
        lent= this.input.keyboard.addKey("space");
        sprint = this.input.keyboard.addKey("shift");
        interagir = this.input.keyboard.addKey("E");
+       changement = this.input.keyboard.addKey("L");
+
     
         this.physics.add.collider(player, decofinale); 
         this.physics.add.collider(player, CalquedeTuiles3); 
@@ -188,13 +190,8 @@ export default class niveau5 extends Phaser.Scene {
         }
     
         // Passage aux niveaux suivants selon la porte touchée
-        if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-          if (this.physics.overlap(player, this.porte1))
-            this.scene.switch("niveau1"); 
-          if (this.physics.overlap(player, this.porte2))
-            this.scene.switch("niveau2");
-          if (this.physics.overlap(player, this.porte3))
-            this.scene.switch("niveau3");
+        if (Phaser.Input.Keyboard.JustDown(changement) == true) {
+            this.scene.switch("Menu_fin"); 
         }
     
     

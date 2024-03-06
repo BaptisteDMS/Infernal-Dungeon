@@ -17,9 +17,7 @@ export default class menu extends Phaser.Scene {
   }
 
   create() {
-
-
-      this.add.image(0, 0, "menu_fond").setOrigin(0).setDepth(0);
+      this.add.image(80, 35, "menu_fond").setOrigin(0).setDepth(0);
 
       var bouton_play = this.add.image(300, 250, "imageBoutonPlay").setDepth(1);
       var bouton_commandes = this.add.image(300, 300, "commandes").setDepth(1);
@@ -51,7 +49,7 @@ export default class menu extends Phaser.Scene {
       });
 
       bouton_play.on("pointerup", () => {
-          this.scene.start("selection");
+          this.scene.start("selection_map_1");
           this.playClickSound(); // Jouez le son du clic pour le bouton "jouer"
       });
 
