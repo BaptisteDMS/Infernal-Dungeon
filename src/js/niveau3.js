@@ -28,17 +28,20 @@ export default class niveau3 extends Phaser.Scene {
     }
     preload(){
         this.load.image("Phaser_JeuDeTuiles14", "src/assets/map_donjon_japon/japontuiles.png");
-        this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_1.json");
+        this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
     }
     create() {
         fct.doNothing();
         fct.doAlsoNothing();
         const carteDuNiveau = this.add.tilemap("carte3");
         const tileset = carteDuNiveau.addTilesetImage(
-          "japontuiles",
+          "carte_1",
           "Phaser_JeuDeTuiles14"
         ); 
-
+        CalquedeTuiles2 = carteDuNiveau.createLayer(
+          "CalquedeTuiles2",
+          tileset
+        );
         rien1 = carteDuNiveau.createLayer(
           "rien1",
          tileset
@@ -47,10 +50,7 @@ export default class niveau3 extends Phaser.Scene {
           "deco_fond",
           tileset
         );
-        CalquedeTuiles2 = carteDuNiveau.createLayer(
-          "CalquedeTuiles2",
-          tileset
-        );
+
         
         CalquedeTuiles2.setCollisionByProperty({ estSolide: true });
         rien1.setCollisionByProperty({ estSolide: true });

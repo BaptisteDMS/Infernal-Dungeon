@@ -1,6 +1,6 @@
-export default class menu extends Phaser.Scene {
+export default class Menu extends Phaser.Scene {
   constructor() {
-      super({ key: "menu" });
+      super({ key: "Menu" });
   }
 
   preload() {
@@ -44,7 +44,7 @@ export default class menu extends Phaser.Scene {
       });
 
       bouton_commandes.on("pointerup", () => {
-          this.scene.start("niveau 1");
+          this.scene.start("niveau_1");
           this.playClickSound(); // Jouez le son du clic pour le bouton "commandes"
       });
 
