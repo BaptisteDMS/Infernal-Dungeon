@@ -40,28 +40,30 @@ export default class niveau5 extends Phaser.Scene {
           "eglise",
           "Phaser_JeuDeTuiles60"
         ); 
-
-        rien3 = carteDuNiveau.createLayer(
-          "rien3",
-         tileset
+        CalquedeTuiles3 = carteDuNiveau.createLayer(
+          "CalquedeTuiles3",
+          tileset
         );
         deco = carteDuNiveau.createLayer(
           "deco",
           tileset
         );
-        CalquedeTuiles3 = carteDuNiveau.createLayer(
-          "CalquedeTuiles3",
+        mur = carteDuNiveau.createLayer(
+          "mur",
           tileset
         );
-        mur = carteDuNiveau.createLayer(
-            "mur",
-            tileset
-          );
-          decofinale = carteDuNiveau.createLayer(
-            "decofinale",
-            tileset
-          );
-        
+        decofinale = carteDuNiveau.createLayer(
+          "decofinale",
+          tileset
+        );
+        rien3 = carteDuNiveau.createLayer(
+          "rien3",
+         tileset
+        );
+
+
+
+
         CalquedeTuiles3.setCollisionByProperty({ estSolide: true });
         rien3.setCollisionByProperty({ estSolide: true });
         deco.setCollisionByProperty({ estSolide: true });

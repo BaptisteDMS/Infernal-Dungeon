@@ -38,7 +38,10 @@ export default class niveau3 extends Phaser.Scene {
           "carte_1",
           "Phaser_JeuDeTuiles14"
         ); 
-
+        CalquedeTuiles2 = carteDuNiveau.createLayer(
+          "CalquedeTuiles2",
+          tileset
+        );
         rien1 = carteDuNiveau.createLayer(
           "rien1",
          tileset
@@ -47,10 +50,7 @@ export default class niveau3 extends Phaser.Scene {
           "deco_fond",
           tileset
         );
-        CalquedeTuiles2 = carteDuNiveau.createLayer(
-          "CalquedeTuiles2",
-          tileset
-        );
+
         
         CalquedeTuiles2.setCollisionByProperty({ estSolide: true });
         rien1.setCollisionByProperty({ estSolide: true });

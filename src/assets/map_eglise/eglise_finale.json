@@ -218,7 +218,7 @@
          "columns":16,
          "firstgid":1,
          "image":"fond_et_map\/image\/chateau.png",
-         "imageheight":512,
+         "imageheight":512, 
          "imagewidth":512,
          "margin":0,
          "name":"eglise",
