@@ -100,7 +100,8 @@ export default class niveau2 extends Phaser.Scene {
 
 
     // Création icone dash
-    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    //image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    let image_sprint = this.add.image(0, 0, "Sprinter_bleu").setOrigin(0, 0 );
 
     // Création du joueur
     player = this.physics.add.sprite(690, 400, "Personnage");
@@ -287,18 +288,22 @@ tirerBalle() {
   });
 }
 
-dash (player, image_sprint) {
+dash(player) {
   if (player.peutDash == true) {
-      
       player.peutDash = false; // on désactive la possibilté de dash
-      
+
+      // Créer l'image sprint et l'ajouter à la caméra principale
       image_sprint = this.add.image(16, 16, "Sprinter_rouge");
-      
+      this.cameras.main.add(image_sprint);
+
       // on la réactive dans 4 secondes avec un timer
       var timerDashOk = this.time.delayedCall(4000, () => {
           player.peutDash = true;
-          image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+          // Mettre à jour l'image sprint
+          image_sprint.setTexture("Sprinter_bleu");
       }, null, this);  
   }
 }
+
+
 }
