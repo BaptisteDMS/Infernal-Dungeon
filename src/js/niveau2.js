@@ -53,6 +53,7 @@ function createEnemy3(Xcor,Ycor) {
   this.physics.add.collider(obj3, groupe_plateformes);
   this.physics.add.collider(obj3, player, (obj3, player) => {
     this.physics.pause();
+    musique_de_fond3.stop();
     var timerRestart = this.time.delayedCall(3000,
       () => {
         this.scene.stop();
