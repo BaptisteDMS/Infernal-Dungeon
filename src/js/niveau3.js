@@ -35,7 +35,7 @@ var obj4;
 function createEnemy4() {
   xCoord4 = Math.random() * 800;
   yCoord4 = Math.random() * 600;
-  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "Sprinter_rouge");
+  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "fantome");
   enemy4.add(obj4);
   obj4.setCollideWorldBounds(true);
   this.physics.add.collider(obj4, deco_fond);
