@@ -1,8 +1,5 @@
 import * as fct from "/src/js/fonctions.js";
 
-
-
-
 // Variables globale
 var player; // désigne le sprite du joueur
 var clavier; // pour la gestion du clavier
@@ -17,11 +14,38 @@ var interagir;
 var changement;
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 var decor;
 var CalquedeTuiles;
 var rien;
 var musique_de_fond1;
+
+// enemy variable 2
+var enemy2;
+var xCoord2;
+var yCoord2;
+var elem2;
+var obj2;
+
+
+function createEnemy2() {
+  xCoord2 = Math.random() * 800;
+  yCoord2 = Math.random() * 600;
+  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "Sprinter_rouge");
+  obj2.setCollideWorldBounds(true);
+  this.physics.add.collider(obj2, groupe_plateformes);
+  this.physics.add.collider(obj2, player, (obj2, player) => {
+    this.physics.pause();
+    var timerRestart = this.time.delayedCall(3000,
+      () => {
+        this.scene.stop();
+        this.scene.start();
+      },
+      null, this);    
+  });
+  this.physics.add.collider(obj2, enemy2);
+  
+  enemy2.add(obj2);
+}
 
 
 export default class niveau1 extends Phaser.Scene {

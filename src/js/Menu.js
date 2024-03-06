@@ -98,6 +98,14 @@ export default class Menu extends Phaser.Scene {
         // Ajouter le bouton de retour en bas de l'image
         var boutonRetour = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "imageRetour").setInteractive().setDepth(2);
 
+        boutonRetour.on("pointerover", () => {
+            boutonRetour.setTexture("imageRetourRouge");
+        });
+
+        boutonRetour.on("pointerout", () => {
+            boutonRetour.setTexture("imageRetour");
+        });
+
         boutonRetour.on("pointerup", () => {
             imageCommandes.destroy(); // Supprimer l'image des commandes
             boutonRetour.destroy(); // Supprimer le bouton de retour
@@ -111,6 +119,14 @@ export default class Menu extends Phaser.Scene {
 
         // Ajouter le bouton de retour en bas de l'image
         var boutonRetour = this.add.image(this.cameras.main.centerX, this.cameras.main.height - 50, "imageRetour").setInteractive().setDepth(2);
+
+        boutonRetour.on("pointerover", () => {
+            boutonRetour.setTexture("imageRetourRouge");
+        });
+
+        boutonRetour.on("pointerout", () => {
+            boutonRetour.setTexture("imageRetour");
+        });
 
         boutonRetour.on("pointerup", () => {
             imageGuide.destroy(); // Supprimer l'image du guide
