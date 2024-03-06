@@ -18,6 +18,7 @@ var groupe_plateformes;
 var armesol;
 var lastFiredTime = 0;
 var groupeballe;
+var groupeenemy;
 
 
 var vitesse_lent=0;
@@ -33,12 +34,19 @@ var yCoord;
 var elem;
 var obj;
 
-// enemy variable 2
-var enemy2;
-var xCoord2;
-var yCoord2;
-var elem2;
-var obj2;
+  // enemy variable 2
+  var enemy2;
+  var xCoord2;
+  var yCoord2;
+  var elem2;
+  var obj2;
+
+  // enemy variable 3
+  var enemy3;
+  var xCoord3;
+  var yCoord3;
+  var elem3;
+  var obj3;
 
 function createEnemy() {
   xCoord = Math.random() * 800;
@@ -67,6 +75,23 @@ function createEnemy2() {
   
   enemy2.add(obj2);
 }
+function createEnemy3() {
+  let xCoord3 = Math.random() * 800;
+  let yCoord3 = Math.random() * 600;
+  let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "fireball");
+  obj3.setCollideWorldBounds(true);
+  this.physics.add.collider(obj3, groupe_plateformes);
+  this.physics.add.collider(obj3, player, (enemy3) => {
+      enemy3.destroy();
+  });
+  obj3.setBounce(1);
+
+  
+  enemy3.add(obj3);
+}
+
+
+
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -182,6 +207,7 @@ export default class selection extends Phaser.Scene {
 
     while (n < 5) {
         createEnemy.call(this); 
+        
         n++;
     }
 
@@ -194,12 +220,24 @@ export default class selection extends Phaser.Scene {
     let b = 0;
 
     while (b < 5) {
-        createEnemy2.call(this); 
+        createEnemy2.call(this);
+        
         b++;
+    }
+
+    enemy3 = this.physics.add.group();
+
+    let c = 0;
+
+    while (c < 5) {
+        createEnemy3.call(this); 
+        
+        c++;
     }
 
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
+// Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy
 enemy.children.iterate(enemy => {
   enemy.on('destroy', () => {
       // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
@@ -214,6 +252,39 @@ enemy.children.iterate(enemy => {
       }
   });
 });
+
+// Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy2
+enemy2.children.iterate(enemy2 => {
+  enemy2.on('destroy', () => {
+      // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
+      var proba = Math.floor(Math.random() * 2);
+      if (proba === 0) { // Vérifier si le nombre est égal à 0
+          // Spawn d'une arme à la position de l'ennemi
+          let randomWeaponKey = Phaser.Math.RND.pick(['ak', 'shotgun', 'pistolet', 'blaster', 'lanceflamme']);
+          let weapon = this.physics.add.sprite(enemy2.x, enemy2.y, randomWeaponKey);
+          weapon.setCollideWorldBounds(true);
+          // Ajouter l'arme au groupe d'armes
+          weaponsGroup.add(weapon);
+      }
+  });
+});
+
+// Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy3
+enemy3.children.iterate(enemy3 => {
+  enemy3.on('destroy', () => {
+      // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
+      var proba = Math.floor(Math.random() * 2);
+      if (proba === 0) { // Vérifier si le nombre est égal à 0
+          // Spawn d'une arme à la position de l'ennemi
+          let randomWeaponKey = Phaser.Math.RND.pick(['ak', 'shotgun', 'pistolet', 'blaster', 'lanceflamme']);
+          let weapon = this.physics.add.sprite(enemy3.x, enemy3.y, randomWeaponKey);
+          weapon.setCollideWorldBounds(true);
+          // Ajouter l'arme au groupe d'armes
+          weaponsGroup.add(weapon);
+      }
+  });
+});
+
 
 
   
@@ -264,6 +335,12 @@ enemy.children.iterate(enemy => {
         v++;
     }
 
+    elem3 = enemy3.getChildren();
+    let speedX = Math.random() * 400 - 200; // Vitesse horizontale entre -200 et 200
+  let speedY = Math.random() * 400 - 200; // Vitesse verticale entre -200 et 200
+
+  enemy3.setVelocity(speedX, speedY);
+
     // Détection des collisions entre les balles et les ennemis
     this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
         // Création des balles à la position du joueur avec le bon nom d'arme
@@ -311,6 +388,16 @@ enemy.children.iterate(enemy => {
             laballe.destroy();
         });
     });  
+    this.physics.add.collider(groupeballe, enemy2, (bullet, enemy2) => {
+      bullet.destroy();
+      enemy2.destroy();
+  });
+  
+  this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
+      bullet.destroy();
+      enemy3.destroy();
+  });
+  
 
 
     // Déplacement du joueur
@@ -425,47 +512,37 @@ enemy.children.iterate(enemy => {
     //console.log(angle);
  }
 
- 
- 
 
- 
+tirerBalle(arme) {
+  let cadence;
+  let nomArme;
+  let Vitesse;
 
-  // Fonction pour tirer une balle
-  // Fonction pour tirer une balle
-  tirerBalle(arme) {
-    let cadence;
-    let nomArme;
-    let Vitesse;
-    
-    if (arme === "lanceflamme") {
-        cadence = 20;
-        nomArme = "fireball";
-        Vitesse = 500;
-    } else if (arme === "Handgun") {
-        cadence = 500;
-        nomArme = "pistolbullet";
-        Vitesse = 1000;
-    } else if (arme ==="ak") {
+  if (arme === "lanceflamme") {
+      cadence = 20;
+      nomArme = "fireball";
+      Vitesse = 500;
+  } else if (arme === "Handgun") {
+      cadence = 500;
+      nomArme = "pistolbullet";
+      Vitesse = 1000;
+  } else if (arme === "ak") {
       cadence = 200;
-        nomArme = "pistolbullet";
-        Vitesse = 1000;
-
-    
-
-    } else if (arme ==="blaster") {
+      nomArme = "pistolbullet";
+      Vitesse = 1000;
+  } else if (arme === "blaster") {
       cadence = 750;
-        nomArme = "blasterbullet";
-        Vitesse = 2500;
-
-    }else if (arme === "pistolet") {
+      nomArme = "blasterbullet";
+      Vitesse = 2500;
+  } else if (arme === "pistolet") {
       cadence = 500;
       nomArme = "tire";
       Vitesse = 1000;
-    }else if (arme === "shotgun") {
+  } else if (arme === "shotgun") {
       cadence = 1200;
       nomArme = "pistolbullet";
       Vitesse = 800;
-  
+
       // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
       if (this.time.now - lastFiredTime > cadence) {
           // Calcul du coefficient de direction en fonction de la position du clic de la souris
@@ -474,7 +551,7 @@ enemy.children.iterate(enemy => {
           let distance = Math.sqrt(diffX * diffX + diffY * diffY);
           let coefdirX = diffX / distance;
           let coefdirY = diffY / distance;
-          
+
           // Création des trois balles
           for (let i = 0; i < 3; i++) {
               let bullet;
@@ -488,10 +565,10 @@ enemy.children.iterate(enemy => {
                   let newDirY = Math.sin(Phaser.Math.DegToRad(angle)) * coefdirX + Math.cos(Phaser.Math.DegToRad(angle)) * coefdirY;
                   bullet = this.physics.add.sprite(player.x + 20 * newDirX, player.y + 20 * newDirY, nomArme);
               }
-              
+
               // Ajouter la balle au groupe de balles
               groupeballe.add(bullet);
-              
+
               // Déplacement de la balle vers la position de la souris
               this.physics.moveTo(
                   bullet,
@@ -499,20 +576,18 @@ enemy.children.iterate(enemy => {
                   this.input.mousePointer.worldY,
                   Vitesse
               );
-              
+
               // Gestion des collisions de la balle avec les plateformes
               this.physics.add.collider(bullet, groupe_plateformes, () => {
                   bullet.destroy();
               });
           }
-  
+
           // Mettre à jour le temps du dernier tir
           lastFiredTime = this.time.now;
       }
   }
-  
-       
-    
+
     
     // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
     if (this.time.now - lastFiredTime > cadence) {
@@ -547,12 +622,6 @@ enemy.children.iterate(enemy => {
     }
 }
 
-  
-  
-  
-  
-  
-
 dash (player, image_sprint) {
   if (player.peutDash == true) {
       
@@ -567,6 +636,4 @@ dash (player, image_sprint) {
       }, null, this);  
   }
 }
-
-
 }
