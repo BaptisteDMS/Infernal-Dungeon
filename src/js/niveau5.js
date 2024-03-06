@@ -420,6 +420,16 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
       player.setVelocityX(0);
       player.setVelocityY(0);
     }
+    this.physics.overlap(groupeballe, player, (bullet, player) => {
+      musique_de_fond5.stop();
+      this.physics.pause();
+      var timerRestart = this.time.delayedCall(3000,
+        () => {
+          this.scene.stop();
+          this.scene.start();
+        },
+        null, this);
+    });
 
     // Tire balle fct position souris
     if (this.input.mousePointer.isDown) {

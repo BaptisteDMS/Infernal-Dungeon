@@ -282,6 +282,7 @@ export default class niveau4 extends Phaser.Scene {
 
             // Contact player
     this.physics.overlap(groupeballe, player, (bullet, player) => {
+      musique_de_fond7.stop();
       this.physics.pause();
       var timerRestart = this.time.delayedCall(3000,
         () => {
