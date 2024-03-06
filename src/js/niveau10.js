@@ -14,24 +14,32 @@ var interagir;
 var vitesse_lent=0;
 var vitesse_dash=0;
 let image_sprint;
-var Rien;
-var Ruine;
-var Terrain;
-var Vert;
+var Fond_map;
+var chateau;
+var fond_porte_chateau;
+var donjon;
+var rien;
 
 
-export default class niveau1 extends Phaser.Scene {
+export default class niveau10 extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
     super({
-      key: "niveau1" //  ici on précise le nom de la classe en tant qu'identifiant
+      key: "niveau10" //  ici on précise le nom de la classe en tant qu'identifiant
     });
   }
   preload() {
-    this.load.image("Phaser_JeuDeTuiles1", "src/assets/donjon_jungle/jungle-ruins.png");
-    this.load.image("Phaser_JeuDeTuiles2", "src/assets/donjon_jungle/terrain-amp-v7.png");
-    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/donjon_jungle.json");
-    this.load.image("img_perso","src/assets/map_principale/dude.png"); 
+    this.load.image("Phaser_JeuDeTuiles1", "src/assets/map_principale/terrain.png");
+    this.load.image("Phaser_JeuDeTuiles2", "src/assets/map_principale/arriere_plan.png");
+    this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
+    this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
+    this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
+    this.load.image("Phaser_JeuDeTuiles6", "src/assets/map_principale/maison_bleu_prote.png");
+    this.load.image("Phaser_JeuDeTuiles7", "src/assets/map_principale/porte_chateau.png");
+    this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_principale/porte_donjon_bois.png");
+    this.load.image("Phaser_JeuDeTuiles9", "src/assets/map_principale/porte_donjon_rouge.png");
+    this.load.image("Phaser_JeuDeTuiles10", "src/assets/map_principale/porte_donjon_brique.png");
+    this.load.tilemapTiledJSON("carte", "src/assets/map_principale/carte_map_principale.json");
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
@@ -41,41 +49,104 @@ export default class niveau1 extends Phaser.Scene {
   create() {
     fct.doNothing();
     fct.doAlsoNothing();
-    const carteDuNiveau = this.add.tilemap("carte8");
+    const carteDuNiveau = this.add.tilemap("carte");
     const tileset1 = carteDuNiveau.addTilesetImage(
-      "terrain-map-v7",
+      "terrain",
       "Phaser_JeuDeTuiles1"
     ); 
     const tileset2 = carteDuNiveau.addTilesetImage(
-      "jungle-ruins",
+      "arriere_plan",
       "Phaser_JeuDeTuiles2"
     ); 
+    const tileset3 = carteDuNiveau.addTilesetImage(
+      "chateau",
+      "Phaser_JeuDeTuiles3"
+    ); 
+    const tileset4 = carteDuNiveau.addTilesetImage(
+      "donjon_maison",
+      "Phaser_JeuDeTuiles4"
+    ); 
+    const tileset5 = carteDuNiveau.addTilesetImage(
+      "house",
+      "Phaser_JeuDeTuiles5"
+    ); 
+    const tileset6 = carteDuNiveau.addTilesetImage(
+      "maison_bleu_porte",
+      "Phaser_JeuDeTuiles6"
+    ); 
+    const tileset7 = carteDuNiveau.addTilesetImage(
+      "porte_chateau",
+      "Phaser_JeuDeTuiles7"
+    ); 
+    const tileset8 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_bois",
+      "Phaser_JeuDeTuiles8"
+    ); 
+    const tileset9 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_rouge",
+      "Phaser_JeuDeTuiles9"
+    ); 
+    const tileset10 = carteDuNiveau.addTilesetImage(
+      "porte_donjon_brique",
+      "Phaser_JeuDeTuiles10"
+    ); 
 
-    
-        Fond_map = carteDuNiveau.createLayer(
-      "Rien",
+    Fond_map = carteDuNiveau.createLayer(
+      "Fond_map",
       [tileset1,
-        tileset2]
+        tileset2,
+        tileset3,
+        tileset4,
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     chateau = carteDuNiveau.createLayer(
-      "Ruine",
+      "chateau",
       [tileset1,
-      tileset2]
+        tileset2,
+        tileset3,
+        tileset4,
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     donjon = carteDuNiveau.createLayer(
-      "Terrain",
+      "donjon",
       [tileset1,
-        tileset2]
+        tileset2,
+        tileset3,
+        tileset4,
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
     fond_porte_chateau = carteDuNiveau.createLayer(
-      "Vert",
+      "fond_porte_chateau",
       [tileset1,
-        tileset2]
+        tileset2,
+        tileset3,
+        tileset4,
+        tileset5,
+        tileset6,
+        tileset7,
+        tileset8,
+        tileset9,
+        tileset10]
     );
-    Rien.setCollisionByProperty({ estSolide: true });
-    Vert.setCollisionByProperty({ estSolide: true });
-    Ruine.setCollisionByProperty({ estSolide: true });
-    Terrain.setCollisionByProperty({ estSolide: true });
+    Fond_map.setCollisionByProperty({ estSolide: true });
+    donjon.setCollisionByProperty({ estSolide: true });
+    fond_porte_chateau.setCollisionByProperty({ estSolide: true });
+
 
 
 
@@ -91,7 +162,6 @@ export default class niveau1 extends Phaser.Scene {
 
     // Création du joueur
     player = this.physics.add.sprite(740, 600, "Personnage");
-    player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     player.peutDash = true;
 
@@ -119,6 +189,7 @@ export default class niveau1 extends Phaser.Scene {
     this.physics.add.collider(player, donjon); 
     this.physics.add.collider(player, chateau); 
     this.physics.add.collider(player, Fond_map);
+
   }
 
   update() {
@@ -256,18 +327,19 @@ tirerBalle() {
     500
   );
   // Gestion des collisions de la balle avec les plateformes
-  this.physics.add.collider(bullet, Rien, () => {
+  this.physics.add.collider(bullet, Fond_map, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, Ruine, () => {
+  this.physics.add.collider(bullet, chateau, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, Terrain, () => {
+  this.physics.add.collider(bullet, fond_porte_chateau, () => {
     bullet.destroy();
   });
-  this.physics.add.collider(bullet, Vert, () => {
+  this.physics.add.collider(bullet, donjon, () => {
     bullet.destroy();
   });
+
 }
 
 dash (player, image_sprint) {

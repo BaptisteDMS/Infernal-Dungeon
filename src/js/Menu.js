@@ -17,11 +17,11 @@ export default class menu extends Phaser.Scene {
   }
 
   create() {
-      this.add.image(0, 0, "menu_fond").setOrigin(0).setDepth(0);
+      this.add.image(80, 35, "menu_fond").setOrigin(0).setDepth(0);
 
-      var bouton_play = this.add.image(300, 250, "imageBoutonPlay").setDepth(1);
-      var bouton_commandes = this.add.image(300, 300, "commandes").setDepth(1);
-      var bouton_son = this.add.image(50, 50, "on").setInteractive().setDepth(1);
+      var bouton_play = this.add.image(390, 300, "imageBoutonPlay").setDepth(1);
+      var bouton_commandes = this.add.image(390, 350, "commandes").setDepth(1);
+      var bouton_son = this.add.image(150, 80, "off").setInteractive().setDepth(1);
       this.boutonSon = bouton_son; // Stockez une référence au bouton du son
 
       bouton_play.setInteractive();
@@ -49,8 +49,9 @@ export default class menu extends Phaser.Scene {
       });
 
       bouton_play.on("pointerup", () => {
-          this.scene.start("selection");
-          this.playClickSound(); // Jouez le son du clic pour le bouton "jouer"
+          this.scene.start("selection_map_1");
+          this.playClickSound();
+          this.musiqueMenu.stop(); // Jouez le son du clic pour le bouton "jouer"
       });
 
       bouton_son.on("pointerup", this.toggleSon, this); // Ajoutez le gestionnaire d'événements pour le bouton du son
@@ -70,6 +71,18 @@ export default class menu extends Phaser.Scene {
   playClickSound() {
       this.sound.play("fx"); // Jouez le son du clic
   }
+
+  stopMenuMusic() {
+    // Arrêter la musique du menu
+    this.musiqueMenu.stop();
+}
+
+  destroy() {
+    // Arrêter la musique lorsque la scène est détruite
+    if (this.musiqueMenu && this.musiqueMenu.isPlaying) {
+        this.musiqueMenu.stop();
+    }
+    super.destroy();}
 
   update() {}
 }
