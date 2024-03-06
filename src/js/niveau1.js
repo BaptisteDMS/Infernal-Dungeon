@@ -2,7 +2,8 @@ import * as fct from "/src/js/fonctions.js";
 
 
 
-// Variable globale
+
+// Variables globale
 var player; // désigne le sprite du joueur
 var clavier; // pour la gestion du clavier
 var droite;

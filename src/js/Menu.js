@@ -19,9 +19,9 @@ export default class menu extends Phaser.Scene {
   create() {
       this.add.image(80, 35, "menu_fond").setOrigin(0).setDepth(0);
 
-      var bouton_play = this.add.image(390, 250, "imageBoutonPlay").setDepth(1);
-      var bouton_commandes = this.add.image(390, 300, "commandes").setDepth(1);
-      var bouton_son = this.add.image(100, 50, "off").setInteractive().setDepth(1);
+      var bouton_play = this.add.image(390, 300, "imageBoutonPlay").setDepth(1);
+      var bouton_commandes = this.add.image(390, 350, "commandes").setDepth(1);
+      var bouton_son = this.add.image(150, 80, "off").setInteractive().setDepth(1);
       this.boutonSon = bouton_son; // Stockez une référence au bouton du son
 
       bouton_play.setInteractive();
