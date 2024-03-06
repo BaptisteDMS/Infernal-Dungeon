@@ -17,7 +17,7 @@ export default class menu extends Phaser.Scene {
   }
 
   create() {
-      this.add.image(0, 0, "menu_fond").setOrigin(0).setDepth(0);
+      this.add.image(80, 35, "menu_fond").setOrigin(0).setDepth(0);
 
       var bouton_play = this.add.image(300, 250, "imageBoutonPlay").setDepth(1);
       var bouton_commandes = this.add.image(300, 300, "commandes").setDepth(1);
