@@ -19,6 +19,7 @@ var Ruine;
 var Terrain;
 var Vert;
 var musique_de_fond7;
+var musique_mort;
 var groupeballe;
 var groupeenemy;
 let weaponsGroup;
@@ -285,10 +286,9 @@ export default class niveau4 extends Phaser.Scene {
     this.physics.overlap(groupeballe, player, (bullet, player) => {
       this.physics.pause();
       musique_de_fond7.stop();
-      musique_mort.play();
       var timerRestart = this.time.delayedCall(3000,
         () => {
-          musique_mort.stop();
+
           this.scene.stop();
           this.scene.start();
         },

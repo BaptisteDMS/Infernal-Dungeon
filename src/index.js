@@ -36,4 +36,4 @@ var config = {
 
 // création et lancement du jeu
 var game = new Phaser.Game(config);
-game.scene.start("Menu");
+game.scene.start("selection_map_4");
