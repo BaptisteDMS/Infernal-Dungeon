@@ -30,6 +30,7 @@ var lastFiredTime = 0;
 var groupe_plateformes;
 var xCor;
 var yCor;
+var condition_switch;
 
 // enemy variable 3
 var enemy3;
@@ -69,19 +70,6 @@ function createEnemy3(Xcor,Ycor) {
   obj3.setVelocity(speedX, speedY); 
 } 
 
-
-
-
-   // Crée 3 ennemis avec les coordonnées spécifiées
-
-
-// Exemple d'utilisation :
-
-
-
-  
-
-
 export default class niveau2 extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
@@ -106,7 +94,7 @@ export default class niveau2 extends Phaser.Scene {
   }
 
   create() {
-    
+    condition_switch=0;
     groupeballe=this.physics.add.group();
     weaponsGroup=this.physics.add.group();
     musique_de_fond3 = this.sound.add("background3");
@@ -284,6 +272,7 @@ this.physics.add.collider(groupeballe, Fond, (laballe, laplateforme) => {
 this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
   bullet.destroy();
   enemy3.destroy();
+  condition_switch++;
 });
 
 
@@ -308,7 +297,9 @@ this.physics.overlap(groupeballe, enemy3, (bullet, enemy3) => {
 
 // Passage aux niveaux suivants selon la porte touchée
 if (Phaser.Input.Keyboard.JustDown(changement)) {
+  this.scene.switch("selection_map_3");
   musique_de_fond3.stop();
+}else if (condition_switch==6){
   this.scene.switch("selection_map_3");
   musique_de_fond3.stop();
 }

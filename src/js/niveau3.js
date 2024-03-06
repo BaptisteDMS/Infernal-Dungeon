@@ -26,6 +26,7 @@ let weaponsGroup;
 let weapon = null;
 var lastFiredTime = 0;
 var groupe_plateformes;
+var condition_switch;
 
 // enemy variable 4
 var enemy4;
@@ -73,6 +74,7 @@ export default class niveau3 extends Phaser.Scene {
         this.load.image("fantome", "src/assets/monstres/phh.png")
     }
     create() {
+      condition_switch=0;
         groupeballe=this.physics.add.group();
         weaponsGroup=this.physics.add.group();
         musique_de_fond5 = this.sound.add("background5");

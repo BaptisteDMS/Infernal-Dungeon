@@ -26,7 +26,7 @@ let weaponsGroup;
 let weapon = null;
 var lastFiredTime = 0;
 var groupe_plateformes;
-var condition_switch=0;
+var condition_switch;
 
 // enemy variable 2
 var enemy2;
@@ -80,6 +80,7 @@ export default class niveau1 extends Phaser.Scene {
   }
 
   create() {
+    condition_switch=0;
     groupeballe=this.physics.add.group();
     weaponsGroup=this.physics.add.group();
     musique_de_fond1 = this.sound.add("background1");
