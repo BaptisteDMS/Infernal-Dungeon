@@ -21,6 +21,7 @@ let image_sprint;
 var decor;
 var CalquedeTuiles;
 var rien;
+var musique_de_fond1;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -33,13 +34,19 @@ export default class niveau1 extends Phaser.Scene {
 
   
   preload() {
+
+    //CHARGEMENT MUSIQUE
+    this.load.audio("background1", "/src/assets/song/DOOM.mp3");
     this.load.image("Phaser_JeuDeTuiles11", "src/assets/map_principale/arriere_plan.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_donjon_eau/map_donjon_eau.json");
+    
   }
 
   create() {
     fct.doNothing();
     fct.doAlsoNothing();
+    musique_de_fond1 = this.sound.add("background1");
+    musique_de_fond1.play();
     const carteDuNiveau = this.add.tilemap("carte1");
     const tileset = carteDuNiveau.addTilesetImage(  
       "arriere_plan",
@@ -183,7 +190,8 @@ export default class niveau1 extends Phaser.Scene {
 6
    // Passage aux niveaux suivants selon la porte touchée
    if (Phaser.Input.Keyboard.JustDown(changement) == true) {
-       this.scene.switch("selection_map_2"); 
+       this.scene.switch("selection_map_2");
+       musique_de_fond1.stop(); 
 
    }
 

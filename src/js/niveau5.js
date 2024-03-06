@@ -20,6 +20,7 @@ var CalquedeTuiles3;
 var rien3;
 var mur;
 var decofinale;
+var musique_de_fond9;
 
 export default class niveau5 extends Phaser.Scene {
     // constructeur de la classe
@@ -29,12 +30,16 @@ export default class niveau5 extends Phaser.Scene {
       });
     }
     preload(){
+          //CHARGEMENT MUSIQUE
+    this.load.audio("background9", "/src/assets/song/FreeBird.mp3");
         this.load.image("Phaser_JeuDeTuiles60", "src/assets/map_eglise/chateau.png");
         this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/eglise_finale.json");
     }
     create() {
         fct.doNothing();
         fct.doAlsoNothing();
+        musique_de_fond9 = this.sound.add("background9");
+        musique_de_fond9.play();
         const carteDuNiveau = this.add.tilemap("carte5");
         const tileset = carteDuNiveau.addTilesetImage(
           "eglise",
@@ -193,7 +198,8 @@ export default class niveau5 extends Phaser.Scene {
     
         // Passage aux niveaux suivants selon la porte touchée
         if (Phaser.Input.Keyboard.JustDown(changement) == true) {
-            this.scene.switch("Menu_fin"); 
+            this.scene.switch("Menu_fin");
+            musique_de_fond9.stop();
         }
     
     

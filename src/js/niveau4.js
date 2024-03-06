@@ -19,6 +19,7 @@ var Rien;
 var Ruine;
 var Terrain;
 var Vert;
+var musique_de_fond7;
 
 
 export default class niveau4 extends Phaser.Scene {
@@ -29,6 +30,8 @@ export default class niveau4 extends Phaser.Scene {
     });
   }
   preload() {
+    //CHARGEMENT MUSIQUE
+    this.load.audio("background7", "/src/assets/song/MadMax.mp3");
     this.load.image("Phaser_JeuDeTuiles20", "src/assets/donjon_jungle/jungle-ruins.png");
     this.load.image("Phaser_JeuDeTuiles21", "src/assets/donjon_jungle/terrain-map-v7.png");
     this.load.tilemapTiledJSON("carte4", "src/assets/donjon_jungle/donjon_jun3.json");
@@ -41,6 +44,8 @@ export default class niveau4 extends Phaser.Scene {
   create() {
     fct.doNothing();
     fct.doAlsoNothing();
+    musique_de_fond7 = this.sound.add("background7");
+    musique_de_fond7.play();
     const carteDuNiveau = this.add.tilemap("carte4");
     const tileset1 = carteDuNiveau.addTilesetImage(
       "jungle-ruins",
@@ -198,6 +203,7 @@ export default class niveau4 extends Phaser.Scene {
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement) == true) {
         this.scene.switch("selection_map_5"); 
+        musique_de_fond7.stop();
     }
 
 

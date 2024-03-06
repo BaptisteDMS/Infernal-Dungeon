@@ -21,6 +21,7 @@ var Falaise;
 var Ponts;
 var Rien;
 var changement;
+var musique_de_fond3;
 
 
 export default class niveau2 extends Phaser.Scene {
@@ -31,6 +32,9 @@ export default class niveau2 extends Phaser.Scene {
     });
   }
   preload() {
+
+    //CHARGEMENT MUSIQUE
+    this.load.audio("background3", "/src/assets/song/PAYDAY.mp3"); 
     this.load.image("Phaser_JeuDeTuiles12", "src/assets/donjon_lave/tuilesJeu.png");
     this.load.image("Phaser_JeuDeTuiles13", "src/assets/donjon_lave/ProjectUtumno_full.png");
     this.load.tilemapTiledJSON("carte2", "src/assets/donjon_lave/donjon_lave_4.json"); 
@@ -43,6 +47,8 @@ export default class niveau2 extends Phaser.Scene {
   create() {
     fct.doNothing();
     fct.doAlsoNothing();
+    musique_de_fond3 = this.sound.add("background3");
+    musique_de_fond3.play();
     const carteDuNiveau = this.add.tilemap("carte2");
     const tileset1 = carteDuNiveau.addTilesetImage(
       "tuilesJeu",
@@ -212,7 +218,8 @@ export default class niveau2 extends Phaser.Scene {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement) == true) {
-        this.scene.switch("selection_map_3"); 
+        this.scene.switch("selection_map_3");
+        musique_de_fond3.stop(); 
     }
 
 
