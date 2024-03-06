@@ -316,10 +316,9 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
     }
 
     // Passage aux niveaux suivants selon la porte touchée
-    if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
-      if (this.physics.overlap(player, this.porte1))
-        this.scene.switch("niveau1");
-      musique_de_fond.stop();
+    if (Phaser.Input.Keyboard.JustDown(changement)) {
+      this.scene.switch("selection_map_2");
+      musique_de_fond1.stop();
     }
 
 

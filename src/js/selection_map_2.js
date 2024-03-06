@@ -232,77 +232,102 @@ export default class selection_map_1 extends Phaser.Scene {
     }   
     
   
-    /***********************************************************************/
+     /***********************************************************************/
     /** FONCTION UPDATE 
   /***********************************************************************/
   
-    update() {
-       // Déplacement du joueur
+  update() {
 
-    if(lent.isDown){
-      vitesse_lent=70;
-      if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;}
-    }else if (sprint.isDown){
-      vitesse_dash=100;
-      if (dash.isDown && player.peutDash==true){
-        vitesse_dash=8000;}
-    }else if (dash.isDown && player.peutDash==true){
-      vitesse_dash=8000;
+    // Gestion des collisions de la balle avec les plateformes
+  this.physics.add.collider(groupeballe, Fond_map, (laballe, laplateforme) => {
+    laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, chateau, (laballe, laplateforme) => {
+  laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, fond_porte_chateau, (laballe, laplateforme) => {
+laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, donjon, (laballe, laplateforme) => {
+laballe.destroy();
+});
+
+this.physics.add.collider(groupeballe, rien, (laballe, laplateforme) => {
+laballe.destroy();
+});
+
+
+
+     // Déplacement du joueur
+
+  if(lent.isDown){
+    vitesse_lent=70;
+    if (dash.isDown && player.peutDash==true){
+      vitesse_dash=500;
+    }
+  }else if (sprint.isDown){
+    vitesse_dash=100;
+    if (dash.isDown && player.peutDash==true){
+      vitesse_dash=500;}
+  }else if (dash.isDown && player.peutDash==true){
+    vitesse_dash=500;
+  }else{
+    vitesse_dash=0;
+    vitesse_lent=0;
+  }
+
+  if (gauche.isDown) {
+    if (haut.isDown){
+      player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+      player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+    }else if(bas.isDown) {
+      player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+      player.setVelocityY(160-vitesse_lent+vitesse_dash);
     }else{
-      vitesse_dash=0;
-      vitesse_lent=0;
+      player.setVelocityX(-160+vitesse_lent-vitesse_dash);
     }
+  }  else if (droite.isDown) {
+    if (haut.isDown){
+      player.setVelocityX(160-vitesse_lent+vitesse_dash);
+      player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+    }else if(bas.isDown) {
+      player.setVelocityX(160-vitesse_lent+vitesse_dash);
+      player.setVelocityY(160-vitesse_lent+vitesse_dash);
+    }else{
+      player.setVelocityX(160-vitesse_lent+vitesse_dash);
+    }
+  } else if (bas.isDown) {
+    if (gauche.isDown){
+      player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+      player.setVelocityY(160-vitesse_lent+vitesse_dash);
+    }else if(droite.isDown) {
+      player.setVelocityX(160-vitesse_lent+vitesse_dash);
+      player.setVelocityY(160-vitesse_lent+vitesse_dash);
+    }else{
+      player.setVelocityY(160-vitesse_lent+vitesse_dash);
+    }
+  } else if (haut.isDown) {
+    if (gauche.isDown){
+      player.setVelocityX(-160+vitesse_lent-vitesse_dash);
+      player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+    }else if(droite.isDown) {
+      player.setVelocityX(160-vitesse_lent+vitesse_dash);
+      player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+    }else{
+      player.setVelocityY(-160+vitesse_lent-vitesse_dash);
+    }
+  } else {
+    player.setVelocityX(0);
+    player.setVelocityY(0);
+  }
 
-    if (gauche.isDown) {
-      if (haut.isDown){
-        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-      }else if(bas.isDown) {
-        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.setVelocityY(160-vitesse_lent+vitesse_dash);
-      }else{
-        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-      }
-    }  else if (droite.isDown) {
-      if (haut.isDown){
-        player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-      }else if(bas.isDown) {
-        player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.setVelocityY(160-vitesse_lent+vitesse_dash);
-      }else{
-        player.setVelocityX(160-vitesse_lent+vitesse_dash);
-      }
-    } else if (bas.isDown) {
-      if (gauche.isDown){
-        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.setVelocityY(160-vitesse_lent+vitesse_dash);
-      }else if(droite.isDown) {
-        player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.setVelocityY(160-vitesse_lent+vitesse_dash);
-      }else{
-        player.setVelocityY(160-vitesse_lent+vitesse_dash);
-      }
-    } else if (haut.isDown) {
-      if (gauche.isDown){
-        player.setVelocityX(-160+vitesse_lent-vitesse_dash);
-        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-      }else if(droite.isDown) {
-        player.setVelocityX(160-vitesse_lent+vitesse_dash);
-        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-      }else{
-        player.setVelocityY(-160+vitesse_lent-vitesse_dash);
-      }
-    } else {
-      player.setVelocityX(0);
-      player.setVelocityY(0);
-    }
-
-    // Tire balle fct position souris
-    if (this.input.mousePointer.isDown) {
-      this.tirerBalle(player.gun);
-    }
+  // Tire balle fct position souris
+  if (this.input.mousePointer.isDown) {
+    this.tirerBalle(player.gun);
+  }
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
@@ -311,7 +336,6 @@ export default class selection_map_1 extends Phaser.Scene {
         musique_de_fond.stop();
     }
 
-    
 
       // Calcul de la direction entre le joueur et la position de la souris
       this.input.mousePointer.updateWorldPoint(this.cameras.main);
@@ -454,17 +478,14 @@ export default class selection_map_1 extends Phaser.Scene {
     }
 }
 
-dash (player, image_sprint) {
+dash (player) {
   if (player.peutDash == true) {
       
       player.peutDash = false; // on désactive la possibilté de dash
       
-      image_sprint = this.add.image(16, 16, "Sprinter_rouge");
-      
       // on la réactive dans 4 secondes avec un timer
       var timerDashOk = this.time.delayedCall(4000, () => {
           player.peutDash = true;
-          image_sprint = this.add.image(16, 16, "Sprinter_bleu");
       }, null, this);  
   }
 }

@@ -13,7 +13,6 @@ var sprint;
 var interagir;
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 var Fond;
 var Bords;
 var sol;
