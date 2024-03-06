@@ -15,7 +15,7 @@ export default class Menu extends Phaser.Scene {
         this.load.image("imageBoutonGuideBlanc", "src/assets/Menu/guide.png");
         this.load.image("imageRetour", "src/assets/Menu/retour.png");
         this.load.image("imageRetourRouge", "src/assets/Menu/retour_rouge.png");
-        this.load.audio("musique_menu", "src/assets/Menu/son.mp3");
+        this.load.audio("musique_menu", "src/assets/song/Fortnite.mp3");
         this.load.audio("fx", "src/assets/Menu/fx.mp3");
         this.load.image("imgjeu", "src/assets/Menu/imgjeu.png");
     }
