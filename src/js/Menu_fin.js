@@ -7,7 +7,7 @@ export default class Menu_fin extends Phaser.Scene {
     }
   
     preload() {
-        this.load.image("menu_fond", "src/assets/Menu/backk.png");
+        this.load.image("menu_fond", "src/assets/Menu/backfin.png");
         this.load.image("imageBoutonPlay1", "src/assets/Menu/rejouer_rouge.png");
         this.load.image("imageBoutonBack2", "src/assets/Menu/retour_rouge.png");
         this.load.image("imageBoutonPlayHover1", "src/assets/Menu/rejouer_blanc.png");
