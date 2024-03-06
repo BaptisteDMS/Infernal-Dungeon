@@ -255,8 +255,10 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
     this.physics.overlap(groupeballe, player, (bullet, player) => {
       this.physics.pause();
       musique_de_fond1.stop();
+      musique_mort.play();
       var timerRestart = this.time.delayedCall(3000,
         () => {
+          musique_mort.stop();
           this.scene.stop();
           this.scene.start();
         },
@@ -340,7 +342,6 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
-      musique_mort.play();
       musique_de_fond1.stop();
       this.scene.stop();
       this.scene.switch("selection_map_2");
