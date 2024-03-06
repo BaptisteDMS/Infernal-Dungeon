@@ -120,7 +120,7 @@ export default class niveau5 extends Phaser.Scene {
       boss = this.physics.add.sprite(xCoord5, yCoord5, "boss");
       this.physics.add.collider(player,boss);
       this.physics.add.collider(groupeballe,boss);
-      boss_vie=10;
+      boss_vie=30;
 
       /****************************
      *  Event Boss *
@@ -131,9 +131,9 @@ export default class niveau5 extends Phaser.Scene {
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
-                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x+85, boss.y, "fireball");
             } else {
-                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x-85, boss.y, "fireball");
             }
           groupeballe.add(bullet);
           this.physics.moveTo(bullet, player.x, player.y, 300);
@@ -149,9 +149,9 @@ export default class niveau5 extends Phaser.Scene {
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
-                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x+85, boss.y, "fireball");
             } else {
-                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x-85, boss.y, "fireball");
             }
           groupeballe.add(bullet);
           this.physics.moveTo(bullet, player.x, player.y, 300);
@@ -166,9 +166,9 @@ export default class niveau5 extends Phaser.Scene {
       callback: function () {
           let bullet;
             if (boss.x <= player.x) {
-                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x+85, boss.y, "fireball");
             } else {
-                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+                bullet = this.physics.add.sprite(boss.x-85, boss.y, "fireball");
             }
           groupeballe.add(bullet);
           this.physics.moveTo(bullet, player.x, player.y, 300);
@@ -190,10 +190,10 @@ export default class niveau5 extends Phaser.Scene {
           coefdir=-1;
         }
 
-        let bullet1 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y+100, "fireball");
-        let bullet2 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y+50, "fireball");
-        let bullet3 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y-50, "fireball");
-        let bullet4 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y-100, "fireball");
+        let bullet1 = this.physics.add.sprite(boss.x+(85*coefdir), boss.y+100, "fireball");
+        let bullet2 = this.physics.add.sprite(boss.x+(85*coefdir), boss.y+50, "fireball");
+        let bullet3 = this.physics.add.sprite(boss.x+(85*coefdir), boss.y-50, "fireball");
+        let bullet4 = this.physics.add.sprite(boss.x+(85*coefdir), boss.y-100, "fireball");
         
         groupeballe.add(bullet1);
         groupeballe.add(bullet2);
@@ -238,14 +238,14 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
     var TimerBossBoule = this.time.addEvent({
       delay: 10000, // ms
       callback: function () {
-        let bullet1 = this.physics.add.sprite(boss.x+50, boss.y, "fireball");
-        let bullet2 = this.physics.add.sprite(boss.x-50, boss.y, "fireball");
-        let bullet3 = this.physics.add.sprite(boss.x, boss.y+50, "fireball");
-        let bullet4 = this.physics.add.sprite(boss.x, boss.y-50, "fireball");
-        let bullet5 = this.physics.add.sprite(boss.x+50, boss.y+50, "fireball");
-        let bullet6 = this.physics.add.sprite(boss.x-50, boss.y+50, "fireball");
-        let bullet7 = this.physics.add.sprite(boss.x-50, boss.y-50, "fireball");
-        let bullet8 = this.physics.add.sprite(boss.x+50, boss.y-50, "fireball");
+        let bullet1 = this.physics.add.sprite(boss.x+85, boss.y, "fireball");
+        let bullet2 = this.physics.add.sprite(boss.x-85, boss.y, "fireball");
+        let bullet3 = this.physics.add.sprite(boss.x, boss.y+85, "fireball");
+        let bullet4 = this.physics.add.sprite(boss.x, boss.y-85, "fireball");
+        let bullet5 = this.physics.add.sprite(boss.x+85, boss.y+85, "fireball");
+        let bullet6 = this.physics.add.sprite(boss.x-85, boss.y+85, "fireball");
+        let bullet7 = this.physics.add.sprite(boss.x-85, boss.y-85, "fireball");
+        let bullet8 = this.physics.add.sprite(boss.x+85, boss.y-85, "fireball");
 
         groupeballe.add(bullet1);
         groupeballe.add(bullet2);

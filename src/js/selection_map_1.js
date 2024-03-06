@@ -47,6 +47,7 @@ export default class selection_map_1 extends Phaser.Scene {
 
       //CHARGEMENT MUSIQUE
       this.load.audio("background", "/src/assets/song/clash_of_clan.mp3"); 
+      this.load.audio("die", "/src/assets/song/DarkSouls.mp3");
       //CHARGEMENT DES IMAGES DE PORTES DES DIFFERENTES NIVEAUX
       this.load.image("porte_bleu", "src/assets/map_principale/maison_bleu_prote.png");
       this.load.image("porte_rouge", "src/assets/map_principale/porte_donjon_rouge.png");
@@ -56,20 +57,21 @@ export default class selection_map_1 extends Phaser.Scene {
       //CHARGEMENT DES IMAGES DU PERSONNAGES
       this.load.image("fireball", "src/assets/fireball.png");
       this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
-      this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
-      this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
+      this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png");
+      this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png");
       this.load.image("bullet", "src/assets/projectile5.png");
-      this.load.image("boss", "src/assets/monstres/ph.png")
+      this.load.image("boss", "src/assets/monstres/ph.png");
+      this.load.image("boss", "src/assets/Redi/died.png");
       // Chargement de l'image de la balle
       this.load.image("Sprinter_rouge", "src/assets/rouge.png");
       // CHARGEMENT DES IMAGES DE SHOOTS
-      this.load.image("tire","src/assets/Redi/tire.jpg")
-      this.load.image("cible", "src/assets/Redi/eyeball.png")
+      this.load.image("tire","src/assets/Redi/tire.jpg");
+      this.load.image("cible", "src/assets/Redi/eyeball.png");
       //Arme
-      this.load.image("blaster", "src/assets/armeSol/Pistolet_blaster_DH-17.jpg")
-      this.load.image("ak", "src/assets/armeSol/1(3).png")
-      this.load.image("pistolet", "src/assets/armeSol/1(4).png")
-      this.load.image("shotgun", "src/assets/armeSol/1(2).png")
+      this.load.image("blaster", "src/assets/armeSol/Pistolet_blaster_DH-17.jpg");
+      this.load.image("ak", "src/assets/armeSol/1(3).png");
+      this.load.image("pistolet", "src/assets/armeSol/1(4).png");
+      this.load.image("shotgun", "src/assets/armeSol/1(2).png");
       this.load.image("lanceflamme", "src/assets/armeSol/1(1).png");
       //CHARGEMENT DES IMAGES POUR CREER LA MAP
       this.load.image("Phaser_JeuDeTuiles1", "src/assets/map_principale/terrain.png");
