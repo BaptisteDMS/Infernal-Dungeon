@@ -62,6 +62,10 @@ var yCoord4;
 var elem4;
 var obj4;
 
+// enemy variable boss
+var boss;
+var boss_vie;
+
 function createEnemy() {
   xCoord = Math.random() * 800;
   yCoord = Math.random() * 600;
@@ -283,6 +287,18 @@ export default class selection extends Phaser.Scene {
         a++;
     }
 
+
+    /****************************
+     *  CREATION DU BOSS *
+     ****************************/
+      var xCoord5 = 400;
+      var yCoord5 = 60;
+      boss = this.physics.add.sprite(xCoord5, yCoord5, "Sprinter_rouge");
+      this.physics.add.collider(player,boss);
+      this.physics.add.collider(groupeballe,boss);
+      boss_vie=10;
+      
+
     var TimerMonster2 = this.time.addEvent({
       delay: 500, // ms
       callback: function () {
@@ -332,6 +348,146 @@ export default class selection extends Phaser.Scene {
       callbackScope: this,
       repeat: -1
     });
+
+    /****************************
+     *  Event Boss *
+     ****************************/
+
+    var TimerBossAtt1= this.time.addEvent({
+      delay: 3000, // ms
+      callback: function () {
+          let bullet;
+            if (boss.x <= player.x) {
+                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+            } else {
+                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+            }
+          groupeballe.add(bullet);
+          this.physics.moveTo(bullet, player.x, player.y, 300);
+        },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    }); 
+
+
+    var TimerBossAtt2= this.time.addEvent({
+      delay: 3200, // ms
+      callback: function () {
+          let bullet;
+            if (boss.x <= player.x) {
+                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+            } else {
+                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+            }
+          groupeballe.add(bullet);
+          this.physics.moveTo(bullet, player.x, player.y, 300);
+        },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    }); 
+
+    var TimerBossAtt3= this.time.addEvent({
+      delay: 3400, // ms
+      callback: function () {
+          let bullet;
+            if (boss.x <= player.x) {
+                bullet = this.physics.add.sprite(boss.x+35, boss.y, "fireball");
+            } else {
+                bullet = this.physics.add.sprite(boss.x-35, boss.y, "fireball");
+            }
+          groupeballe.add(bullet);
+          this.physics.moveTo(bullet, player.x, player.y, 300);
+        },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    }); 
+
+    var TimerBossAttLeger= this.time.addEvent({
+      delay: 8000 , // ms
+      callback: function () {
+        let randomValue = Math.random();
+        let randomBinary = Math.round(randomValue);
+        var coefdir=1;
+        if (randomBinary==0){
+          coefdir=1;
+        }else{
+          coefdir=-1;
+        }
+
+        let bullet1 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y+100, "fireball");
+        let bullet2 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y+50, "fireball");
+        let bullet3 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y-50, "fireball");
+        let bullet4 = this.physics.add.sprite(boss.x+(50*coefdir), boss.y-100, "fireball");
+        
+        groupeballe.add(bullet1);
+        groupeballe.add(bullet2);
+        groupeballe.add(bullet3);
+        groupeballe.add(bullet4);
+        
+        this.physics.moveTo(bullet1, player.x, player.y, 100);
+        this.physics.moveTo(bullet2, player.x, player.y, 100);
+        this.physics.moveTo(bullet3, player.x, player.y, 100);
+        this.physics.moveTo(bullet4, player.x, player.y, 100);
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateforme) => {
+          laballe.destroy();
+      });
+        },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    }); 
+
+
+    var TimerBossBoule = this.time.addEvent({
+      delay: 10000, // ms
+      callback: function () {
+        let bullet1 = this.physics.add.sprite(boss.x+50, boss.y, "fireball");
+        let bullet2 = this.physics.add.sprite(boss.x-50, boss.y, "fireball");
+        let bullet3 = this.physics.add.sprite(boss.x, boss.y+50, "fireball");
+        let bullet4 = this.physics.add.sprite(boss.x, boss.y-50, "fireball");
+        let bullet5 = this.physics.add.sprite(boss.x+50, boss.y+50, "fireball");
+        let bullet6 = this.physics.add.sprite(boss.x-50, boss.y+50, "fireball");
+        let bullet7 = this.physics.add.sprite(boss.x-50, boss.y-50, "fireball");
+        let bullet8 = this.physics.add.sprite(boss.x+50, boss.y-50, "fireball");
+
+        groupeballe.add(bullet1);
+        groupeballe.add(bullet2);
+        groupeballe.add(bullet3);
+        groupeballe.add(bullet4);
+        groupeballe.add(bullet5);
+        groupeballe.add(bullet6);
+        groupeballe.add(bullet7);
+        groupeballe.add(bullet8);
+
+        bullet1.setVelocityX(200);
+        bullet2.setVelocityX(-200);
+        bullet3.setVelocityY(200);
+        bullet4.setVelocityY(-200);
+
+        bullet5.setVelocityX(200);
+        bullet5.setVelocityY(200);
+        bullet6.setVelocityX(-200);
+        bullet6.setVelocityY(200);
+        bullet7.setVelocityY(-200);
+        bullet7.setVelocityX(-200);
+        bullet8.setVelocityY(-200);  
+        bullet8.setVelocityX(200);
+
+        // Gestion des collisions de la balle avec les plateformes
+        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateforme) => {
+          laballe.destroy();
+      }); },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    });
+
+
+   
 
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
@@ -449,6 +605,9 @@ this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateform
       c++;
     }
 
+    // Mouvement boss
+    this.physics.moveTo(boss, 400, 60, 20);
+
     
 
     // Détection des collisions entre les balles et les ennemis
@@ -516,6 +675,15 @@ this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateform
     // Contact enemy 4
     this.physics.overlap(groupeballe, enemy4, (bullet, enemy4) => {bullet.destroy();
       enemy4.destroy();});
+
+    this.physics.overlap(boss, groupeballe, (boss, bullet) => {
+      bullet.destroy();
+      boss_vie--;
+      if(boss_vie==0){
+        this.scene.restart();
+      }
+    });
+
 
 
     // Déplacement du joueur
