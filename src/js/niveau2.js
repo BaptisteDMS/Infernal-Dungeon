@@ -281,9 +281,8 @@ this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
 
 // Contact player
 this.physics.overlap(groupeballe, player, (bullet, player) => {
-
-  this.physics.pause();
   musique_de_fond3.stop();
+  this.physics.pause();
   var timerRestart = this.time.delayedCall(3000,
     () => {
       this.scene.stop();
