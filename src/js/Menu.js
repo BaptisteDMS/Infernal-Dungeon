@@ -44,7 +44,7 @@ export default class Menu extends Phaser.Scene {
       });
 
       bouton_commandes.on("pointerup", () => {
-          this.scene.start("niveau_10");
+          this.scene.start("niveau_1");
           this.playClickSound(); // Jouez le son du clic pour le bouton "commandes"
       });
 
