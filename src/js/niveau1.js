@@ -18,6 +18,7 @@ var decor;
 var CalquedeTuiles;
 var rien;
 var musique_de_fond1;
+var musique_mort;
 var groupeballe;
 var groupeenemy;
 let weaponsGroup;
@@ -339,7 +340,7 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
-      die.
+      musique_mort.play();
       musique_de_fond1.stop();
       this.scene.stop();
       this.scene.switch("selection_map_2");
