@@ -18,6 +18,7 @@ let image_sprint;
 var deco_fond;
 var CalquedeTuiles2;
 var rien1;
+var musique_de_fond5;
 
 export default class niveau3 extends Phaser.Scene {
     // constructeur de la classe
@@ -27,12 +28,16 @@ export default class niveau3 extends Phaser.Scene {
       });
     }
     preload(){
+          //CHARGEMENT MUSIQUE
+    this.load.audio("background5", "/src/assets/song/street_fighter.mp3");
         this.load.image("Phaser_JeuDeTuiles14", "src/assets/map_donjon_japon/japontuiles.png");
         this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
     }
     create() {
         fct.doNothing();
         fct.doAlsoNothing();
+        musique_de_fond5 = this.sound.add("background5");
+        musique_de_fond5.play();
         const carteDuNiveau = this.add.tilemap("carte3");
         const tileset = carteDuNiveau.addTilesetImage(
           "carte_1",
@@ -176,6 +181,7 @@ export default class niveau3 extends Phaser.Scene {
         // Passage aux niveaux suivants selon la porte touchée
         if (Phaser.Input.Keyboard.JustDown(changement) == true) {
             this.scene.switch("selection_map_4"); 
+            musique_de_fond5.stop();
         }
     
     

@@ -35,6 +35,7 @@ var chateau;
 var fond_porte_chateau;
 var donjon;
 var rien;
+var musique_de_fond8;
 
 /***********************************************************************/
 /** FONCTION */
@@ -68,7 +69,8 @@ export default class selection_map_5 extends Phaser.Scene {
   /***********************************************************************/
   
     preload() {
-
+    //CHARGEMENT MUSIQUE
+    this.load.audio("background8", "/src/assets/song/clash_of_clan.mp3");
       //CHARGEMENT DES IMAGES DE PORTES DES DIFFERENTES NIVEAUX
       this.load.image("porte_bleu", "src/assets/map_principale/maison_bleu_prote.png");
       this.load.image("porte_rouge", "src/assets/map_principale/porte_donjon_rouge.png");
@@ -114,6 +116,8 @@ export default class selection_map_5 extends Phaser.Scene {
 
       fct.doNothing();
       fct.doAlsoNothing();
+      musique_de_fond8 = this.sound.add("background8");
+      musique_de_fond8.play();
       groupeballe = this.physics.add.group();
       weaponsGroup = this.physics.add.group();
 
@@ -350,6 +354,7 @@ export default class selection_map_5 extends Phaser.Scene {
       if (Phaser.Input.Keyboard.JustDown(interagir) == true) {
         if (this.physics.overlap(player, this.porte5))
           this.scene.switch("niveau5");
+          musique_de_fond8.stop();
       }
 
       // Calcul de la direction entre le joueur et la position de la souris
