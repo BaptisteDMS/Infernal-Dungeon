@@ -30,7 +30,6 @@ var xCoord;
 var yCoord;
 var elem;
 var obj;
-var image_sprint;
 
 function createEnemy() {
   xCoord = Math.random() * 800;
@@ -127,8 +126,6 @@ export default class niveau4 extends Phaser.Scene {
     });
 
 
-    // Création icone dash
-    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
 
     // Création du joueur
     player = this.physics.add.sprite(640, 430, "Personnage");
@@ -152,7 +149,7 @@ export default class niveau4 extends Phaser.Scene {
 
         let n = 0;
     
-        while (n < 4) {
+        while (n < 5) {
             createEnemy.call(this); 
             
             n++;
