@@ -198,6 +198,7 @@ export default class niveau5 extends Phaser.Scene {
     
         // Passage aux niveaux suivants selon la porte touchée
         if (Phaser.Input.Keyboard.JustDown(changement) == true) {
+          musique_de_fond9.stop();
             this.scene.switch("Menu_fin_Victoire");
             musique_de_fond9.stop();
         }
