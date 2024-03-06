@@ -120,7 +120,7 @@ export default class niveau3 extends Phaser.Scene {
 
     let a = 0;
 
-    while (a < 0) {
+    while (a < 5) {
         createEnemy4.call(this); 
         a++;
     }
