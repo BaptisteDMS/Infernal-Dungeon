@@ -14,13 +14,22 @@ var interagir;
 var changement;
 var vitesse_lent=0;
 var vitesse_dash=0;
-let image_sprint;
 var deco;
 var CalquedeTuiles3;
 var rien3;
 var mur;
 var decofinale;
 var musique_de_fond9;
+var groupeballe;
+var groupeenemy;
+let weaponsGroup;
+let weapon = null;
+var lastFiredTime = 0;
+var groupe_plateformes;
+
+// enemy variable boss
+var boss;
+var boss_vie;
 
 export default class niveau5 extends Phaser.Scene {
     // constructeur de la classe
@@ -38,8 +47,8 @@ export default class niveau5 extends Phaser.Scene {
           this.load.image("boss", "src/assets/monstres/boss.png")
     }
     create() {
-        fct.doNothing();
-        fct.doAlsoNothing();
+      groupeballe=this.physics.add.group();
+      weaponsGroup=this.physics.add.group();
         musique_de_fond9 = this.sound.add("background9");
         musique_de_fond9.play();
         const carteDuNiveau = this.add.tilemap("carte5");
@@ -89,13 +98,11 @@ export default class niveau5 extends Phaser.Scene {
         });
     
     
-        // Création icone dash
-        image_sprint = this.add.image(16, 16, "Sprinter_bleu");
-    
         // Création du joueur
         player = this.physics.add.sprite(675, 515, "Personnage");
         player.setCollideWorldBounds(true);
         player.peutDash = true;
+        player.gun = "ak";
     
     
     
@@ -104,6 +111,17 @@ export default class niveau5 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, 1280, 967.5);
         // ancrage de la caméra sur le joueur
         this.cameras.main.startFollow(player);
+
+        /****************************
+       *  CREATION DU BOSS *
+       ****************************/
+      var xCoord5 = 400;
+      var yCoord5 = 100;
+      boss = this.physics.add.sprite(xCoord5, yCoord5, "boss");
+      this.physics.add.collider(player,boss);
+      this.physics.add.collider(groupeballe,boss);
+      boss_vie=10;
+
     
     
        // Création du clavier
