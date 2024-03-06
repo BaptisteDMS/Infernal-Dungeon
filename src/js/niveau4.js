@@ -35,7 +35,7 @@ var image_sprint;
 function createEnemy() {
   xCoord = Math.random() * 800;
   yCoord = Math.random() * 600;
-  obj = this.physics.add.sprite(xCoord, yCoord, "Sprinter_rouge");
+  obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
   obj.setCollideWorldBounds(true);
   this.physics.add.collider(obj, Rien);
   this.physics.add.collider(obj, Ruine);
