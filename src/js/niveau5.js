@@ -76,7 +76,7 @@ export default class niveau5 extends Phaser.Scene {
     
     
         // ajout d'un texte distintcif  du niveau
-        this.add.text(400, 100, "Vous êtes dans le niveau 5", {
+        this.add.text(500, 385, "Vous êtes dans le niveau 5", {
           fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
           fontSize: "22pt"
         });
@@ -86,7 +86,7 @@ export default class niveau5 extends Phaser.Scene {
         image_sprint = this.add.image(16, 16, "Sprinter_bleu");
     
         // Création du joueur
-        player = this.physics.add.sprite(740, 600, "Personnage");
+        player = this.physics.add.sprite(675, 515, "Personnage");
         player.setCollideWorldBounds(true);
         player.peutDash = true;
     
