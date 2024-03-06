@@ -31,7 +31,7 @@ export default class niveau4 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_JeuDeTuiles20", "src/assets/donjon_jungle/jungleruins.png");
     this.load.image("Phaser_JeuDeTuiles21", "src/assets/donjon_jungle/terrainampv7.png");
-    this.load.tilemapTiledJSON("carte4", "src/assets/donjon_jungle/donjon_jungle.json");
+    this.load.tilemapTiledJSON("carte4", "src/assets/donjon_jungle/donjonjungles.json");
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle

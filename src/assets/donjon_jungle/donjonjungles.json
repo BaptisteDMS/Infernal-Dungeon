@@ -179,12 +179,12 @@
  "tilesets":[
         {
          "firstgid":1,
-         "source":"..\/..\/Downloads\/lpc-jungle-ruins\/lpc-jungle-ruins\/preview\/terrain-map-v7.tsx"
+         "source":"..\/..\/..\/..\/..\/..\/..\/Downloads\/lpc-jungle-ruins\/lpc-jungle-ruins\/preview\/terrain-map-v7.tsx"
         }, 
         {
          "columns":32,
          "firstgid":15745,
-         "image":"..\/..\/Downloads\/lpc-jungle-ruins\/lpc-jungle-ruins\/jungle-ruins.png",
+         "image":"..\/..\/..\/..\/..\/..\/..\/Downloads\/lpc-jungle-ruins\/lpc-jungle-ruins\/jungle-ruins.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
