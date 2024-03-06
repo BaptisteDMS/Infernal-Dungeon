@@ -312,16 +312,22 @@ export default class selection_map_1 extends Phaser.Scene {
     
 
       // Calcul de la direction entre le joueur et la position de la souris
+      this.input.mousePointer.updateWorldPoint(this.cameras.main);
+
     let diffX = this.input.mousePointer.worldX - player.x;
     let diffY = this.input.mousePointer.worldY - player.y;
+    console.log("pointer"+this.input.mousePointer.x); 
+    console.log("pointer"+this.input.mousePointer.worldX); 
+
+    console.log("player" +player.x);
 
     // Calcul de l'angle en radians entre le joueur et la souris
     let angle = Math.atan(diffY / diffX);
-    console.log(angle);
+
 
     // Convertir l'angle en degrés
     angle = Phaser.Math.RadToDeg(angle);
-
+    //console.log(angle);
     // Ajuster l'angle en fonction de la position du curseur
     if (diffX < 0) {
     // player.flipX=true;
@@ -418,6 +424,7 @@ export default class selection_map_1 extends Phaser.Scene {
     // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
     if (this.time.now - lastFiredTime > cadence) {
         // Calcul du coefficient de direction en fonction de la position du clic de la souris
+        this.input.mousePointer.updateWorldPoint(this.cameras.main);
         let diffX = this.input.mousePointer.worldX - player.x;
         let diffY = this.input.mousePointer.worldY - player.y;
         let distance = Math.sqrt(diffX * diffX + diffY * diffY);
@@ -431,6 +438,7 @@ export default class selection_map_1 extends Phaser.Scene {
         groupeballe.add(bullet);
         
         // Déplacement de la balle vers la position de la souris
+        this.input.mousePointer.updateWorldPoint(this.cameras.main);
         this.physics.moveTo(
             bullet,
             this.input.mousePointer.worldX,

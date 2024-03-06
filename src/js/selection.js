@@ -33,13 +33,6 @@ var yCoord;
 var elem;
 var obj;
 
-  // enemy variable 2
-  var enemy2;
-  var xCoord2;
-  var yCoord2;
-  var elem2;
-  var obj2;
-
   // enemy variable 3
   var enemy3;
   var xCoord3;
