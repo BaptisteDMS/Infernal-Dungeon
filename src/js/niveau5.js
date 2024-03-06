@@ -115,8 +115,8 @@ export default class niveau5 extends Phaser.Scene {
         /****************************
        *  CREATION DU BOSS *
        ****************************/
-      var xCoord5 = 400;
-      var yCoord5 = 100;
+      var xCoord5 = 670;
+      var yCoord5 = 251;
       boss = this.physics.add.sprite(xCoord5, yCoord5, "boss");
       this.physics.add.collider(player,boss);
       this.physics.add.collider(groupeballe,boss);
@@ -325,13 +325,14 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
       update() {
 
         // Mouvement boss
-        this.physics.moveTo(boss, 400, 60, 20);
+        this.physics.moveTo(boss, 670, 251, 20);
 
         this.physics.overlap(boss, groupeballe, (boss, bullet) => {
           bullet.destroy();
           boss_vie--;
           if(boss_vie==0){
-            this.scene.restart();
+            this.scene.stop();
+            this.scene.switch("Menu_fin_Victoire");
           }
         });
 
@@ -439,6 +440,8 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
 
     let diffX = this.input.mousePointer.worldX - player.x;
     let diffY = this.input.mousePointer.worldY - player.y;
+    console.log(this.input.mousePointer.worldX);
+    console.log(this.input.mousePointer.worldY);
 
     // Calcul de l'angle en radians entre le joueur et la souris
     let angle = Math.atan(diffY / diffX);
