@@ -45,6 +45,7 @@ function createEnemy2() {
   this.physics.add.collider(obj2, rien);
   this.physics.add.collider(obj2, player, (obj2, player) => {
     this.physics.pause();
+    musique_de_fond1.stop();
     var timerRestart = this.time.delayedCall(3000,
       () => {
         this.scene.stop();

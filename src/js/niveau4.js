@@ -42,6 +42,7 @@ function createEnemy() {
   this.physics.add.collider(obj, Vert);
   this.physics.add.collider(obj, player, (obj, player) => {
     this.physics.pause();
+    musique_de_fond7.stop();
     var timerRestart = this.time.delayedCall(3000,
       () => {
         this.scene.stop();
@@ -282,10 +283,12 @@ export default class niveau4 extends Phaser.Scene {
 
             // Contact player
     this.physics.overlap(groupeballe, player, (bullet, player) => {
-      musique_de_fond7.stop();
       this.physics.pause();
+      musique_de_fond7.stop();
+      musique_mort.play();
       var timerRestart = this.time.delayedCall(3000,
         () => {
+          musique_mort.stop();
           this.scene.stop();
           this.scene.start();
         },

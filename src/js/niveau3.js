@@ -18,6 +18,7 @@ var deco_fond;
 var CalquedeTuiles2;
 var rien1;
 var musique_de_fond5;
+var musique_mort;
 var groupeballe;
 var groupeenemy;
 let weaponsGroup;
@@ -44,6 +45,7 @@ function createEnemy4() {
   this.physics.add.collider(obj4, groupe_plateformes);
   this.physics.add.collider(obj4, player, (obj4, player) => {
     this.physics.pause();
+    musique_de_fond5.stop();
     var timerRestart = this.time.delayedCall(3000,
       () => {
         this.scene.stop();
@@ -231,10 +233,11 @@ this.physics.add.collider(groupeballe, deco_fond, (laballe, laplateforme) => {
 
 // Contact player
 this.physics.overlap(groupeballe, player, (bullet, player) => {
-  musique_de_fond5.stop();
   this.physics.pause();
+  musique_de_fond5.stop();
   var timerRestart = this.time.delayedCall(3000,
     () => {
+
       this.scene.stop();
       this.scene.start();
     },
