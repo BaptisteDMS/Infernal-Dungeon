@@ -51,9 +51,13 @@ export default class niveau4 extends Phaser.Scene {
       "Phaser_JeuDeTuiles21"
     ); 
 
-    
-    Rien = carteDuNiveau.createLayer(
-      "Rien",
+    Vert = carteDuNiveau.createLayer(
+      "Vert",
+      [tileset1,
+        tileset2]
+    );  
+    Terrain = carteDuNiveau.createLayer(
+      "Terrain",
       [tileset1,
         tileset2]
     );
@@ -62,16 +66,14 @@ export default class niveau4 extends Phaser.Scene {
       [tileset1,
       tileset2]
     );
-    Terrain = carteDuNiveau.createLayer(
-      "Terrain",
+    Rien = carteDuNiveau.createLayer(
+      "Rien",
       [tileset1,
         tileset2]
     );
-    Vert = carteDuNiveau.createLayer(
-      "Vert",
-      [tileset1,
-        tileset2]
-    );
+
+
+
     Rien.setCollisionByProperty({ estSolide: true });
     Vert.setCollisionByProperty({ estSolide: true });
     Ruine.setCollisionByProperty({ estSolide: true });
