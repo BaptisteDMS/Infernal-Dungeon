@@ -440,8 +440,6 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
 
     let diffX = this.input.mousePointer.worldX - player.x;
     let diffY = this.input.mousePointer.worldY - player.y;
-    console.log(this.input.mousePointer.worldX);
-    console.log(this.input.mousePointer.worldY);
 
     // Calcul de l'angle en radians entre le joueur et la souris
     let angle = Math.atan(diffY / diffX);
