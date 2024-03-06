@@ -1,57 +1,75 @@
 export default class menu extends Phaser.Scene {
-    constructor() {
+  constructor() {
       super({ key: "menu" });
-    }
-    //on charge les images
-    preload() {
+  }
+
+  preload() {
       this.load.image("menu_fond", "src/assets/Menu/backk.png");
       this.load.image("imageBoutonPlay", "src/assets/Menu/JOUER.png");
       this.load.image("imageBoutonBack", "src/assets/Menu/retour_rouge.png");
       this.load.image("imageBoutonPlayHover", "src/assets/Menu/JOUER_blanc.png");
       this.load.image("commandes", "src/assets/Menu/commandes.png");
       this.load.image("commandes_blanches", "src/assets/Menu/commandes_blanches.png");
-    }
-  
-    create() {
-     // on place les éléments de fond
-      this.add
-        .image(0, 0, "menu_fond")
-        .setOrigin(0)
-        .setDepth(0);
-  
-      //on ajoute un bouton de clic, nommé bouton_play
+      this.load.audio("musique_menu", "src/assets/Menu/son.mp3");
+      this.load.image("on", "src/assets/Menu/on.png");
+      this.load.image("off", "src/assets/Menu/off.png");
+      this.load.audio("fx", "src/assets/Menu/fx.mp3");
+  }
+
+  create() {
+      this.add.image(0, 0, "menu_fond").setOrigin(0).setDepth(0);
+
       var bouton_play = this.add.image(300, 250, "imageBoutonPlay").setDepth(1);
       var bouton_commandes = this.add.image(300, 300, "commandes").setDepth(1);
-     
-      //=========================================================
-      //on rend le bouton interratif
+      var bouton_son = this.add.image(50, 50, "on").setInteractive().setDepth(1);
+      this.boutonSon = bouton_son; // Stockez une référence au bouton du son
+
       bouton_play.setInteractive();
       bouton_commandes.setInteractive();
-  
-      bouton_play.on("pointerover", () => {
-          bouton_play.setTexture("imageBoutonPlayHover"); // Changez la texture pour l'image avec la couleur différente
-        });
-        
-        bouton_play.on("pointerout", () => {
-          bouton_play.setTexture("imageBoutonPlay"); // Revenez à l'image normale du bouton
-        });
 
-        bouton_commandes.on("pointerover", () => {
-          bouton_commandes.setTexture("commandes_blanches"); // Changement de texture pour la couleur différente
-        });
-        
-        bouton_commandes.on("pointerout", () => {
-          bouton_commandes.setTexture("commandes"); // Revenir à la texture normale
-        });
-    
-        bouton_commandes.on("pointerup", () => {
+      bouton_play.on("pointerover", () => {
+          bouton_play.setTexture("imageBoutonPlayHover");
+      });
+
+      bouton_play.on("pointerout", () => {
+          bouton_play.setTexture("imageBoutonPlay");
+      });
+
+      bouton_commandes.on("pointerover", () => {
+          bouton_commandes.setTexture("commandes_blanches");
+      });
+
+      bouton_commandes.on("pointerout", () => {
+          bouton_commandes.setTexture("commandes");
+      });
+
+      bouton_commandes.on("pointerup", () => {
           this.scene.start("niveau 1");
-        });
-      
-        bouton_play.on("pointerup", () => {
-          this.scene.start("niveau 1");
-        });
+          this.playClickSound(); // Jouez le son du clic pour le bouton "commandes"
+      });
+
+      bouton_play.on("pointerup", () => {
+          this.scene.start("selection");
+          this.playClickSound(); // Jouez le son du clic pour le bouton "jouer"
+      });
+
+      bouton_son.on("pointerup", this.toggleSon, this); // Ajoutez le gestionnaire d'événements pour le bouton du son
+  }
+
+  toggleSon() {
+      if (this.musiqueMenu && this.musiqueMenu.isPlaying) {
+          this.musiqueMenu.stop();
+          this.boutonSon.setTexture("off");
+      } else {
+          this.musiqueMenu = this.sound.add("musique_menu", { loop: true });
+          this.musiqueMenu.play();
+          this.boutonSon.setTexture("on");
       }
-  
-      update(){}
-    }
+  }
+
+  playClickSound() {
+      this.sound.play("fx"); // Jouez le son du clic
+  }
+
+  update() {}
+}
