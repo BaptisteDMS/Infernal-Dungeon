@@ -63,9 +63,11 @@ export default class niveau3 extends Phaser.Scene {
     }
     preload(){
           //CHARGEMENT MUSIQUE
-    this.load.audio("background5", "/src/assets/song/StreetFighter.mp3");
+        this.load.audio("background5", "/src/assets/song/StreetFighter.mp3");
         this.load.image("Phaser_JeuDeTuiles14", "src/assets/map_donjon_japon/japontuiles.png");
         this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
+          //CHARGEMENT MONSTRES
+        this.load.image("fantome", "src/assets/monstres/phh.png")
     }
     create() {
         groupeballe=this.physics.add.group();

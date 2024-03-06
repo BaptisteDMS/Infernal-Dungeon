@@ -71,7 +71,8 @@ export default class niveau1 extends Phaser.Scene {
     this.load.audio("background1", "/src/assets/song/DOOM.mp3");
     this.load.image("Phaser_JeuDeTuiles11", "src/assets/map_principale/arriere_plan.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_donjon_eau/map_donjon_eau.json");
-
+    //CHARGEMENT MONSTRES
+    this.load.image("chauve-souris", "src/assets/monstres/chauve-souris.png") 
   }
 
   create() {

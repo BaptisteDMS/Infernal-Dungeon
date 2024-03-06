@@ -34,6 +34,8 @@ export default class niveau5 extends Phaser.Scene {
     this.load.audio("background9", "/src/assets/song/FreeBird.mp3");
         this.load.image("Phaser_JeuDeTuiles60", "src/assets/map_eglise/chateau.png");
         this.load.tilemapTiledJSON("carte5", "src/assets/map_eglise/eglise_finale.json");
+          //CHARGEMENT DES MONSTRES
+          this.load.image("boss", "src/assets/monstres/boss.png")
     }
     create() {
         fct.doNothing();
