@@ -84,7 +84,12 @@ function createEnemy3() {
   this.physics.add.collider(obj3, player, (enemy3) => {
       enemy3.destroy();
   });
-  obj3.setBounce(1);
+  obj3.setBounce(5);
+  let speedX = Math.random() * 400 - 200; 
+  let speedY = Math.random() * 400 - 200; 
+
+  enemy3.setVelocity(speedX, speedY);
+  
 
   
   enemy3.add(obj3);
@@ -169,7 +174,10 @@ export default class selection extends Phaser.Scene {
     this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
     // Création icone dash
-    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    //image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    // Ajouter une image fixe en haut à gauche de l'écran
+    let image_sprint = this.add.image(16, 16, "Sprinter_bleu").setOrigin(0, 0);
+
 
     // Creation arme
     armesol = this.physics.add.sprite(200,200,"lanceflamme");
@@ -231,6 +239,7 @@ export default class selection extends Phaser.Scene {
 
     while (c < 5) {
         createEnemy3.call(this); 
+        
         
         c++;
     }
@@ -336,10 +345,7 @@ enemy3.children.iterate(enemy3 => {
     }
 
     elem3 = enemy3.getChildren();
-    let speedX = Math.random() * 400 - 200; // Vitesse horizontale entre -200 et 200
-  let speedY = Math.random() * 400 - 200; // Vitesse verticale entre -200 et 200
-
-  enemy3.setVelocity(speedX, speedY);
+    
 
     // Détection des collisions entre les balles et les ennemis
     this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {

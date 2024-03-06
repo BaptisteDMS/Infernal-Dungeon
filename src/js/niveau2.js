@@ -19,6 +19,7 @@ let image_sprint;
 var decor;
 var CalquedeTuiles;
 var rien;
+let imageContainer;
 
 
 export default class niveau2 extends Phaser.Scene {
@@ -33,7 +34,9 @@ export default class niveau2 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_JeuDeTuiles6", "src/assets/map_donjon_eau/arriere_plan.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_donjon_eau/map_fin_eau.json");
-  }
+    this.load.image("Sprinter_bleu", "src/assets/bleu.png");
+    this.load.image("Sprinter_rouge", "src/assets/rouge.png");
+  }   
 
   create() {
     fct.doNothing();
@@ -70,7 +73,8 @@ export default class niveau2 extends Phaser.Scene {
 
 
     // Création icone dash
-    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    //image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    let image_sprint = this.add.image(0, 0, "Sprinter_bleu").setOrigin(0, 0 );
 
     // Création du joueur
     player = this.physics.add.sprite(200, 300, "Personnage");
@@ -250,18 +254,22 @@ tirerBalle() {
 });
 }
 
-dash (player, image_sprint) {
- if (player.peutDash == true) {
-     
-     player.peutDash = false; // on désactive la possibilté de dash
-     
-     image_sprint = this.add.image(16, 16, "Sprinter_rouge");
-     
-     // on la réactive dans 4 secondes avec un timer
-     var timerDashOk = this.time.delayedCall(4000, () => {
-         player.peutDash = true;
-         image_sprint = this.add.image(16, 16, "Sprinter_bleu");
-     }, null, this);  
- }
+dash(player) {
+  if (player.peutDash == true) {
+      player.peutDash = false; // on désactive la possibilté de dash
+
+      // Créer l'image sprint et l'ajouter à la caméra principale
+      image_sprint = this.add.image(16, 16, "Sprinter_rouge");
+      this.cameras.main.add(image_sprint);
+
+      // on la réactive dans 4 secondes avec un timer
+      var timerDashOk = this.time.delayedCall(4000, () => {
+          player.peutDash = true;
+          // Mettre à jour l'image sprint
+          image_sprint.setTexture("Sprinter_bleu");
+      }, null, this);  
+  }
 }
+
+
 }
