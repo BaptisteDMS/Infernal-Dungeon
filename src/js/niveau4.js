@@ -224,10 +224,7 @@ export default class niveau4 extends Phaser.Scene {
       laballe.destroy();
     });
     
-        this.physics.add.collider(groupeballe, enemy, (bullet, enemy) => {
-          bullet.destroy();
-          enemy.destroy();
-        });
+        
 
 
  // Détection des collisions entre les balles et les ennemis
