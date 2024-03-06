@@ -31,7 +31,7 @@ export default class niveau4 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_JeuDeTuiles20", "src/assets/donjon_jungle/jungle-ruins.png");
     this.load.image("Phaser_JeuDeTuiles21", "src/assets/donjon_jungle/terrain-map-v7.png");
-    this.load.tilemapTiledJSON("carte4", "src/assets/donjon_jungle/donjon_jun.json");
+    this.load.tilemapTiledJSON("carte4", "src/assets/donjon_jungle/donjon_jun3.json");
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
@@ -43,11 +43,11 @@ export default class niveau4 extends Phaser.Scene {
     fct.doAlsoNothing();
     const carteDuNiveau = this.add.tilemap("carte4");
     const tileset1 = carteDuNiveau.addTilesetImage(
-      "terrain-map-v7",
+      "jungle-ruins",
       "Phaser_JeuDeTuiles20"
     ); 
     const tileset2 = carteDuNiveau.addTilesetImage(
-      "jungle-ruins",
+      "terrain-map-v7",
       "Phaser_JeuDeTuiles21"
     ); 
 
