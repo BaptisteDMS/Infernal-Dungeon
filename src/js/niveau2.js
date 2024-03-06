@@ -84,6 +84,9 @@ export default class niveau2 extends Phaser.Scene {
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
     this.load.image("bullet", "src/assets/projectile5.png"); // Chargement de l'image de la balle
     this.load.image("fireball", "src/assets/fireball.png");
+
+    //CHARGEMENT MONSTRES
+    this.load.image("slime", "src/assets/monstres/Slime.png")
   }
 
   create() {
