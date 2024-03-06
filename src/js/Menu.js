@@ -21,7 +21,7 @@ export default class menu extends Phaser.Scene {
 
       var bouton_play = this.add.image(390, 250, "imageBoutonPlay").setDepth(1);
       var bouton_commandes = this.add.image(390, 300, "commandes").setDepth(1);
-      var bouton_son = this.add.image(100, 50, "on").setInteractive().setDepth(1);
+      var bouton_son = this.add.image(100, 50, "off").setInteractive().setDepth(1);
       this.boutonSon = bouton_son; // Stockez une référence au bouton du son
 
       bouton_play.setInteractive();
@@ -50,7 +50,8 @@ export default class menu extends Phaser.Scene {
 
       bouton_play.on("pointerup", () => {
           this.scene.start("selection_map_1");
-          this.playClickSound(); // Jouez le son du clic pour le bouton "jouer"
+          this.playClickSound();
+          this.musiqueMenu.stop(); // Jouez le son du clic pour le bouton "jouer"
       });
 
       bouton_son.on("pointerup", this.toggleSon, this); // Ajoutez le gestionnaire d'événements pour le bouton du son
