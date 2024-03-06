@@ -12,6 +12,7 @@ var lent;
 var sprint;
 var interagir;
 var changement;
+var refresh;
 var vitesse_lent=0;
 var vitesse_dash=0;
 var deco_fond;
@@ -201,6 +202,7 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
     sprint = this.input.keyboard.addKey("shift");
     interagir = this.input.keyboard.addKey("E");
     changement = this.input.keyboard.addKey("L");
+    refresh = this.input.keyboard.addKey("G");
 
     
         this.physics.add.collider(player, deco_fond); 
@@ -209,6 +211,13 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
       }
     
       update() {
+
+        if(refresh.isDown){
+          musique_de_fond5.stop();
+          this.scene.stop();
+          this.scene.start();
+        }
+
         // enemy follow
         elem4 = enemy4.getChildren();
         var a = elem4.length;

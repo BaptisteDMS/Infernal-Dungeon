@@ -12,6 +12,7 @@ var lent;
 var sprint;
 var interagir;
 var changement;
+var refresh;
 var vitesse_lent=0;
 var vitesse_dash=0;
 var deco;
@@ -313,6 +314,7 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
     sprint = this.input.keyboard.addKey("shift");
     interagir = this.input.keyboard.addKey("E");
     changement = this.input.keyboard.addKey("L");
+    refresh = this.input.keyboard.addKey("G");
 
     
         this.physics.add.collider(player, decofinale); 
@@ -323,6 +325,12 @@ this.physics.add.collider(groupeballe, deco, (laballe, laplateforme) => {
       }
     
       update() {
+
+        if(refresh.isDown){
+          musique_de_fond9.stop();
+          this.scene.stop();
+          this.scene.start();
+        }
 
         // Mouvement boss
         this.physics.moveTo(boss, 670, 251, 20);

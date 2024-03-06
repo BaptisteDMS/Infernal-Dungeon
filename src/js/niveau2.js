@@ -11,6 +11,7 @@ var dash;
 var lent;
 var sprint;
 var interagir;
+var refresh;
 var vitesse_lent=0;
 var vitesse_dash=0;
 var Fond;
@@ -240,6 +241,7 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
    sprint = this.input.keyboard.addKey("shift");
    interagir = this.input.keyboard.addKey("E");
    changement = this.input.keyboard.addKey("L");
+   refresh = this.input.keyboard.addKey("G");
 
 
     this.physics.add.collider(player, Ponts); 
@@ -251,6 +253,12 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
   }
 
   update() {
+
+    if(refresh.isDown){
+      musique_de_fond3.stop();
+      this.scene.stop();
+      this.scene.start();
+    }
 
      // Gestion des collisions de la balle avec les plateformes
      this.physics.add.collider(groupeballe, Ponts, (laballe, laplateforme) => {

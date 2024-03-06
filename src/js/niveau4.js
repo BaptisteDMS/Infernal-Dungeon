@@ -12,6 +12,7 @@ var lent;
 var sprint;
 var interagir;
 var changement;
+var refresh;
 var vitesse_lent = 0;
 var vitesse_dash = 0;
 var Rien;
@@ -191,6 +192,7 @@ export default class niveau4 extends Phaser.Scene {
       sprint = this.input.keyboard.addKey("shift");
       interagir = this.input.keyboard.addKey("E");
       changement = this.input.keyboard.addKey("L");
+      refresh = this.input.keyboard.addKey("G");
 
     this.physics.add.collider(player, Rien); 
     this.physics.add.collider(player, Ruine); 
@@ -199,6 +201,12 @@ export default class niveau4 extends Phaser.Scene {
   }
 
   update() {
+
+    if(refresh.isDown){
+      musique_de_fond7.stop();
+      this.scene.stop();
+      this.scene.start();
+    }
 
     // Deplacement enenmy
     /*************************

@@ -14,6 +14,7 @@ var dash;
 var lent;
 var sprint;
 var interagir;
+var refresh;
 var groupe_plateformes;
 var lastFiredTime = 0;
 var groupeballe;
@@ -229,6 +230,7 @@ export default class selection_map_1 extends Phaser.Scene {
       lent= this.input.keyboard.addKey("C");
       sprint = this.input.keyboard.addKey("shift");
       interagir = this.input.keyboard.addKey("E");
+      refresh = this.input.keyboard.addKey("G");
     }   
     
   
@@ -237,6 +239,11 @@ export default class selection_map_1 extends Phaser.Scene {
   /***********************************************************************/
   
   update() {
+
+    if(refresh.isDown){
+      this.scene.stop();
+      this.scene.start();
+    }
 
     // Gestion des collisions de la balle avec les plateformes
   this.physics.add.collider(groupeballe, Fond_map, (laballe, laplateforme) => {
