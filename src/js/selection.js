@@ -56,8 +56,8 @@ var obj4;
 
 
 function createEnemy() {
-  xCoord = Math.random() * 800;
-  yCoord = Math.random() * 600;
+  xCoord = -288;
+  yCoord = 163;
   obj = this.physics.add.sprite(xCoord, yCoord, "img_ene");
   obj.setCollideWorldBounds(true);
   this.physics.add.collider(obj, groupe_plateformes);
@@ -99,7 +99,7 @@ function createEnemy2() {
 function createEnemy3() {
   let xCoord3 = Math.random() * 800;
   let yCoord3 = Math.random() * 600;
-  let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "fireball");
+  let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "slime");
   enemy3.add(obj3);
 
   obj3.setCollideWorldBounds(true);
@@ -250,7 +250,7 @@ export default class selection extends Phaser.Scene {
 
     let n = 0;
 
-    while (n < 4) {
+    while (n < 0) {
         createEnemy.call(this); 
         
         n++;
@@ -260,7 +260,7 @@ export default class selection extends Phaser.Scene {
 
     let c = 0;
 
-    while (c < 5) {
+    while (c < 4) {
         createEnemy3.call(this); 
         
         c++;

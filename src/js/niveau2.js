@@ -27,6 +27,8 @@ let weaponsGroup;
 let weapon = null;
 var lastFiredTime = 0;
 var groupe_plateformes;
+var xCor;
+var yCor;
 
 // enemy variable 3
 var enemy3;
@@ -36,8 +38,8 @@ var elem3;
 var obj3;
 
 function createEnemy3() {
-  let xCoord3 = Math.random() * 800;
-  let yCoord3 = Math.random() * 600;
+  let xCoord3 = 402;
+  let yCoord3 = 563;
   let obj3 = this.physics.add.sprite(xCoord3, yCoord3, "slime");
   enemy3.add(obj3);
 
@@ -63,7 +65,19 @@ function createEnemy3() {
   let speedY = Math.random() * 400 - 200; 
 
   obj3.setVelocity(speedX, speedY); 
-}
+} 
+
+
+
+
+   // Crée 3 ennemis avec les coordonnées spécifiées
+
+
+// Exemple d'utilisation :
+
+
+
+  
 
 
 export default class niveau2 extends Phaser.Scene {
@@ -87,6 +101,7 @@ export default class niveau2 extends Phaser.Scene {
   }
 
   create() {
+    
     groupeballe=this.physics.add.group();
     weaponsGroup=this.physics.add.group();
     musique_de_fond3 = this.sound.add("background3");
@@ -146,7 +161,7 @@ export default class niveau2 extends Phaser.Scene {
     // Création du joueur
     player = this.physics.add.sprite(690, 400, "Personnage");
     player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
+    //player.setCollideWorldBounds(true);
     player.peutDash = true;
     player.gun = "Handgun";
 
@@ -160,15 +175,19 @@ export default class niveau2 extends Phaser.Scene {
 
 
     // Creation mechant
+    
+    
     enemy3 = this.physics.add.group();
 
     let c = 0;
 
-    while (c < 5) {
+    while (c < 1) {
         createEnemy3.call(this); 
         
         c++;
     }
+
+    
 
     // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy3
 enemy3.children.iterate(enemy3 => {
@@ -192,6 +211,17 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
   weapon.destroy();
 });
 
+//let xCoordinates = [100, 200, 300]; // Coordonnées x de chaque ennemi
+  //let yCoordinates = [50, 150, 250]; // Coordonnées y de chaque ennemi
+  //createEnemy3.call(this, 1, -288, 163);
+  //enemy3 = this.physics.add.group();
+    
+    // Création des ennemis après l'initialisation du groupe
+    //let xCoordinates = [-288]; // Coordonnées x de chaque ennemi
+    //let yCoordinates = [163]; // Coordonnées y de chaque ennemi
+    //createEnemy3.call(this, 1, xCoordinates, yCoordinates);
+  
+
 
    // Création du clavier
    clavier = this.input.keyboard.createCursorKeys();
@@ -211,9 +241,11 @@ this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
     this.physics.add.collider(player, sol); 
     this.physics.add.collider(player, Falaise);
     this.physics.add.collider(player, Fond);
+    
   }
 
   update() {
+
      // Gestion des collisions de la balle avec les plateformes
      this.physics.add.collider(groupeballe, Ponts, (laballe, laplateforme) => {
       laballe.destroy();
@@ -235,10 +267,12 @@ this.physics.add.collider(groupeballe, Fond, (laballe, laplateforme) => {
   laballe.destroy();
 });
 
-this.physics.add.collider(groupeballe, enemy3, (bullet, enemy2) => {
+this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
   bullet.destroy();
   enemy3.destroy();
 });
+
+
 
 // Contact player
 this.physics.overlap(groupeballe, player, (bullet, player) => {
@@ -342,7 +376,8 @@ if (Phaser.Input.Keyboard.JustDown(changement)) {
 
   let diffX = this.input.mousePointer.worldX - player.x;
   let diffY = this.input.mousePointer.worldY - player.y;
-
+  //console.log(diffX);
+  //console.log(diffY);
   // Calcul de l'angle en radians entre le joueur et la souris
   let angle = Math.atan(diffY / diffX);
 
@@ -441,6 +476,7 @@ tirerBalle(arme) {
       lastFiredTime = this.time.now;
     }
   }
+  
 
 
   // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
@@ -477,6 +513,7 @@ tirerBalle(arme) {
     lastFiredTime = this.time.now;
   }
 }
+
 
 dash(player, image_sprint) {
   if (player.peutDash == true) {
