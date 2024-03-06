@@ -34,8 +34,8 @@ export default class niveau10 extends Phaser.Scene {
     this.load.image("Phaser_JeuDeTuiles3", "src/assets/map_principale/chateau.png");
     this.load.image("Phaser_JeuDeTuiles4", "src/assets/map_principale/donjon_maison.png");
     this.load.image("Phaser_JeuDeTuiles5", "src/assets/map_principale/house.png");
-    this.load.image("Phaser_JeuDeTuiles6", "src/assets/map_principale/maison_bleu_prote.png");
-    this.load.image("Phaser_JeuDeTuiles7", "src/assets/map_principale/porte_chateau.png");
+    this.load.image("Phaser_JeuDeTuiles6", "src/assets/map_principale/donjon.png");
+    this.load.image("Phaser_JeuDeTuiles7", "src/assets/map_principale/maison_bleu_prote.png");
     this.load.image("Phaser_JeuDeTuiles8", "src/assets/map_principale/porte_donjon_bois.png");
     this.load.image("Phaser_JeuDeTuiles9", "src/assets/map_principale/porte_donjon_rouge.png");
     this.load.image("Phaser_JeuDeTuiles10", "src/assets/map_principale/porte_donjon_brique.png");
@@ -71,7 +71,7 @@ export default class niveau10 extends Phaser.Scene {
       "Phaser_JeuDeTuiles5"
     ); 
     const tileset6 = carteDuNiveau.addTilesetImage(
-      "maison_bleu_porte",
+      "porte_donjon_bleu",
       "Phaser_JeuDeTuiles6"
     ); 
     const tileset7 = carteDuNiveau.addTilesetImage(
