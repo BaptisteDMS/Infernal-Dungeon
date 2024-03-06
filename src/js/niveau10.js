@@ -158,7 +158,7 @@ export default class niveau10 extends Phaser.Scene {
 
 
     // Création icone dash
-    image_sprint = this.add.image(16, 16, "Sprinter_bleu");
+    image_sprint = this.add.image(16, 16, "boss");
 
     // Création du joueur
     player = this.physics.add.sprite(740, 600, "Personnage");

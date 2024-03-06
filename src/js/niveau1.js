@@ -36,7 +36,7 @@ var obj2;
 function createEnemy2() {
   xCoord2 = Math.random() * 800;
   yCoord2 = Math.random() * 600;
-  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "Sprinter_rouge");
+  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "chauve-souris");
   obj2.setCollideWorldBounds(true);
   this.physics.add.collider(obj2, decor);
   this.physics.add.collider(obj2, CalquedeTuiles);
