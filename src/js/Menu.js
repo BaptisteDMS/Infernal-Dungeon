@@ -17,6 +17,8 @@ export default class menu extends Phaser.Scene {
   }
 
   create() {
+
+
       this.add.image(0, 0, "menu_fond").setOrigin(0).setDepth(0);
 
       var bouton_play = this.add.image(300, 250, "imageBoutonPlay").setDepth(1);
@@ -70,6 +72,12 @@ export default class menu extends Phaser.Scene {
   playClickSound() {
       this.sound.play("fx"); // Jouez le son du clic
   }
+  destroy() {
+    // Arrêter la musique lorsque la scène est détruite
+    if (this.musiqueMenu && this.musiqueMenu.isPlaying) {
+        this.musiqueMenu.stop();
+    }
+    super.destroy();}
 
   update() {}
 }
