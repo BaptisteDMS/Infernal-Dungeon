@@ -33,14 +33,14 @@ var elem4;
 var obj4;
 
 function createEnemy4() {
-  enemy4.add(obj4);
   xCoord4 = Math.random() * 800;
   yCoord4 = Math.random() * 600;
   obj4 = this.physics.add.sprite(xCoord4, yCoord4, "fantome");
+  enemy4.add(obj4);
   obj4.setCollideWorldBounds(true);
-  this.physics.add.collider(obj2, deco_fond);
-  this.physics.add.collider(obj2, CalquedeTuiles2);
-  this.physics.add.collider(obj2, rien1);
+  this.physics.add.collider(obj4, deco_fond);
+  this.physics.add.collider(obj4, CalquedeTuiles2);
+  this.physics.add.collider(obj4, rien1);
   this.physics.add.collider(obj4, groupe_plateformes);
   this.physics.add.collider(obj4, player, (obj4, player) => {
     this.physics.pause();
@@ -63,9 +63,11 @@ export default class niveau3 extends Phaser.Scene {
     }
     preload(){
           //CHARGEMENT MUSIQUE
-    this.load.audio("background5", "/src/assets/song/StreetFighter.mp3");
+        this.load.audio("background5", "/src/assets/song/StreetFighter.mp3");
         this.load.image("Phaser_JeuDeTuiles14", "src/assets/map_donjon_japon/japontuiles.png");
         this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
+          //CHARGEMENT MONSTRES
+        this.load.image("fantome", "src/assets/monstres/phh.png")
     }
     create() {
         groupeballe=this.physics.add.group();
@@ -120,7 +122,7 @@ export default class niveau3 extends Phaser.Scene {
 
     let a = 0;
 
-    while (a < 5) {
+    while (a < 4) {
         createEnemy4.call(this); 
         a++;
     }
@@ -315,7 +317,7 @@ this.physics.overlap(groupeballe, enemy4, (bullet, enemy4) => {
 
     // Passage aux niveaux suivants selon la porte touchée
     if (Phaser.Input.Keyboard.JustDown(changement)) {
-      this.scene.switch("selection_map_5");
+      this.scene.switch("selection_map_4");
       musique_de_fond5.stop();
     }
 
