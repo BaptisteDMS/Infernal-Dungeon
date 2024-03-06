@@ -40,6 +40,13 @@ var yCoord2;
 var elem2;
 var obj2;
 
+// enemy variable 4
+var enemy4;
+var xCoord4;
+var yCoord4;
+var elem4;
+var obj4;
+
 function createEnemy() {
   xCoord = Math.random() * 800;
   yCoord = Math.random() * 600;
@@ -57,7 +64,7 @@ function createEnemy() {
 function createEnemy2() {
   xCoord2 = Math.random() * 800;
   yCoord2 = Math.random() * 600;
-  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "img_ene2");
+  obj2 = this.physics.add.sprite(xCoord2, yCoord2, "Sprinter_bleu");
   obj2.setCollideWorldBounds(true);
   this.physics.add.collider(obj2, groupe_plateformes);
   this.physics.add.collider(obj2, player, (enemy2) => {
@@ -66,6 +73,20 @@ function createEnemy2() {
   this.physics.add.collider(obj2, enemy2);
   
   enemy2.add(obj2);
+}
+
+function createEnemy4() {
+  xCoord4 = Math.random() * 800;
+  yCoord4 = Math.random() * 600;
+  obj4 = this.physics.add.sprite(xCoord4, yCoord4, "Sprinter_rouge");
+  obj4.setCollideWorldBounds(true);
+  this.physics.add.collider(obj4, groupe_plateformes);
+  this.physics.add.collider(obj4, player, (enemy4) => {
+      enemy4.destroy();
+  });
+  this.physics.add.collider(obj4, enemy4);
+  
+  enemy4.add(obj4);
 }
 
 // définition de la classe "selection"
@@ -93,14 +114,17 @@ export default class selection extends Phaser.Scene {
     this.load.image("Personnage", "src/assets/Redi/LUIIII.png");
     this.load.image("Sprinter_bleu", "src/assets/bleu.png");
     this.load.image("Sprinter_rouge", "src/assets/rouge.png");
-    this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
-    this.load.image("img_ene2", "src/assets/Redi/Chauve souris");
     this.load.image("blasterbullet", "src/assets/Redi/blasterbullet.png")
     this.load.image("pistolbullet", "src/assets/Redi/pistolbullet.png")
   
     
     this.load.image("tire","src/assets/Redi/tire.jpg")
     this.load.image("cible", "src/assets/Redi/eyeball.png")
+
+    //Monstre
+    this.load.image("img_ene", "src/assets/Redi/eyeball2.png");
+    this.load.image("img_ene2", "src/assets/monstres/chauvr-souris.png");
+    this.load.image("img_ene4","src/assets/monstres/ph.png");
 
     //Arme
     this.load.image("blaster", "src/assets/armeSol/Pistolet_blaster_DH-17.jpg")
@@ -178,7 +202,7 @@ export default class selection extends Phaser.Scene {
 
     let n = 0;
 
-    while (n < 5) {
+    while (n < 0) {
         createEnemy.call(this); 
         n++;
     }
@@ -191,10 +215,74 @@ export default class selection extends Phaser.Scene {
 
     let b = 0;
 
-    while (b < 5) {
+    while (b < 1) {
         createEnemy2.call(this); 
         b++;
     }
+
+
+    /****************************
+     *  CREATION DU MECHANT 4 *
+     ****************************/
+
+    enemy4 = this.physics.add.group();
+
+    let a = 0;
+
+    while (a < 0) {
+        createEnemy4.call(this); 
+        a++;
+    }
+
+    var TimerMonster2 = this.time.addEvent({
+      delay: 500, // ms
+      callback: function () {
+        elem2 = enemy2.getChildren();
+        elem2.forEach(enemy => {
+          let bullet;
+            if (enemy.x <= player.x) {
+                bullet = this.physics.add.sprite(enemy.x+35, enemy.y, "fireball");
+            } else {
+                bullet = this.physics.add.sprite(enemy.x-35, enemy.y, "fireball");
+            }
+          groupeballe.add(bullet);
+          this.physics.moveTo(bullet, player.x, player.y, 200);
+      });
+      },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    }); 
+
+    var TimerMonster4 = this.time.addEvent({
+      delay: 2500, // ms
+      callback: function () {
+        elem4 = enemy4.getChildren();
+        elem4.forEach(enemy => {
+          let bullet1;
+          let bullet2;
+          let bullet3;
+            if (enemy.x <= player.x) {
+                bullet1 = this.physics.add.sprite(enemy.x+35, enemy.y, "fireball");
+                bullet2 = this.physics.add.sprite(enemy.x+35, enemy.y, "fireball");
+                bullet3 = this.physics.add.sprite(enemy.x+35, enemy.y, "fireball");
+            } else {
+                bullet1 = this.physics.add.sprite(enemy.x-35, enemy.y, "fireball");
+                bullet2 = this.physics.add.sprite(enemy.x-35, enemy.y, "fireball");
+                bullet3 = this.physics.add.sprite(enemy.x-35, enemy.y, "fireball");
+            }
+          groupeballe.add(bullet1);
+          groupeballe.add(bullet2);
+          groupeballe.add(bullet3);
+          this.physics.moveTo(bullet1, player.x, player.y, 300);
+          this.physics.moveTo(bullet2, player.x+50, player.y-50, 300);
+          this.physics.moveTo(bullet3, player.x-50, player.y-50, 300);
+      });
+      },
+      args: [],
+      callbackScope: this,
+      repeat: -1
+    });
 
    // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
 // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi
@@ -218,6 +306,11 @@ enemy.children.iterate(enemy => {
   this.physics.add.collider(player, weaponsGroup, (player, weapon) => {
     player.gun = weapon.texture.key;
     weapon.destroy();    
+});
+
+// Gestion des collisions de la balle avec les plateformes
+this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateforme) => {
+  laballe.destroy();
 });
   
 
@@ -257,10 +350,20 @@ enemy.children.iterate(enemy => {
     elem2 = enemy2.getChildren();
     var b = elem2.length;
     let v = 0;
-    while (v < b) {
-        this.physics.moveTo(elem2[v], player.x-100, player.y-100, 200);
-        v++;
+    while (v < b) {       
+      this.physics.moveTo(elem2[v], player.x-100, player.y-100, 100);
+      v++;
     }
+
+    elem4 = enemy4.getChildren();
+    var a = elem4.length;
+    let c = 0;
+    while (c < a) {       
+      this.physics.moveTo(elem4[c], player.x-100, player.y-100, 80);
+      c++;
+    }
+
+    
 
     // Détection des collisions entre les balles et les ennemis
     this.physics.overlap(groupeballe, enemy, (bullet, enemy) => {
@@ -305,10 +408,18 @@ enemy.children.iterate(enemy => {
         bullet8.setVelocityX(500);
       
         // Gestion des collisions de la balle avec les plateformes
-        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe) => {
+        this.physics.add.collider(groupeballe, groupe_plateformes, (laballe, laplateforme) => {
             laballe.destroy();
         });
     });  
+
+    // Contact enemy 2
+    this.physics.overlap(groupeballe, enemy2, (bullet, enemy2) => {bullet.destroy();
+      enemy2.destroy();});
+
+    // Contact enemy 4
+    this.physics.overlap(groupeballe, enemy4, (bullet, enemy4) => {bullet.destroy();
+      enemy4.destroy();});
 
 
     // Déplacement du joueur
