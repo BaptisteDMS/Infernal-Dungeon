@@ -187,6 +187,7 @@ createEnemy3.call(this, 460, 290);
     // Ajout de l'événement 'destroy' pour détecter la destruction d'un ennemi dans enemy3
 enemy3.children.iterate(enemy3 => {
   enemy3.on('destroy', () => {
+    condition_switch++;
       // Générer un nombre aléatoire entre 0 (inclus) et 6 (exclus)
       var proba = Math.floor(Math.random() * 2);
       if (proba === 0) { // Vérifier si le nombre est égal à 0
@@ -272,7 +273,6 @@ this.physics.add.collider(groupeballe, Fond, (laballe, laplateforme) => {
 this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
   bullet.destroy();
   enemy3.destroy();
-  condition_switch++;
 });
 
 
