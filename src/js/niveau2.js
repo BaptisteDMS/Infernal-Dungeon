@@ -56,7 +56,7 @@ function createEnemy3(Xcor,Ycor) {
   this.physics.add.collider(obj3, player, (obj3, player) => {
     this.physics.pause();
     musique_de_fond3.stop();
-    var timerRestart = this.time.delayedCall(3000,
+    var timerRestart = this.time.delayedCall(1500,
       () => {
         this.scene.stop();
         this.scene.start();
@@ -281,7 +281,7 @@ this.physics.add.collider(groupeballe, enemy3, (bullet, enemy3) => {
 this.physics.overlap(groupeballe, player, (bullet, player) => {
   musique_de_fond3.stop();
   this.physics.pause();
-  var timerRestart = this.time.delayedCall(3000,
+  var timerRestart = this.time.delayedCall(1500,
     () => {
       this.scene.stop();
       this.scene.start();

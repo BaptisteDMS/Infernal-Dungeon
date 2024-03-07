@@ -46,7 +46,7 @@ function createEnemy() {
   this.physics.add.collider(obj, player, (obj, player) => {
     this.physics.pause();
     musique_de_fond7.stop();
-    var timerRestart = this.time.delayedCall(3000,
+    var timerRestart = this.time.delayedCall(1500,
       () => {
         this.scene.stop();
         this.scene.start();
@@ -300,7 +300,7 @@ export default class niveau4 extends Phaser.Scene {
     this.physics.overlap(groupeballe, player, (bullet, player) => {
       this.physics.pause();
       musique_de_fond7.stop();
-      var timerRestart = this.time.delayedCall(3000,
+      var timerRestart = this.time.delayedCall(1500,
         () => {
 
           this.scene.stop();

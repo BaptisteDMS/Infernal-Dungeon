@@ -47,7 +47,7 @@ function createEnemy2() {
   this.physics.add.collider(obj2, player, (obj2, player) => {
     this.physics.pause();
     musique_de_fond1.stop();
-    var timerRestart = this.time.delayedCall(3000,
+    var timerRestart = this.time.delayedCall(1500,
       () => {
         this.scene.stop();
         this.scene.start();
@@ -264,10 +264,8 @@ this.physics.add.collider(groupeballe, decor, (laballe, laplateforme) => {
     this.physics.overlap(groupeballe, player, (bullet, player) => {
       this.physics.pause();
       musique_de_fond1.stop();
-      musique_mort.play();
-      var timerRestart = this.time.delayedCall(3000,
+      var timerRestart = this.time.delayedCall(1500,
         () => {
-          musique_mort.stop();
           this.scene.stop();
           this.scene.start();
         },
