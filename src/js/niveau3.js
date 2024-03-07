@@ -69,7 +69,7 @@ export default class niveau3 extends Phaser.Scene {
           //CHARGEMENT MUSIQUE
         this.load.audio("background5", "/src/assets/song/StreetFighter.mp3");
         this.load.image("Phaser_JeuDeTuiles14", "src/assets/map_donjon_japon/japontuiles.png");
-        this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon_fin.json");
+        this.load.tilemapTiledJSON("carte3", "src/assets/map_donjon_japon/donjon_japon.json");
           //CHARGEMENT MONSTRES
         this.load.image("fantome", "src/assets/monstres/phh.png")
     }
@@ -249,7 +249,7 @@ this.physics.overlap(groupeballe, player, (bullet, player) => {
   musique_de_fond5.stop();
   var timerRestart = this.time.delayedCall(1500,
     () => {
-
+      musique_de_fond5.stop();
       this.scene.stop();
       this.scene.start();
     },

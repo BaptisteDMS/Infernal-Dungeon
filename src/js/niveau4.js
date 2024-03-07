@@ -448,49 +448,7 @@ export default class niveau4 extends Phaser.Scene {
       nomArme = "pistolbullet";
       Vitesse = 800;
 
-      // Vérifier si suffisamment de temps s'est écoulé depuis le dernier tir
-      if (this.time.now - lastFiredTime > cadence) {
-        // Calcul du coefficient de direction en fonction de la position du clic de la souris
-        let diffX = this.input.mousePointer.worldX - player.x;
-        let diffY = this.input.mousePointer.worldY - player.y;
-        let distance = Math.sqrt(diffX * diffX + diffY * diffY);
-        let coefdirX = diffX / distance;
-        let coefdirY = diffY / distance;
-
-        // Création des trois balles
-        for (let i = 0; i < 3; i++) {
-          let bullet;
-          // Position de la balle en fonction de l'indice i
-          if (i === 0) {
-            bullet = this.physics.add.sprite(player.x + 20 * coefdirX, player.y + 20 * coefdirY, nomArme);
-          } else {
-            // Calcul des positions pour les balles latérales
-            let angle = (i === 1) ? -45 : 45; // Angle négatif pour la balle de gauche, positif pour la balle de droite
-            let newDirX = Math.cos(Phaser.Math.DegToRad(angle)) * coefdirX - Math.sin(Phaser.Math.DegToRad(angle)) * coefdirY;
-            let newDirY = Math.sin(Phaser.Math.DegToRad(angle)) * coefdirX + Math.cos(Phaser.Math.DegToRad(angle)) * coefdirY;
-            bullet = this.physics.add.sprite(player.x + 20 * newDirX, player.y + 20 * newDirY, nomArme);
-          }
-
-          // Ajouter la balle au groupe de balles
-          groupeballe.add(bullet);
-
-          // Déplacement de la balle vers la position de la souris
-          this.physics.moveTo(
-            bullet,
-            this.input.mousePointer.worldX,
-            this.input.mousePointer.worldY,
-            Vitesse
-          );
-
-          // Gestion des collisions de la balle avec les plateformes
-          this.physics.add.collider(bullet, groupe_plateformes, () => {
-            bullet.destroy();
-          });
-        }
-
-        // Mettre à jour le temps du dernier tir
-        lastFiredTime = this.time.now;
-      }
+      
     }
 
 
