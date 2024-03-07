@@ -50,7 +50,6 @@ function createEnemy4() {
     musique_de_fond5.stop();
     var timerRestart = this.time.delayedCall(1500,
       () => {
-        musique_de_fond5.stop();
         this.scene.stop();
         this.scene.start();
       },
@@ -250,7 +249,6 @@ this.physics.overlap(groupeballe, player, (bullet, player) => {
   musique_de_fond5.stop();
   var timerRestart = this.time.delayedCall(1500,
     () => {
-      musique_de_fond5.stop();
       this.scene.stop();
       this.scene.start();
     },
