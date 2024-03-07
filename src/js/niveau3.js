@@ -133,7 +133,7 @@ export default class niveau3 extends Phaser.Scene {
     }
 
     var TimerMonster4 = this.time.addEvent({
-      delay: 2500, // ms
+      delay: 1500, // ms
       callback: function () {
         elem4 = enemy4.getChildren();
         elem4.forEach(enemy => {
