@@ -156,7 +156,7 @@ export default class niveau4 extends Phaser.Scene {
 
         let n = 0;
     
-        while (n < 30) {
+        while (n < 15) {
             createEnemy.call(this); 
             
             n++;
@@ -381,7 +381,7 @@ export default class niveau4 extends Phaser.Scene {
     if (Phaser.Input.Keyboard.JustDown(changement)) {
       musique_de_fond7.stop();
       this.scene.switch("selection_map_5");
-    }else if (condition_switch==30){
+    }else if (condition_switch==15){
       musique_de_fond7.stop();
       this.scene.switch("selection_map_5");
     }
